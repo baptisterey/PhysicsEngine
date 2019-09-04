@@ -126,7 +126,7 @@
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="OPENGL_TESTcpp.cpp" />
+    <ClCompile Include="test.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

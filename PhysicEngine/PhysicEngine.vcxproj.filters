@@ -23,7 +23,7 @@
     <ClCompile Include="Vector3.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="OPENGL_TESTcpp.cpp">
+    <ClCompile Include="test.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
