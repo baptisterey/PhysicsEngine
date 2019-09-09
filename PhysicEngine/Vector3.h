@@ -14,6 +14,7 @@ public:
 
 	void Normalize();
 
+	float GetSquaredMagnitude() const;
 	float GetMagnitude() const;
 
 
@@ -33,6 +34,8 @@ public:
 
 	static Vector3 Cross(Vector3 const& a, Vector3 const& b);
 	static float Dot(Vector3 const& a, Vector3 const& b);
+	static Vector3 Components(Vector3 const& a, Vector3 const& b);
+
 
 	static float Distance(Vector3 const& a, Vector3 const& b);
 	static float Angle(Vector3 const& a, Vector3 const& b);

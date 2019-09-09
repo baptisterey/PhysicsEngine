@@ -30,9 +30,14 @@ void Vector3::Normalize()
 	z = z / magnitude;
 }
 
+float Vector3::GetSquaredMagnitude() const
+{
+	return pow(x, 2) + pow(y, 2) + pow(z, 2);
+}
+
 float Vector3::GetMagnitude() const
 {
-	return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
+	return sqrt(GetSquaredMagnitude());
 }
 
 Vector3 Vector3::operator+(Vector3 const& vect)
@@ -83,6 +88,11 @@ Vector3 Vector3::Cross(Vector3 const& a, Vector3 const& b)
 float Vector3::Dot(Vector3 const & a, Vector3 const & b)
 {
 	return (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
+}
+
+Vector3 Vector3::Components(Vector3 const& a, Vector3 const& b)
+{
+	return Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
 }
 
 float Vector3::Distance(Vector3 const & a, Vector3 const & b)
