@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 class Vector3
 {
@@ -17,6 +18,8 @@ public:
 	float GetSquaredMagnitude() const;
 	float GetMagnitude() const;
 
+	std::string ToString();
+
 
 	// ---- OPERATOR OVERLOADING ----
 	Vector3 operator+ (Vector3 const& vect);
@@ -30,6 +33,7 @@ public:
 
 	bool operator== (Vector3 const& vect);
 	bool operator!= (Vector3 const& vect);
+
 	// ------------------------------
 
 	static Vector3 Cross(Vector3 const& a, Vector3 const& b);

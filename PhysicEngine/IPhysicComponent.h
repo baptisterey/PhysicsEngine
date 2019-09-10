@@ -3,7 +3,7 @@ class IPhysicComponent
 {
 public:
 	IPhysicComponent();
-	~IPhysicComponent();
+	virtual ~IPhysicComponent();
 
 	virtual void Update(float deltaTime) {};
 };

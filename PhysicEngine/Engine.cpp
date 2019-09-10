@@ -14,7 +14,10 @@
 
 #include "Time.h"
 
+#include "EntityManager.h"
+#include "Entity.h"
 
+#include "Particle.h"
 
 bool InitSDL()
 {
@@ -46,6 +49,8 @@ int main(int argc, char* args[]) {
 
 	SystemManager::AddSystem(new PhysicSystem());
 	SystemManager::AddSystem(new LogicSystem());
+
+	EntityManager::CreateEntity("Bullet", { new Particle(Vector3(), Vector3(10, 5, 0)) });
 	
 	bool running = true;
 	while (running) {
@@ -53,7 +58,7 @@ int main(int argc, char* args[]) {
 		for (ISystem* system : SystemManager::GetSystems()) {
 			system->Update();
 		}
-		
+
 		//handle the deltatime
 		timeLast = timeNow;
 		timeNow = SDL_GetPerformanceCounter();

@@ -130,6 +130,7 @@
     <ClInclude Include="IPhysicComponent.h" />
     <ClInclude Include="ISystem.h" />
     <ClInclude Include="LogicSystem.h" />
+    <ClInclude Include="Particle.h" />
     <ClInclude Include="PhysicSystem.h" />
     <ClInclude Include="SystemManager.h" />
     <ClInclude Include="Time.h" />
@@ -145,6 +146,7 @@
     <ClCompile Include="IPhysicComponent.cpp" />
     <ClCompile Include="ISystem.cpp" />
     <ClCompile Include="LogicSystem.cpp" />
+    <ClCompile Include="Particle.cpp" />
     <ClCompile Include="PhysicSystem.cpp" />
     <ClCompile Include="SystemManager.cpp" />
     <ClCompile Include="test.cpp" />
