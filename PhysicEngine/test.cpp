@@ -9,6 +9,8 @@ and may not be redistributed without written permission.*/
 #include <stdio.h>
 #include <string>
 
+
+
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -359,6 +361,8 @@ void printShaderLog(GLuint shader)
 
 int main(int argc, char* args[])
 {
+
+
 	//Start up SDL and create window
 	if (!init())
 	{

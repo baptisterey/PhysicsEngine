@@ -18,12 +18,18 @@
     <ClInclude Include="Vector3.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Vector3.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="test.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
