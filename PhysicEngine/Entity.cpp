@@ -29,13 +29,13 @@ void Entity::AddComponent(BaseComponent * component)
 	component->SetOwner(this);
 }
 
-void Entity::RemoveComponent(std::string name)
+void Entity::RemoveComponent(std::string id)
 {
 	BaseComponent* baseComponent;
-	baseComponent = components.at(name);
+	baseComponent = components.at(id);
 
 	if (baseComponent != nullptr) {
-		components.erase(name);
+		components.erase(id);
 
 		delete baseComponent;
 	}

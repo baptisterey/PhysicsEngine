@@ -6,6 +6,8 @@
 #include "ILogicComponent.h"
 #include "ISystem.h"
 
+#include "Time.h"
+
 
 
 class LogicSystem : public ISystem

@@ -14,7 +14,7 @@ LogicSystem::~LogicSystem()
 void LogicSystem::Update()
 {
 	for (ILogicComponent* component : components) {
-		component->Update(0.33f); // TODO : Ajouter le time delta
+		component->Update(Time::deltaTime);
 	}
 }
 
