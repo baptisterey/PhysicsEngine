@@ -1,6 +1,7 @@
 #include "Vector3.h"
 
 #include <math.h> 
+#include <string>
 
 Vector3::Vector3() : x(0), y(0), z(0)
 {
@@ -36,6 +37,11 @@ float Vector3::GetSquaredMagnitude() const
 float Vector3::GetMagnitude() const
 {
 	return sqrt(GetSquaredMagnitude());
+}
+
+std::string Vector3::ToString()
+{
+	return "(x : " + std::to_string(x) + ", y : " + std::to_string(y) + ", z : " + std::to_string(z) + ")";
 }
 
 Vector3 Vector3::operator+(Vector3 const& vect)

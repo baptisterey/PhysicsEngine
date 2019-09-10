@@ -1,28 +1,28 @@
 #pragma once
+
 #include "Vector3.h"
-class Particle
+#include "IPhysicComponent.h"
+#include "BaseComponent.h"
+
+class Particle : public IPhysicComponent, public BaseComponent
 {
-protected:
-	float mass, invertedMass;
 
 public:
 
-	Vector3 position, velocity, acceleration;
-
-
 	Particle();
-	Particle(Vector3 pos, Vector3 vel, Vector3 acc, float mass);
+	Particle(Vector3 pos, Vector3 vel, float mass = 1, float damping = 1);
+
 	~Particle();
 
-	void setMass(float mass);
-	float getMass();
-	float getInvertedMass();
+	void SetMass(float mass);
+	float GetMass();
+	float GetInvertedMass();
 
+	void Update(float delta);
 
-	void updateAcceleration(Vector3 gravity);
-	void updateVelocity(float fTime, float damp);
-	void updatePosition(float fTime, float damp);
-	void updateParticle(float fTime, float damp, Vector3 gravity);
+protected:
 
+	float mass, invertedMass, damping;
+	Vector3 position, velocity;
 
 };
