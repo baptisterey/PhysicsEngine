@@ -14,10 +14,9 @@ public:
 
 	void Normalize();
 
-	float GetMagnitude() const;
+        float GetMagnitude() const;
 
-
-	// ---- OPERATOR OVERLOADING ----
+        // ---- OPERATOR OVERLOADING ----
 	Vector3 operator+ (Vector3 const& vect);
 	Vector3 operator+= (Vector3 const& vect);
 
