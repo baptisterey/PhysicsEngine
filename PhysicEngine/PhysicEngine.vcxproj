@@ -123,10 +123,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BaseComponent.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="ILogicComponent.h" />
+    <ClInclude Include="IPhysicComponent.h" />
+    <ClInclude Include="ISystem.h" />
+    <ClInclude Include="LogicSystem.h" />
+    <ClInclude Include="PhysicSystem.h" />
+    <ClInclude Include="SystemManager.h" />
+    <ClInclude Include="Time.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseComponent.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
+    <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="ILogicComponent.cpp" />
+    <ClCompile Include="IPhysicComponent.cpp" />
+    <ClCompile Include="ISystem.cpp" />
+    <ClCompile Include="LogicSystem.cpp" />
+    <ClCompile Include="PhysicSystem.cpp" />
+    <ClCompile Include="SystemManager.cpp" />
     <ClCompile Include="test.cpp" />
+    <ClCompile Include="Time.cpp" />
+    <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

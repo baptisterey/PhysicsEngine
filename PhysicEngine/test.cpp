@@ -357,7 +357,7 @@ void printShaderLog(GLuint shader)
 	}
 }
 
-int main(int argc, char* args[])
+int mainTest(int argc, char* args[])
 {
 	//Start up SDL and create window
 	if (!init())
