@@ -13,153 +13,171 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Fichiers d%27en-tête\Logic">
-      <UniqueIdentifier>{12e1f939-4ea9-45fe-9e1a-a54e9e7aa04a}</UniqueIdentifier>
+    <Filter Include="Fichiers sources\Engine">
+      <UniqueIdentifier>{dd43c63d-b2fc-45a5-afec-e9bf0c1376ef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers sources\Logic">
-      <UniqueIdentifier>{294f82c6-0b4f-4d0e-a28f-3a1017fa6a63}</UniqueIdentifier>
+    <Filter Include="Fichiers sources\Engine\Renderer">
+      <UniqueIdentifier>{e0e91ba0-24bd-4e2f-884d-271d4d19f1e7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers d%27en-tête\Physic">
-      <UniqueIdentifier>{6db9e168-df0c-437d-ada8-dcf19bea8177}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Physic">
+    <Filter Include="Fichiers sources\Engine\Physic">
       <UniqueIdentifier>{263eb086-657b-466b-9b1d-10f71ee56d1f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers d%27en-tête\Math">
-      <UniqueIdentifier>{bc26635b-bd42-46e0-bdca-40e6df5616dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Math">
-      <UniqueIdentifier>{fd1cd13e-2321-485d-acc8-d624ec68acfb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Managers">
-      <UniqueIdentifier>{1c425199-66f9-44cb-b1b0-0ab110e577cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Managers">
-      <UniqueIdentifier>{20ff6adb-7f9d-47b9-bc1d-0e34b672e935}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Utils">
-      <UniqueIdentifier>{f760e58c-c70e-4eed-b2ef-1098c1d23ab3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Utils">
+    <Filter Include="Fichiers sources\Engine\Utils">
       <UniqueIdentifier>{83fbe4a2-7485-4ac8-96fe-0e984788831f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers d%27en-tête\Base">
-      <UniqueIdentifier>{ff911eb0-5fb4-47f8-873f-6506ec5136d6}</UniqueIdentifier>
+    <Filter Include="Fichiers sources\Engine\Logic">
+      <UniqueIdentifier>{294f82c6-0b4f-4d0e-a28f-3a1017fa6a63}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers sources\Base">
+    <Filter Include="Fichiers sources\Engine\Managers">
+      <UniqueIdentifier>{20ff6adb-7f9d-47b9-bc1d-0e34b672e935}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Engine\Math">
+      <UniqueIdentifier>{fd1cd13e-2321-485d-acc8-d624ec68acfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Engine\Base">
       <UniqueIdentifier>{9f25ea9b-c6d0-462d-ae8f-01717c4188d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers d%27en-tête\Renderer">
+    <Filter Include="Fichiers d%27en-tête\Engine">
+      <UniqueIdentifier>{29fbccb5-75fe-4b98-a5d3-d85660a372de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Engine\Logic">
+      <UniqueIdentifier>{12e1f939-4ea9-45fe-9e1a-a54e9e7aa04a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Engine\Managers">
+      <UniqueIdentifier>{1c425199-66f9-44cb-b1b0-0ab110e577cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Engine\Math">
+      <UniqueIdentifier>{bc26635b-bd42-46e0-bdca-40e6df5616dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Engine\Base">
+      <UniqueIdentifier>{ff911eb0-5fb4-47f8-873f-6506ec5136d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Engine\Renderer">
       <UniqueIdentifier>{f0af8a31-d400-449b-9dd8-4eaa778c0e83}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers sources\Renderer">
-      <UniqueIdentifier>{e0e91ba0-24bd-4e2f-884d-271d4d19f1e7}</UniqueIdentifier>
+    <Filter Include="Fichiers d%27en-tête\Engine\Physic">
+      <UniqueIdentifier>{6db9e168-df0c-437d-ada8-dcf19bea8177}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Engine\Utils">
+      <UniqueIdentifier>{f760e58c-c70e-4eed-b2ef-1098c1d23ab3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ILogicComponent.h">
-      <Filter>Fichiers d%27en-tête\Logic</Filter>
+      <Filter>Fichiers d%27en-tête\Engine\Logic</Filter>
     </ClInclude>
     <ClInclude Include="LogicSystem.h">
-      <Filter>Fichiers d%27en-tête\Logic</Filter>
+      <Filter>Fichiers d%27en-tête\Engine\Logic</Filter>
     </ClInclude>
     <ClInclude Include="IPhysicComponent.h">
-      <Filter>Fichiers d%27en-tête\Physic</Filter>
+      <Filter>Fichiers d%27en-tête\Engine\Physic</Filter>
     </ClInclude>
     <ClInclude Include="PhysicSystem.h">
-      <Filter>Fichiers d%27en-tête\Physic</Filter>
+      <Filter>Fichiers d%27en-tête\Engine\Physic</Filter>
     </ClInclude>
     <ClInclude Include="Vector3.h">
-      <Filter>Fichiers d%27en-tête\Math</Filter>
+      <Filter>Fichiers d%27en-tête\Engine\Math</Filter>
     </ClInclude>
     <ClInclude Include="EntityManager.h">
-      <Filter>Fichiers d%27en-tête\Managers</Filter>
+      <Filter>Fichiers d%27en-tête\Engine\Managers</Filter>
     </ClInclude>
     <ClInclude Include="SystemManager.h">
-      <Filter>Fichiers d%27en-tête\Managers</Filter>
+      <Filter>Fichiers d%27en-tête\Engine\Managers</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h">
-      <Filter>Fichiers d%27en-tête\Utils</Filter>
+      <Filter>Fichiers d%27en-tête\Engine\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
-      <Filter>Fichiers d%27en-tête\Utils</Filter>
+      <Filter>Fichiers d%27en-tête\Engine\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Particle.h">
-      <Filter>Fichiers d%27en-tête\Physic</Filter>
+      <Filter>Fichiers d%27en-tête\Engine\Physic</Filter>
     </ClInclude>
     <ClInclude Include="BaseComponent.h">
-      <Filter>Fichiers d%27en-tête\Base</Filter>
+      <Filter>Fichiers d%27en-tête\Engine\Base</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
-      <Filter>Fichiers d%27en-tête\Base</Filter>
+      <Filter>Fichiers d%27en-tête\Engine\Base</Filter>
     </ClInclude>
     <ClInclude Include="ISystem.h">
-      <Filter>Fichiers d%27en-tête\Base</Filter>
+      <Filter>Fichiers d%27en-tête\Engine\Base</Filter>
     </ClInclude>
     <ClInclude Include="IRendererComponent.h">
-      <Filter>Fichiers d%27en-tête\Renderer</Filter>
+      <Filter>Fichiers d%27en-tête\Engine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="RendererSystem.h">
-      <Filter>Fichiers d%27en-tête\Renderer</Filter>
+      <Filter>Fichiers d%27en-tête\Engine\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="TextureRenderer.h">
-      <Filter>Fichiers d%27en-tête\Renderer</Filter>
+      <Filter>Fichiers d%27en-tête\Engine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="BallSpawner.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="EventSystem.h">
+      <Filter>Fichiers d%27en-tête\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="ILogicComponent.cpp">
-      <Filter>Fichiers sources\Logic</Filter>
+      <Filter>Fichiers sources\Engine\Logic</Filter>
     </ClCompile>
     <ClCompile Include="LogicSystem.cpp">
-      <Filter>Fichiers sources\Logic</Filter>
+      <Filter>Fichiers sources\Engine\Logic</Filter>
     </ClCompile>
     <ClCompile Include="IPhysicComponent.cpp">
-      <Filter>Fichiers sources\Physic</Filter>
+      <Filter>Fichiers sources\Engine\Physic</Filter>
     </ClCompile>
     <ClCompile Include="PhysicSystem.cpp">
-      <Filter>Fichiers sources\Physic</Filter>
+      <Filter>Fichiers sources\Engine\Physic</Filter>
     </ClCompile>
     <ClCompile Include="Vector3.cpp">
-      <Filter>Fichiers sources\Math</Filter>
+      <Filter>Fichiers sources\Engine\Math</Filter>
     </ClCompile>
     <ClCompile Include="EntityManager.cpp">
-      <Filter>Fichiers sources\Managers</Filter>
+      <Filter>Fichiers sources\Engine\Managers</Filter>
     </ClCompile>
     <ClCompile Include="SystemManager.cpp">
-      <Filter>Fichiers sources\Managers</Filter>
+      <Filter>Fichiers sources\Engine\Managers</Filter>
     </ClCompile>
     <ClCompile Include="Utils.cpp">
-      <Filter>Fichiers sources\Utils</Filter>
+      <Filter>Fichiers sources\Engine\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Time.cpp">
-      <Filter>Fichiers sources\Utils</Filter>
+      <Filter>Fichiers sources\Engine\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Particle.cpp">
-      <Filter>Fichiers sources\Physic</Filter>
+      <Filter>Fichiers sources\Engine\Physic</Filter>
     </ClCompile>
     <ClCompile Include="BaseComponent.cpp">
-      <Filter>Fichiers sources\Base</Filter>
+      <Filter>Fichiers sources\Engine\Base</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
-      <Filter>Fichiers sources\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\Engine\Base</Filter>
     </ClCompile>
     <ClCompile Include="ISystem.cpp">
-      <Filter>Fichiers sources\Base</Filter>
+      <Filter>Fichiers sources\Engine\Base</Filter>
     </ClCompile>
     <ClCompile Include="IRendererComponent.cpp">
-      <Filter>Fichiers sources\Renderer</Filter>
+      <Filter>Fichiers sources\Engine\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="RendererSystem.cpp">
-      <Filter>Fichiers sources\Renderer</Filter>
+      <Filter>Fichiers sources\Engine\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="TextureRenderer.cpp">
-      <Filter>Fichiers sources\Renderer</Filter>
+      <Filter>Fichiers sources\Engine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="BallSpawner.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Fichiers sources\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>Fichiers sources\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="EventSystem.cpp">
+      <Filter>Fichiers sources\Engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -14,13 +14,11 @@ public:
 
 	void Render(SDL_Renderer* renderer);
 
-	void LoadTexture(std::string fileName, SDL_Renderer* renderer);
+	void SetTexture(SDL_Texture* texture);
+
+	static SDL_Texture* LoadTexture(std::string fileName, SDL_Renderer* renderer);
 private:
 
 	SDL_Texture* texture = nullptr;
-	
-
-	int imageSizeWeight = 0;
-	int imageSizeHeight = 0;
 };
 
