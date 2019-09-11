@@ -20,8 +20,8 @@ void TextureRenderer::Render(SDL_Renderer * renderer)
 	// Where to draw the texture on the screen
 	SDL_Rect destRect;
 
-	destRect.h = 35;
-	destRect.w = 35;
+	destRect.h = 40;
+	destRect.w = 40;
 
 	destRect.x = particle->position.x;
 	destRect.y = particle->position.y;
