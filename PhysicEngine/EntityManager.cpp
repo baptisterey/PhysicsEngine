@@ -27,3 +27,14 @@ const std::map<std::string, Entity*> EntityManager::GetEntities()
 {
 	return EntityManager::entities;
 }
+
+Entity * EntityManager::GetEntity(std::string entityName)
+{
+	for (const auto entity : entities) {
+		if (entity.second->name == entityName) {
+			return entity.second;
+		}
+	}
+
+	return nullptr;
+}

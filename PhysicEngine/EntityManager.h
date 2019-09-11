@@ -16,6 +16,8 @@ public:
 
 	static const std::map<std::string, Entity*> GetEntities();
 
+	static Entity* GetEntity(std::string entityName);
+
 private:
 	static std::map<std::string, Entity*> entities;
 };

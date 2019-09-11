@@ -43,17 +43,20 @@
     <Filter Include="Fichiers sources\Utils">
       <UniqueIdentifier>{83fbe4a2-7485-4ac8-96fe-0e984788831f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Base">
+      <UniqueIdentifier>{ff911eb0-5fb4-47f8-873f-6506ec5136d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Base">
+      <UniqueIdentifier>{9f25ea9b-c6d0-462d-ae8f-01717c4188d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Renderer">
+      <UniqueIdentifier>{f0af8a31-d400-449b-9dd8-4eaa778c0e83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Renderer">
+      <UniqueIdentifier>{e0e91ba0-24bd-4e2f-884d-271d4d19f1e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ISystem.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseComponent.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="ILogicComponent.h">
       <Filter>Fichiers d%27en-tête\Logic</Filter>
     </ClInclude>
@@ -84,21 +87,27 @@
     <ClInclude Include="Particle.h">
       <Filter>Fichiers d%27en-tête\Physic</Filter>
     </ClInclude>
+    <ClInclude Include="BaseComponent.h">
+      <Filter>Fichiers d%27en-tête\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Fichiers d%27en-tête\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ISystem.h">
+      <Filter>Fichiers d%27en-tête\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="IRendererComponent.h">
+      <Filter>Fichiers d%27en-tête\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="RendererSystem.h">
+      <Filter>Fichiers d%27en-tête\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureRenderer.h">
+      <Filter>Fichiers d%27en-tête\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseComponent.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="ISystem.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="ILogicComponent.cpp">
@@ -130,6 +139,27 @@
     </ClCompile>
     <ClCompile Include="Particle.cpp">
       <Filter>Fichiers sources\Physic</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseComponent.cpp">
+      <Filter>Fichiers sources\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Fichiers sources\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ISystem.cpp">
+      <Filter>Fichiers sources\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="IRendererComponent.cpp">
+      <Filter>Fichiers sources\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="RendererSystem.cpp">
+      <Filter>Fichiers sources\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureRenderer.cpp">
+      <Filter>Fichiers sources\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
