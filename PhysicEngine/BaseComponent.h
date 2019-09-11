@@ -9,7 +9,7 @@ class BaseComponent
 public:
 
 	BaseComponent();
-	~BaseComponent();
+	virtual ~BaseComponent();
 
 	std::string GetId();
 

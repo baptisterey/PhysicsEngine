@@ -1,7 +1,5 @@
 #include "BaseComponent.h"
 
-
-
 BaseComponent::BaseComponent()
 {
 	id = Utils::GenerateHex(8);
@@ -10,6 +8,7 @@ BaseComponent::BaseComponent()
 
 BaseComponent::~BaseComponent()
 {
+
 }
 
 std::string BaseComponent::GetId()

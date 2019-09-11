@@ -32,5 +32,5 @@ float Particle::GetInvertedMass() { return invertedMass; }
 void Particle::Update(float deltaTime)
 {
 	position = position + velocity * deltaTime; // Update position based on velocity
-	velocity = velocity * pow(damping, deltaTime) + Vector3(0, -PhysicSystem::GRAVITY_CONST, 0)  * deltaTime; // Update velocity based on damping and acceleration
+	velocity = velocity * pow(damping, deltaTime) + Vector3(0, PhysicSystem::GRAVITY_CONST, 0)  * deltaTime; // Update velocity based on damping and acceleration
 }

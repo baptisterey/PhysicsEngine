@@ -82,7 +82,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glew32.lib;opengl32.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -123,33 +123,43 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BallSpawner.h" />
     <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="EventSystem.h" />
     <ClInclude Include="ILogicComponent.h" />
     <ClInclude Include="IPhysicComponent.h" />
+    <ClInclude Include="IRendererComponent.h" />
     <ClInclude Include="ISystem.h" />
     <ClInclude Include="LogicSystem.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="PhysicSystem.h" />
+    <ClInclude Include="RendererSystem.h" />
     <ClInclude Include="SystemManager.h" />
+    <ClInclude Include="TextureRenderer.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BallSpawner.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="EventSystem.cpp" />
     <ClCompile Include="ILogicComponent.cpp" />
     <ClCompile Include="IPhysicComponent.cpp" />
+    <ClCompile Include="IRendererComponent.cpp" />
     <ClCompile Include="ISystem.cpp" />
     <ClCompile Include="LogicSystem.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="PhysicSystem.cpp" />
+    <ClCompile Include="RendererSystem.cpp" />
     <ClCompile Include="SystemManager.cpp" />
     <ClCompile Include="test.cpp" />
+    <ClCompile Include="TextureRenderer.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Vector3.cpp" />

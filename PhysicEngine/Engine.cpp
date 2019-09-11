@@ -4,6 +4,8 @@
 
 #include "PhysicSystem.h"
 #include "LogicSystem.h"
+#include "RendererSystem.h"
+#include "EventSystem.h"
 
 #include <SDL.h>
 #include <gl\glew.h>
@@ -18,6 +20,8 @@
 #include "Entity.h"
 
 #include "Particle.h"
+#include "TextureRenderer.h"
+#include "BallSpawner.h"
 
 bool InitSDL()
 {
@@ -47,13 +51,28 @@ int main(int argc, char* args[]) {
 	Uint64 timeNow = SDL_GetPerformanceCounter();
 	Uint64 timeLast = 0;
 
-	SystemManager::AddSystem(new PhysicSystem());
+	SystemManager::AddSystem(new EventSystem());
 	SystemManager::AddSystem(new LogicSystem());
+	SystemManager::AddSystem(new PhysicSystem());
+	SystemManager::AddSystem(new RendererSystem());
 
-	EntityManager::CreateEntity("Bullet", { new Particle(Vector3(), Vector3(10, 5, 0)) });
-	
+	SystemManager::GetSystemByType<RendererSystem>()->InitRenderer("Bullet Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1020, 720, false);
+
+	EntityManager::CreateEntity("Ball Spawner", { new BallSpawner() });
+
 	bool running = true;
 	while (running) {
+
+		switch (SystemManager::GetSystemByType<EventSystem>()->event.type)
+		{
+		case SDL_QUIT:
+			running = false;
+			break;
+
+		default:
+			break;
+		}
+
 		
 		for (ISystem* system : SystemManager::GetSystems()) {
 			system->Update();
@@ -64,6 +83,9 @@ int main(int argc, char* args[]) {
 		timeNow = SDL_GetPerformanceCounter();
 		Time::deltaTime = (float) ((timeNow - timeLast) * 1000 / (double)SDL_GetPerformanceFrequency()) * 0.001 * Time::timeScale;
 	}
+
+	//Quit SDL subsystems
+	SDL_Quit();
 
 	return 0;
 }

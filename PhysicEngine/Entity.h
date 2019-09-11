@@ -26,7 +26,7 @@ public:
 	ComponentType* GetComponentByType() {
 		for (auto && component : components) {
 
-			if (ComponentType* t = dynamic_cast<ComponentType*>(component)) {
+			if (ComponentType* t = dynamic_cast<ComponentType*>(component.second)) {
 				return t;
 			}
 		}

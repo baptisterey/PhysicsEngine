@@ -9,6 +9,8 @@ class Particle : public IPhysicComponent, public BaseComponent
 
 public:
 
+	Vector3 position, velocity;
+
 	Particle();
 	Particle(Vector3 pos, Vector3 vel, float mass = 1, float damping = 1);
 
@@ -20,9 +22,9 @@ public:
 
 	void Update(float delta);
 
+	
+
 protected:
 
 	float mass, invertedMass, damping;
-	Vector3 position, velocity;
-
 };
