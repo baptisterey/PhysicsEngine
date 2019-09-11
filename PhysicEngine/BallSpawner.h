@@ -14,8 +14,12 @@ public:
 
 private:
 
-	void SpawnBasketBall();
+	void SpawnSuperBall();
+	void SpawnPokeBall();
+	void SpawnUltraBall();
 
-	SDL_Texture* basketballTexture = nullptr;
+	SDL_Texture* ultraballTexture = nullptr;
+	SDL_Texture* superballTexture = nullptr;
+	SDL_Texture* pokeballTexture = nullptr;
 };
 
