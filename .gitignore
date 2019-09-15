@@ -260,5 +260,16 @@ paket-files/
 __pycache__/
 *.pyc
 
-# Project configuration file
+# Project configuration files
+*.vcxproj.filters
+*.vcxproj.user
 *.vcxproj
+*.sln
+
+# Packages
+packages/
+packages.config
+
+# Debug
+PhysicsEngine/Debug/
+PhysicsEngine/x64/
