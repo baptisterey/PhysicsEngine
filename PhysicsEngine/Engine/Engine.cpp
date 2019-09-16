@@ -6,7 +6,7 @@
 #include "Physic/PhysicSystem.h"
 #include "Physic/Particle.h"
 #include "Renderer/RendererSystem.h"
-#include "Renderer/TextureRenderer.h"
+#include "Renderer/ParticleRenderer.h"
 #include "Utils/Time.h"
 
 #include "EventSystem.h"
@@ -39,8 +39,7 @@ bool InitSDL()
 
 int main(int argc, char* args[]) {
 
-
-	if (InitSDL() == false) {
+	if (!InitSDL()) {
 		printf("Failed to initialize SDL! \n");
 
 		return 1;
@@ -71,7 +70,7 @@ int main(int argc, char* args[]) {
 			break;
 		}
 
-		
+
 		for (ISystem* system : SystemManager::GetSystems()) {
 			system->Update();
 		}
@@ -79,7 +78,7 @@ int main(int argc, char* args[]) {
 		//handle the deltatime
 		timeLast = timeNow;
 		timeNow = SDL_GetPerformanceCounter();
-		Time::deltaTime = (float) ((timeNow - timeLast) * 1000 / (double)SDL_GetPerformanceFrequency()) * 0.001 * Time::timeScale;
+		Time::deltaTime = (float)((timeNow - timeLast) * 1000 / (double)SDL_GetPerformanceFrequency()) * 0.001 * Time::timeScale;
 	}
 
 	//Quit SDL subsystems
