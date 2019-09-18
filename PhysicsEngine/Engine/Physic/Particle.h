@@ -9,10 +9,10 @@ class Particle : public IPhysicComponent, public BaseComponent
 
 public:
 
-	Vector3 position, velocity;
+	Vector3 velocity;
 
 	Particle();
-	Particle(Vector3 pos, Vector3 vel, float mass = 1, float damping = 1);
+	Particle(Vector3 vel, float mass = 1, float damping = 1);
 
 	~Particle();
 

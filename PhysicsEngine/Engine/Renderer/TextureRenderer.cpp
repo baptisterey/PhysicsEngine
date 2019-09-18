@@ -15,16 +15,16 @@ TextureRenderer::~TextureRenderer()
 
 void TextureRenderer::Render(SDL_Renderer * renderer)
 {
-	Particle* particle = GetOwner()->GetComponentByType<Particle>();
-
 	// Where to draw the texture on the screen
 	SDL_Rect destRect;
 
 	destRect.h = 40;
 	destRect.w = 40;
 
-	destRect.x = (int) particle->position.x;
-	destRect.y = (int) particle->position.y;
+	Vector3 position = GetOwner()->GetPosition();
+
+	destRect.x = (int) position.x;
+	destRect.y = (int) position.y;
 
 	SDL_RenderCopyEx(renderer, texture, NULL, &destRect, NULL, NULL, SDL_FLIP_NONE);
 }

@@ -40,3 +40,13 @@ void Entity::RemoveComponent(std::string id)
 		delete baseComponent;
 	}
 }
+
+Vector3 Entity::GetPosition()
+{
+	return position;
+}
+
+void Entity::SetPosition(Vector3 & const value)
+{
+	this->position = value;
+}
