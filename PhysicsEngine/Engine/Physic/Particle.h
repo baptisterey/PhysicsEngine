@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../Math/Vector3.h"
-#include "IPhysicComponent.h"
+#include "Base/IPhysicComponent.h"
 #include "../Base/BaseComponent.h"
 
 class Particle : public IPhysicComponent, public BaseComponent
@@ -9,22 +9,12 @@ class Particle : public IPhysicComponent, public BaseComponent
 
 public:
 
-	Vector3 velocity;
-
 	Particle();
-	Particle(Vector3 vel, float mass = 1, float damping = 1);
+	Particle(Vector3 vel, float mass = 1);
 
 	~Particle();
 
-	void SetMass(float mass);
-	float GetMass();
-	float GetInvertedMass();
-
 	void Update(float delta);
 
-	
 
-protected:
-
-	float mass, invertedMass, damping;
 };

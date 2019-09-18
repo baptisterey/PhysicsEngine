@@ -4,12 +4,13 @@
 #include "PhysicSystem.h"
 #include <iostream>
 
-Particle::Particle() : IPhysicComponent(), BaseComponent(), velocity(Vector3()), damping(1) {
+Particle::Particle() : IPhysicComponent(), BaseComponent() {
 	SetMass(1);
 }
 
 
-Particle::Particle(Vector3 vel, float mass, float damping) : velocity(vel), damping(damping) {
+Particle::Particle(Vector3 vel, float mass) : IPhysicComponent(), BaseComponent() {
+	velocity = vel;
 	SetMass(mass);
 }
 
@@ -18,19 +19,18 @@ Particle::~Particle() {
 
 }
 
-void Particle::SetMass(float _mass)
-{
-	mass = _mass;
-	invertedMass = 1 / _mass;
-}
-
-float Particle::GetMass() { return mass; }
-
-float Particle::GetInvertedMass() { return invertedMass; }
-
 // Update is called once per frame
 void Particle::Update(float deltaTime)
 {
+	if (GetInvertedMass() < 0 || deltaTime <= 0) {
+		return;
+	}
+
 	GetOwner()->SetPosition( GetOwner()->GetPosition() + velocity * deltaTime); // Update position based on velocity
-	velocity = velocity * pow(damping, deltaTime) + Vector3(0, PhysicSystem::GRAVITY_CONST, 0)  * deltaTime; // Update velocity based on damping and acceleration
+	acceleration = accumForce * GetInvertedMass();
+
+	velocity = velocity + accumForce * deltaTime;
+
+	ClearAccumForce();
 }
+
