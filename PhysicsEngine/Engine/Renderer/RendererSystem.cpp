@@ -16,7 +16,7 @@ void RendererSystem::Update()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	for (IRendererComponent* component : components) {
-		;//component->Render(renderer); TODO
+		component->Render();
 	}
 
 	SDL_GL_SwapWindow(window);
@@ -72,7 +72,12 @@ bool RendererSystem::InitRenderer(const char* title, int xpos, int ypos, int wid
 	glewInit();
 #endif
 
+	// OpenGL other settings
+	glEnable(GL_TEXTURE_2D);
 
+
+	// Define a default view
+	glOrtho(0, width, 0, height, -1, 1);
 	// Define the background
 	glClearColor(.1f, .1f, .1f, 1.0);
 	// Clear the content of the screen
@@ -86,7 +91,6 @@ bool RendererSystem::InitRenderer(const char* title, int xpos, int ypos, int wid
 void RendererSystem::close()
 {
 	// glDeleteProgram(programID);
-	// glDeleteTextures(1, &textureID);
 
 	SDL_GL_DeleteContext(context);
 

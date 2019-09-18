@@ -13,13 +13,13 @@ public:
 	ParticleRenderer();
 	~ParticleRenderer();
 
-	void Render(SDL_Renderer* renderer);
+	void Render();
 
-	void SetTexture(SDL_Texture* texture);
+	void SetTexture(GLuint texture);
 
-	static SDL_Texture* LoadTexture(std::string fileName, SDL_Renderer* renderer);
+	static GLuint LoadTexture(std::string fileName);
 private:
 
-	SDL_Texture* texture = nullptr;
+	GLuint texture;
 };
 

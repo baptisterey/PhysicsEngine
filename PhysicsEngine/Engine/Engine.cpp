@@ -78,7 +78,7 @@ int main(int argc, char* args[]) {
 		//handle the deltatime
 		timeLast = timeNow;
 		timeNow = SDL_GetPerformanceCounter();
-		Time::deltaTime = (float)((timeNow - timeLast) * 1000 / (double)SDL_GetPerformanceFrequency()) * 0.001 * Time::timeScale;
+		Time::deltaTime = (float)((timeNow - timeLast) * 1000 / (double)SDL_GetPerformanceFrequency()) * 0.001f * Time::timeScale;
 	}
 
 	//Quit SDL subsystems

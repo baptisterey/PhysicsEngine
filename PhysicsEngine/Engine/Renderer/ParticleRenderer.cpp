@@ -1,10 +1,11 @@
 #include "ParticleRenderer.h"
 
 #include "../Physic/Particle.h"
+#include <SDL_image.h>
 
 ParticleRenderer::ParticleRenderer() : BaseComponent(), IRendererComponent()
 {
-
+	texture = NULL;
 }
 
 
@@ -13,52 +14,67 @@ ParticleRenderer::~ParticleRenderer()
 
 }
 
-void ParticleRenderer::Render(SDL_Renderer* renderer)
+void ParticleRenderer::Render()
 {
 	Particle* particle = GetOwner()->GetComponentByType<Particle>();
 
 	// Where to draw the texture on the screen
-	SDL_Rect destRect;
+	float
+		w = 40,
+		h = 40,
+		x = (int)particle->position.x,
+		y = (int)particle->position.y;
 
-	destRect.h = 40;
-	destRect.w = 40;
+	// Vertices & texture coords
+	float vertices[] = {
+		0.0, 0.0,
+		w, 0.0,
+		w, h,
+		0.0, h
+	};
+	float texCoords[] = {
+		0.0, 0.0,
+		1.0, 0.0,
+		1.0, 1.0,
+		0.0, 1.0
+	};
 
-	destRect.x = (int)particle->position.x;
-	destRect.y = (int)particle->position.y;
-
-	SDL_RenderCopyEx(renderer, texture, NULL, &destRect, NULL, NULL, SDL_FLIP_NONE);
-
-	// Vertices
-	float vertices[] = { 0.0, 0.0,	0.1, 0.0,	0.0, 0.1,		// Triangle 1
-						 0.0, 0.0,	-0.1, 0.0,	0.0, -0.1 };	// Triangle 2
-
-	// On remplie puis on active le tableau Vertex Attrib 0
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-	glEnableVertexAttribArray(0);
-
-	// On affiche des triangles
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-
-	// On désactive le tableau Vertex Attrib puisque l'on n'en a plus besoin
-	glDisableVertexAttribArray(0);
+	// Choose base color to draw
+	glColor3f(1, 1, 1);
+	// Apply a texture
+	glBindTexture(GL_TEXTURE_2D, texture);
+	// Start drawing
+	glBegin(GL_QUADS);
+	for (unsigned int i = 0; i < std::size(vertices); i += 2) {
+		glTexCoord2f(texCoords[i], texCoords[i + 1]);
+		glVertex3f(
+			x + vertices[i],		// x
+			y + vertices[i + 1],	// y
+			0						// z --> to change when goin' further in 3D
+		);
+	}
+	glEnd();
 }
 
-void ParticleRenderer::SetTexture(SDL_Texture* _texture)
+void ParticleRenderer::SetTexture(GLuint _texture)
 {
-	if (_texture != nullptr) {
+	if (_texture != NULL) {
 		texture = _texture;
 	}
 }
 
-SDL_Texture* ParticleRenderer::LoadTexture(std::string fileName, SDL_Renderer* renderer)
+GLuint ParticleRenderer::LoadTexture(std::string fileName)
 {
-	SDL_Surface* tempSurface = NULL;//IMG_Load(fileName.c_str()); TODO
+	SDL_Surface* tempSurface = IMG_Load(fileName.c_str());
 
 	if (tempSurface != NULL) {
-		SDL_Texture* _texture = SDL_CreateTextureFromSurface(renderer, tempSurface);
-		SDL_FreeSurface(tempSurface);
-
-		return _texture;
+		GLuint tex;
+		glGenTextures(1, &tex);
+		glBindTexture(GL_TEXTURE_2D, tex);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexImage2D(GL_TEXTURE_2D, 0, tempSurface->format->BytesPerPixel, tempSurface->w, tempSurface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, tempSurface->pixels);
+		return tex;
 	}
 
 	return NULL;

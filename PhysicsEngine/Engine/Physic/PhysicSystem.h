@@ -14,7 +14,7 @@ public:
 	PhysicSystem();
 	~PhysicSystem();
 
-	static const int GRAVITY_CONST = 10;
+	static const int GRAVITY_CONST = -10;
 
 	virtual void Update();
 
