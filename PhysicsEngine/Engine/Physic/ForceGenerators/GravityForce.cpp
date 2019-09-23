@@ -2,7 +2,7 @@
 
 #include "../PhysicSystem.h"
 
-GravityForce::GravityForce()
+GravityForce::GravityForce() : IForceGenerator()
 {
 }
 

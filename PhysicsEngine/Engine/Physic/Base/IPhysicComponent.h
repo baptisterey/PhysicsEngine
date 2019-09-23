@@ -16,6 +16,8 @@ public:
 	void AddForce(const Vector3& value);
 	void ClearAccumForce();
 
+	Vector3 GetVelocity();
+
 protected:
 	Vector3 velocity, accumForce, acceleration;
 

@@ -45,3 +45,8 @@ void IPhysicComponent::ClearAccumForce()
 {
 	accumForce = Vector3();
 }
+
+Vector3 IPhysicComponent::GetVelocity()
+{
+	return velocity;
+}

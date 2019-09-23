@@ -15,7 +15,7 @@ public:
 	PhysicSystem();
 	~PhysicSystem();
 
-	static const int GRAVITY_CONST = -25;
+	static const int GRAVITY_CONST = -10;
 
 	virtual void Update();
 
@@ -29,6 +29,10 @@ private:
 		IForceGenerator* forceGenerator;
 
 		ForceRegister(IPhysicComponent* _physicComponent, IForceGenerator* _forceGenerator) : physicComponent(_physicComponent), forceGenerator(_forceGenerator) {}
+
+		~ForceRegister() {
+			delete this->forceGenerator;
+		}
 	};
 
 	std::vector<IPhysicComponent*> components;
