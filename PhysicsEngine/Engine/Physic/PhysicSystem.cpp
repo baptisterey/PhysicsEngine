@@ -20,7 +20,7 @@ void PhysicSystem::Update()
 		ForceRegister* gravityForceRegister = new ForceRegister(component, new GravityForce());
 		forcesRegister.push_back(gravityForceRegister);
 
-		ForceRegister* dragForceRegister = new ForceRegister(component, new DragForce(1, 0));
+		ForceRegister* dragForceRegister = new ForceRegister(component, new DragForce(.1f, 0));
 		forcesRegister.push_back(dragForceRegister);
 	}
 
