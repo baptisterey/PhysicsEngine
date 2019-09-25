@@ -1,8 +1,5 @@
 #include "ParticleRenderer.h"
 
-#include "../Physic/Particle.h"
-#include <SDL_image.h>
-
 ParticleRenderer::ParticleRenderer() : BaseComponent(), IRendererComponent()
 {
 	texture = NULL;
@@ -16,14 +13,13 @@ ParticleRenderer::~ParticleRenderer()
 
 void ParticleRenderer::Render()
 {
-	Particle* particle = GetOwner()->GetComponentByType<Particle>();
-
 	// Where to draw the texture on the screen
+	Vector3 position = GetOwner()->GetPosition();
 	float
 		w = 40,
 		h = 40,
-		x = (int)particle->position.x,
-		y = (int)particle->position.y;
+		x = (int)position.x,
+		y = (int)position.y;
 
 	// Vertices & texture coords
 	float vertices[] = {

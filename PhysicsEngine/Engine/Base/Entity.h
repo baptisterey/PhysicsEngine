@@ -2,6 +2,8 @@
 #include <string>
 #include <map>
 
+#include "../Math/Vector3.h"
+
 class BaseComponent;
 
 class Entity
@@ -34,8 +36,14 @@ public:
 		return nullptr;
 	}
 
+
+	Vector3 GetPosition();
+	void SetPosition(Vector3& const value);
+
 private:
 	std::map<std::string, BaseComponent*> components;
 	std::string id;
+
+	Vector3 position;
 };
 

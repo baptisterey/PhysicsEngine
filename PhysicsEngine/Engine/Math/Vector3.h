@@ -28,6 +28,8 @@ public:
 	Vector3 operator- (Vector3 const& vect);
 	Vector3 operator-= (Vector3 const& vect);
 
+	Vector3 operator* (Vector3 const& vect);
+
 	Vector3 operator/ (float value);
 	Vector3 operator* (float value);
 
@@ -40,7 +42,10 @@ public:
 	static float Dot(Vector3 const& a, Vector3 const& b);
 	static Vector3 Components(Vector3 const& a, Vector3 const& b);
 
-
 	static float Distance(Vector3 const& a, Vector3 const& b);
 	static float Angle(Vector3 const& a, Vector3 const& b);
+
+	static Vector3 Normalized(Vector3 const& a);
+	
+	static Vector3 Abs(Vector3 const& a);
 };

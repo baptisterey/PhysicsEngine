@@ -10,7 +10,7 @@
 #include "Utils/Time.h"
 
 #include "EventSystem.h"
-#include "../BallSpawner.h"
+#include "../Game/BallSpawner.h"
 
 #include <SDL.h>
 #include <gl\glew.h>

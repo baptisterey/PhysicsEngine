@@ -64,6 +64,11 @@ Vector3 Vector3::operator-=(Vector3 const & vect)
 	return Vector3(x - vect.x, y - vect.y, z - vect.z);
 }
 
+Vector3 Vector3::operator*(Vector3 const & vect)
+{
+	return Vector3::Components(*this, vect);
+}
+
 Vector3 Vector3::operator/(float value)
 {
 	return Vector3(x / value, y / value, z / value);
@@ -107,4 +112,39 @@ float Vector3::Distance(Vector3 const & a, Vector3 const & b)
 float Vector3::Angle(Vector3 const & a, Vector3 const & b)
 {
 	return acos(Vector3::Dot(a, b) / (a.GetMagnitude() * b.GetMagnitude()));
+}
+
+Vector3 Vector3::Normalized(Vector3 const & a)
+{
+	Vector3 temp = a;
+	temp.Normalize();
+
+	return temp;
+}
+
+Vector3 Vector3::Abs(Vector3 const & a)
+{
+	Vector3 temp;
+	if (a.x < 0) {
+		temp.x = a.x * -1;
+	}
+	else {
+		temp.x = a.x;
+	}
+
+	if (a.y < 0) {
+		temp.y = a.y * -1;
+	}
+	else {
+		temp.y = a.y;
+	}
+
+	if (a.z < 0) {
+		temp.z = a.z * -1;
+	}
+	else {
+		temp.z = a.z;
+	}
+
+	return temp;
 }

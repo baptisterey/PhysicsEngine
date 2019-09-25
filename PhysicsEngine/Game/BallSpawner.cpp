@@ -1,7 +1,8 @@
-#include "BallSpawner.h"
+#include "./BallSpawner.h"
 
 BallSpawner::BallSpawner() : BaseComponent(), ILogicComponent()
 {
+
 	Time::timeScale = 5.0f; // For the sake of the demonstration
 
 	superballTexture = ParticleRenderer::LoadTexture("Images/superball.png");
@@ -47,18 +48,21 @@ void BallSpawner::Update(float deltaTime)
 
 void BallSpawner::SpawnPokeBall()
 {
-	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(150, 250, 0), Vector3(45, 50, 0)), new ParticleRenderer() });
+	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(45, 50, 0)), new ParticleRenderer() });
+	newEntity->SetPosition(Vector3(150, 250, 0));
 	newEntity->GetComponentByType<ParticleRenderer>()->SetTexture(pokeballTexture);
 }
 
 void BallSpawner::SpawnSuperBall()
 {
-	Entity* newEntity = EntityManager::CreateEntity("SuperBall", { new Particle(Vector3(150, 250, 0), Vector3(0, 80, 0)), new ParticleRenderer() });
+	Entity* newEntity = EntityManager::CreateEntity("SuperBall", { new Particle(Vector3(0, 80, 0)), new ParticleRenderer() });
+	newEntity->SetPosition(Vector3(150, 250, 0));
 	newEntity->GetComponentByType<ParticleRenderer>()->SetTexture(superballTexture);
 }
 
 void BallSpawner::SpawnUltraBall()
 {
-	Entity* newEntity = EntityManager::CreateEntity("UltraBall", { new Particle(Vector3(150, 250, 0), Vector3(125, 18, 0)), new ParticleRenderer() });
+	Entity* newEntity = EntityManager::CreateEntity("UltraBall", { new Particle(Vector3(125, 18, 0)), new ParticleRenderer() });
+	newEntity->SetPosition(Vector3(150, 250, 0));
 	newEntity->GetComponentByType<ParticleRenderer>()->SetTexture(ultraballTexture);
 }
