@@ -11,7 +11,7 @@ public:
 	float GetMass();
 	float GetInvertedMass();
 
-	virtual void Update(float deltaTime) {};
+	virtual void UpdatePhysics(float deltaTime) {};
 
 	void AddForce(const Vector3& value);
 	void ClearAccumForce();

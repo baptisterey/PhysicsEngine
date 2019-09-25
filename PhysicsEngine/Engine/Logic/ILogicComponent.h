@@ -7,6 +7,6 @@ public:
 	ILogicComponent();
 	virtual ~ILogicComponent();
 
-	virtual void Update(float deltaTime) {};
+	virtual void Update(float deltaTime) = 0;
 };
 

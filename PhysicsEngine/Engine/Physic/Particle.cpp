@@ -4,12 +4,16 @@
 #include "PhysicSystem.h"
 #include <iostream>
 
-Particle::Particle() : IPhysicComponent(), BaseComponent() {
+#include "./ForceGenerators/DragForce.h"
+#include "./ForceGenerators/GravityForce.h"
+#include "../Managers/SystemManager.h"
+
+Particle::Particle() : ILogicComponent(), IPhysicComponent(), BaseComponent()  {
 	SetMass(1);
 }
 
 
-Particle::Particle(Vector3 vel, float mass) : IPhysicComponent(), BaseComponent() {
+Particle::Particle(Vector3 vel, float mass) : ILogicComponent(), IPhysicComponent(), BaseComponent()  {
 	velocity = vel;
 	SetMass(mass);
 }
@@ -19,8 +23,19 @@ Particle::~Particle() {
 
 }
 
-// Update is called once per frame
 void Particle::Update(float deltaTime)
+{
+	PhysicSystem* physicSystem = SystemManager::GetSystemByType<PhysicSystem>();
+
+	if (gravity) {
+		physicSystem->AddForce(this, new GravityForce());
+	}
+
+	physicSystem->AddForce(this, new DragForce(kDrag1, kDrag2));
+}
+
+// Update is called once per frame
+void Particle::UpdatePhysics(float deltaTime)
 {
 	if (GetInvertedMass() < 0 || deltaTime <= 0) {
 		return;
