@@ -1,21 +1,11 @@
-#include "BallSpawner.h"
+#include "./BallSpawner.h"
 
 #include <SDL.h>
-
-#include "Engine/Managers/SystemManager.h"
-#include "Engine/Managers/EntityManager.h"
-#include "Engine/Physic/Particle.h"
-#include "Engine/Renderer/TextureRenderer.h"
-#include "Engine/Utils/Time.h"
-#include "Engine/Renderer/RendererSystem.h"
-
-#include "Engine/Managers/SystemManager.h"
-#include "Engine/EventSystem.h"
-
 #include <iostream>
 
 BallSpawner::BallSpawner() : BaseComponent(), ILogicComponent()
 {
+
 	Time::timeScale = 5.0f; // For the sake of the demonstration
 
 	SDL_Renderer* renderer = SystemManager::GetSystemByType<RendererSystem>()->GetRenderer();
@@ -64,18 +54,24 @@ void BallSpawner::Update(float deltaTime)
 
 void BallSpawner::SpawnPokeBall()
 {
-	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(150, 450, 0), Vector3(45, -50, 0)), new TextureRenderer() });
+	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(45, -50, 0)), new TextureRenderer() });
+	newEntity->SetPosition(Vector3(150, 450, 0));
+
 	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(pokeballTexture);
 }
 
 void BallSpawner::SpawnSuperBall()
 {
-	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(150, 450, 0), Vector3(0, -80, 0)), new TextureRenderer() });
+	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(0, -80, 0)), new TextureRenderer() });
+	newEntity->SetPosition(Vector3(150, 450, 0));
+
 	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(superballTexture);
 }
 
 void BallSpawner::SpawnUltraBall()
 {
-	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(150, 450, 0), Vector3(125, -18, 0)), new TextureRenderer() });
+	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(125, -18, 0)), new TextureRenderer() });
+	newEntity->SetPosition(Vector3(150, 450, 0));
+
 	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(ultraballTexture);
 }
