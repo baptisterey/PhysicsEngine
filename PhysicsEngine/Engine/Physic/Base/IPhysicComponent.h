@@ -1,7 +1,8 @@
 #pragma once
 #include "../../Math/Vector3.h"
+#include "../../Base/BaseComponent.h"
 
-class IPhysicComponent
+class IPhysicComponent : public BaseComponent 
 {
 public:
 	IPhysicComponent();

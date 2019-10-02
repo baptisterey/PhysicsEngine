@@ -8,12 +8,12 @@
 #include "./ForceGenerators/GravityForce.h"
 #include "../Managers/SystemManager.h"
 
-Particle::Particle() : ILogicComponent(), IPhysicComponent(), BaseComponent()  {
+Particle::Particle() : ILogicComponent(), IPhysicComponent()  {
 	SetMass(1);
 }
 
 
-Particle::Particle(Vector3 vel, float mass) : ILogicComponent(), IPhysicComponent(), BaseComponent()  {
+Particle::Particle(Vector3 vel, float mass) : ILogicComponent(), IPhysicComponent() {
 	velocity = vel;
 	SetMass(mass);
 }

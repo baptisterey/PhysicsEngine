@@ -3,7 +3,7 @@
 #include "../../Managers/SystemManager.h"
 #include "../PhysicSystem.h"
 
-IPhysicComponent::IPhysicComponent()
+IPhysicComponent::IPhysicComponent() : BaseComponent()
 {
 	PhysicSystem* physicSystem = SystemManager::GetSystemByType<PhysicSystem>();
 	if (physicSystem != nullptr) {

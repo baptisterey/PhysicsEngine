@@ -5,7 +5,7 @@
 #include "../Base/BaseComponent.h"
 #include "../Logic/ILogicComponent.h"
 
-class Particle : public IPhysicComponent, public BaseComponent, public ILogicComponent
+class Particle : public IPhysicComponent, public ILogicComponent
 {
 
 public:
