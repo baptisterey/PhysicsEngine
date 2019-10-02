@@ -15,15 +15,6 @@ PhysicSystem::~PhysicSystem()
 
 void PhysicSystem::Update()
 {
-	// Register all constant forces (gravity and damping) for all particles
-	for (IPhysicComponent* component : components) {
-		ForceRegister* gravityForceRegister = new ForceRegister(component, new GravityForce());
-		forcesRegister.push_back(gravityForceRegister);
-
-		ForceRegister* dragForceRegister = new ForceRegister(component, new DragForce(1, 0));
-		forcesRegister.push_back(dragForceRegister);
-	}
-
 	// Update all forces
 	for (ForceRegister* force : forcesRegister) {
 		force->forceGenerator->UpdateForce(force->physicComponent, Time::deltaTime);
@@ -31,7 +22,7 @@ void PhysicSystem::Update()
 
 	// We update every physic components
 	for (IPhysicComponent* component : components) {
-		component->Update(Time::deltaTime);
+		component->UpdatePhysics(Time::deltaTime);
 	}
 
 	// We clear all forces for this frame
@@ -52,4 +43,9 @@ void PhysicSystem::AddPhysicComponent(IPhysicComponent * component)
 void PhysicSystem::RemovePhysicComponent(IPhysicComponent * component)
 {
 	components.erase(std::remove(components.begin(), components.end(), component), components.end());
+}
+
+void PhysicSystem::AddForce(IPhysicComponent * component, IForceGenerator * force)
+{
+	forcesRegister.push_back(new ForceRegister(component, force));
 }
