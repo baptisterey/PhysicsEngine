@@ -18,9 +18,7 @@ public:
 	BuoyancySpringForce();
 	BuoyancySpringForce(float maxDepth, float objectVolume, float liquidLevel, float liquidDensity);
 
-
 	~BuoyancySpringForce();
 
 	void UpdateForce(IPhysicComponent* physicComponent, float deltaTime);
-
 }
