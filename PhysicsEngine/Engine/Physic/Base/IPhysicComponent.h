@@ -1,7 +1,8 @@
 #pragma once
 #include "../../Math/Vector3.h"
+#include "../../Base/BaseComponent.h"
 
-class IPhysicComponent
+class IPhysicComponent : public BaseComponent 
 {
 public:
 	IPhysicComponent();
@@ -11,7 +12,7 @@ public:
 	float GetMass();
 	float GetInvertedMass();
 
-	virtual void Update(float deltaTime) {};
+	virtual void UpdatePhysics(float deltaTime) {};
 
 	void AddForce(const Vector3& value);
 	void ClearAccumForce();

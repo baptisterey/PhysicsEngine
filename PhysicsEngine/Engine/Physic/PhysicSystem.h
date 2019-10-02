@@ -22,6 +22,8 @@ public:
 	void AddPhysicComponent(IPhysicComponent* component);
 	void RemovePhysicComponent(IPhysicComponent* component);
 
+	void AddForce(IPhysicComponent* component, IForceGenerator* force);
+
 private:
 
 	struct ForceRegister {
