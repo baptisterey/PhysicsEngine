@@ -7,13 +7,6 @@
 class BuoyancySpringForce : public IForceGenerator
 {
 public:
-	float maxDepth;
-	float objectVolume;
-	float liquidLevel;
-	float liquidDensity;
-
-	Entity* attachedEntity; //Remote entity
-	Vector3 anchor;
 
 	BuoyancySpringForce();
 	BuoyancySpringForce(float maxDepth, float objectVolume, float liquidLevel, float liquidDensity);
@@ -21,4 +14,10 @@ public:
 	~BuoyancySpringForce();
 
 	void UpdateForce(IPhysicComponent* physicComponent, float deltaTime);
+
+private:
+	float maxDepth;
+	float objectVolume;
+	float liquidLevel;
+	float liquidDensity;
 }
