@@ -4,6 +4,9 @@
 
 #include <vector>
 #include <algorithm>
+#include <string>
+#include <fstream>
+#include <streambuf>
 
 #include <SDL.h>
 #include <stdio.h>
@@ -35,5 +38,6 @@ private:
 
 	SDL_Window* window;
 	SDL_GLContext context;
+	GLuint programID;
 };
 

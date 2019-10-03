@@ -3,15 +3,17 @@
 ParticleRenderer::ParticleRenderer() : BaseComponent(), IRendererComponent()
 {
 	texture = NULL;
+	glGenVertexArrays(1, VAO);
+	glGenBuffers(1, VBO);
+	glGenBuffers(1, EBO);
 }
-
 
 ParticleRenderer::~ParticleRenderer()
 {
 
 }
 
-void ParticleRenderer::Render()
+void ParticleRenderer::Render(GLuint programID)
 {
 	// Where to draw the texture on the screen
 	Vector3 position = GetOwner()->GetPosition();
@@ -19,37 +21,47 @@ void ParticleRenderer::Render()
 		w = 40,
 		h = 40,
 		x = (int)position.x,
-		y = (int)position.y;
+		y = (int)position.y,
+		z = (int)position.z;
 
-	// Vertices & texture coords
-	float vertices[] = {
-		0.0, 0.0,
-		w, 0.0,
-		w, h,
-		0.0, h
+
+	/*VertexData*/float vertices[] = {
+		// position			color (RGBA)		texture coords
+	//	x + w, y + h, z,	1.0, 1.0, 1.0,		1.0, 1.0,		// top right
+	//	x + w, y, z,		1.0, 1.0, 1.0,		1.0, 0.0,		// bottom right
+	//	x, y, z,			1.0, 1.0, 1.0,		0.0, 0.0,		// bottom left
+	//	x, y + h, z,		1.0, 1.0, 1.0,		0.0, 1.0		// top left
+	//};
+	///*VertexData*/float vertices[] = {
+		// position			color (RGBA)		texture coords
+		.5, .5, 0,			1.0, 1.0, 1.0,		1.0, 1.0,		// top right
+		-.5, .5, 0,			1.0, 1.0, 1.0,		1.0, 0.0,		// bottom right
+		-.5, -.5, 0,		1.0, 1.0, 1.0,		0.0, 0.0,		// bottom left
+		.5, -.5, 0,			1.0, 1.0, 1.0,		0.0, 1.0		// top left
 	};
-	float texCoords[] = {
-		0.0, 0.0,
-		1.0, 0.0,
-		1.0, 1.0,
-		0.0, 1.0
+	GLubyte indices[] = {
+		0, 1, 3, // first triangle
+		1, 2, 3  // second triangle
 	};
 
-	// Choose base color to draw
-	glColor3f(1, 1, 1);
-	// Apply a texture
-	glBindTexture(GL_TEXTURE_2D, texture);
-	// Start drawing
-	glBegin(GL_QUADS);
-	for (unsigned int i = 0; i < std::size(vertices); i += 2) {
-		glTexCoord2f(texCoords[i], texCoords[i + 1]);
-		glVertex3f(
-			x + vertices[i],		// x
-			y + vertices[i + 1],	// y
-			0						// z --> to change when goin' further in 3D
-		);
-	}
-	glEnd();
+	// Set up buffer arrays
+	glBindVertexArray(VAO[0]);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	// Define 'position' location in vertex shader
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	// Define 'color' location in vertex shader
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+	// Define 'textureCoords' location in vertex shader
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+
+	//glBindTexture(GL_TEXTURE_2D, texture);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, 0);
 }
 
 void ParticleRenderer::SetTexture(GLuint _texture)
@@ -70,6 +82,7 @@ GLuint ParticleRenderer::LoadTexture(std::string fileName)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexImage2D(GL_TEXTURE_2D, 0, tempSurface->format->BytesPerPixel, tempSurface->w, tempSurface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, tempSurface->pixels);
+		glGenerateMipmap(GL_TEXTURE_2D);
 		return tex;
 	}
 

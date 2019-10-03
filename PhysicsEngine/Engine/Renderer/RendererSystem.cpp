@@ -1,9 +1,11 @@
 #include "RendererSystem.h"
+#include "../Utils/Utils.h"
 
 RendererSystem::RendererSystem() : ISystem()
 {
 	context = NULL;
 	window = nullptr;
+	programID = NULL;
 }
 
 RendererSystem::~RendererSystem()
@@ -13,10 +15,11 @@ RendererSystem::~RendererSystem()
 
 void RendererSystem::Update()
 {
+	glUseProgram(programID);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	for (IRendererComponent* component : components) {
-		component->Render();
+		component->Render(programID);
 	}
 
 	SDL_GL_SwapWindow(window);
@@ -85,12 +88,31 @@ bool RendererSystem::InitRenderer(const char* title, int xpos, int ypos, int wid
 	// Actually draw things on screen
 	SDL_GL_SwapWindow(window);
 
+
+	// Add VERTEX shader
+	GLuint v_shader = glCreateShader(GL_VERTEX_SHADER);
+	const char* v_str = Utils::ReadFile("Engine/Renderer/Shaders/VertexShader.glsl");
+	glShaderSource(v_shader, 1, &v_str, 0);
+	glCompileShader(v_shader);
+	// Add FRAGMENT shader
+	GLuint f_shader = glCreateShader(GL_FRAGMENT_SHADER);
+	const char* f_str = Utils::ReadFile("Engine/Renderer/Shaders/FragmentShader.glsl");
+	glShaderSource(f_shader, 1, &f_str, 0);
+	glCompileShader(f_shader);
+	// Create a program (ID of process shaders)
+	programID = glCreateProgram();
+	glAttachShader(programID, v_shader);
+	glAttachShader(programID, f_shader);
+	glLinkProgram(programID);
+	glDetachShader(programID, v_shader);
+	glDetachShader(programID, f_shader);
+
 	return true;
 }
 
 void RendererSystem::close()
 {
-	// glDeleteProgram(programID);
+	glDeleteProgram(programID);
 
 	SDL_GL_DeleteContext(context);
 

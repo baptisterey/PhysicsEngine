@@ -3,6 +3,7 @@
 #include "../Base/BaseComponent.h"
 #include "../Physic/Particle.h"
 #include "IRendererComponent.h"
+#include "Shaders/VertexData.h"
 
 #include <SDL.h>
 #include <gl\glew.h>
@@ -15,7 +16,7 @@ public:
 	ParticleRenderer();
 	~ParticleRenderer();
 
-	void Render();
+	void Render(GLuint programID);
 
 	void SetTexture(GLuint texture);
 
@@ -23,5 +24,6 @@ public:
 private:
 
 	GLuint texture;
+	GLuint VAO[1], VBO[1], EBO[1];
 };
 
