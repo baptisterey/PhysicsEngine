@@ -6,11 +6,11 @@
 class SpringForce : public IForceGenerator
 {
 public:
+
 	float k, l0; //k coefficient de raideur et l0 longueur a l'origine
 	Entity* attachedEntity;
-	Vector3 anchor;
+	Vector3 anchor; // ancre à laquelle est attachée la force si aucune entité n'est trouvée
 
-	
 	SpringForce();
 	SpringForce(float k, float l0);
 	SpringForce(float k, float l0, Vector3 anchor);

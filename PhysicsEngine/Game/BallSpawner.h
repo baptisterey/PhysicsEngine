@@ -8,9 +8,12 @@
 #include "../Engine/Renderer/TextureRenderer.h"
 #include "../Engine/Utils/Time.h"
 #include "../Engine/Renderer/RendererSystem.h"
+#include "../Engine/Physic/Spring.h"
 
 #include "../Engine/Managers/SystemManager.h"
 #include "../Engine/EventSystem.h"
+
+#include "KeyController.h"
 
 #include <SDL.h>
 
@@ -27,6 +30,8 @@ private:
 	void SpawnSuperBall();
 	void SpawnPokeBall();
 	void SpawnUltraBall();
+
+	void SpawnUltraBallSpring();
 
 	SDL_Texture* ultraballTexture = nullptr;
 	SDL_Texture* superballTexture = nullptr;
