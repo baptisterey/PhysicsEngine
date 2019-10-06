@@ -3,8 +3,6 @@
 #include <SDL.h>
 #include <iostream>
 
-#include "../Engine/Physic/Buoyancy.h"
-
 BallSpawner::BallSpawner() : BaseComponent(), ILogicComponent()
 {
 	Time::timeScale = 5.0f; // For the sake of the demonstration
@@ -61,8 +59,13 @@ void BallSpawner::SpawnPokeBall()
 
 void BallSpawner::SpawnSuperBall()
 {
-	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(0, -80, 0)), new TextureRenderer(), new Buoyancy(0,0,0,0) });
+	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(0, 0, 0)), new TextureRenderer(), new Buoyancy(440, 11, 440, 1) });
 	newEntity->SetPosition(Vector3(150, 450, 0));
+
+	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(superballTexture);
+
+	newEntity = EntityManager::CreateEntity("BasketBall", { new TextureRenderer()});
+	newEntity->SetPosition(Vector3(150, 400, 0));
 
 	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(superballTexture);
 }

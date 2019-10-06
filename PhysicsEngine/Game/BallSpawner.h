@@ -12,6 +12,8 @@
 #include "../Engine/Managers/SystemManager.h"
 #include "../Engine/EventSystem.h"
 
+#include "../Engine/Physic/Buoyancy.h"
+
 #include <SDL.h>
 
 class BallSpawner : public BaseComponent, public ILogicComponent
@@ -32,4 +34,3 @@ private:
 	SDL_Texture* superballTexture = nullptr;
 	SDL_Texture* pokeballTexture = nullptr;
 };
-

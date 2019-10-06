@@ -20,4 +20,4 @@ private:
 	float objectVolume;
 	float liquidLevel;
 	float liquidDensity;
-}
+};

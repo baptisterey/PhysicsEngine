@@ -26,7 +26,15 @@ void TextureRenderer::Render(SDL_Renderer * renderer)
 	destRect.x = (int) position.x;
 	destRect.y = (int) position.y;
 
+	// Set render color to blue ( rect will be rendered in this color )
+	SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+
+	// Render rect
+	SDL_RenderFillRect(renderer, &destRect);
+
 	SDL_RenderCopyEx(renderer, texture, NULL, &destRect, NULL, NULL, SDL_FLIP_NONE);
+
+	
 }
 
 void TextureRenderer::SetTexture(SDL_Texture * _texture)
