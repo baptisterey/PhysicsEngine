@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-BuoyancySpringForce::BuoyancySpringForce() : IForceGenerator()
+BuoyancySpringForce::BuoyancySpringForce() : IForceGenerator(), maxDepth(0), objectVolume(1), liquidLevel(0), liquidDensity(1)
 {
 }
 

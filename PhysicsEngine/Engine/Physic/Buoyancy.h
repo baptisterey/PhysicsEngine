@@ -3,6 +3,11 @@
 #include "../Base/BaseComponent.h"
 #include "../Logic/ILogicComponent.h"
 
+#include "PhysicSystem.h"
+#include "../Managers/SystemManager.h"
+
+#include "./ForceGenerators/BuoyancySpringForce.h"
+
 class Buoyancy : public ILogicComponent, public BaseComponent {
 public:
 
