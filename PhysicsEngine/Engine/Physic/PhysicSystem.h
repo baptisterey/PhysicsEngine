@@ -26,6 +26,9 @@ public:
 
 private:
 
+	std::vector<IPhysicComponent*> components;
+
+
 	struct ForceRegister {
 		IPhysicComponent* physicComponent;
 		IForceGenerator* forceGenerator;
@@ -36,8 +39,34 @@ private:
 			delete this->forceGenerator;
 		}
 	};
-
-	std::vector<IPhysicComponent*> components;
 	std::vector<ForceRegister*> forcesRegister;
+
+
+	struct Contact {
+
+		Contact(IPhysicComponent* component1, IPhysicComponent* component2, float penetration);
+
+		float CalculateSeparatingVelocity() const;
+
+		void Resolve(float time);
+		
+		void ResolveVelocity(float time);
+		void ResolvePenetration(float time);
+
+		void SetKRestitution(float value);
+		float GetKRestitution();
+
+	private:
+		Vector3 contactNormal;
+
+		float kRestitution = 1;
+		float penetration;
+
+		std::vector<IPhysicComponent*> components;
+	};
+	std::vector<Contact*> contacts;
+
+	void GenerateInterprenationContacts();
+	void ResolveContacts();
 };
 

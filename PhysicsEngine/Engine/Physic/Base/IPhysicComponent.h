@@ -18,6 +18,9 @@ public:
 	void ClearAccumForce();
 
 	Vector3 GetVelocity();
+	Vector3 GetAcceleration();
+
+	void AddImpulse(Vector3 impulse);
 
 protected:
 	Vector3 velocity, accumForce, acceleration;

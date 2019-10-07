@@ -10,6 +10,7 @@
 
 Particle::Particle() : ILogicComponent(), IPhysicComponent()  {
 	SetMass(1);
+	velocity = Vector3();
 }
 
 

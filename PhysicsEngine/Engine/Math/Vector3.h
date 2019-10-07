@@ -35,7 +35,6 @@ public:
 
 	bool operator== (Vector3 const& vect);
 	bool operator!= (Vector3 const& vect);
-
 	// ------------------------------
 
 	static Vector3 Cross(Vector3 const& a, Vector3 const& b);
