@@ -78,8 +78,8 @@ void BallSpawner::SpawnUltraBall()
 
 	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(ultraballTexture);
 
-	newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(-60, -18, 0)), new TextureRenderer() });
-	newEntity->SetPosition(Vector3(350, 440, 0));
+	newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(-200, -18, 0)), new TextureRenderer() });
+	newEntity->SetPosition(Vector3(350, 449, 0));
 
 	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(superballTexture);
 }

@@ -39,11 +39,9 @@ void PhysicSystem::Update()
 	// Generate the interpenetration contacts
 	GenerateInterprenationContacts();
 
-
 	// Resolve the contacts
 	ResolveContacts();
 	
-
 	// Clear all contacts for this frame
 	for (auto contact : contacts) {
 		delete contact;
@@ -133,7 +131,7 @@ PhysicSystem::Contact::Contact(IPhysicComponent * component1, IPhysicComponent *
 
 float PhysicSystem::Contact::CalculateSeparatingVelocity() const
 {
-	return Vector3::Dot(components[0]->GetVelocity() - components[1]->GetVelocity(), contactNormal);
+	return Vector3::Dot((components[0]->GetVelocity() - components[1]->GetVelocity()), contactNormal);
 }
 
 void PhysicSystem::Contact::Resolve(float time)
@@ -158,9 +156,9 @@ void PhysicSystem::Contact::ResolveVelocity(float time)
 
 	Vector3 impulsePerInvertedMass = contactNormal * impulse;
 
-	// Add the impulsion for each object in proportion to their inverted mass
-	components[0]->AddImpulse(impulsePerInvertedMass * components[0]->GetMass());
-	components[1]->AddImpulse(impulsePerInvertedMass * components[0]->GetMass() * -1);
+	// Set the velocity for each object in proportion to their inverted mass
+	components[0]->SetVelocity(components[0]->GetVelocity() + impulsePerInvertedMass * components[0]->GetInvertedMass());
+	components[1]->SetVelocity(components[1]->GetVelocity() - impulsePerInvertedMass * components[1]->GetInvertedMass());
 }
 
 void PhysicSystem::Contact::ResolvePenetration(float time)
@@ -175,7 +173,7 @@ void PhysicSystem::Contact::ResolvePenetration(float time)
 		// Calculate the movement on total inverted mass unit
 		Vector3 movementPerInvertedMass = contactNormal * (penetration / totalInvertedMass);
 
-		// Set the position by proportion to the inverted mass of each objects
+		// Add the impulse by proportion to the inverted mass of each objects
 		components[0]->GetOwner()->SetPosition(components[0]->GetOwner()->GetPosition() + (movementPerInvertedMass * components[0]->GetInvertedMass()));
 		components[1]->GetOwner()->SetPosition(components[1]->GetOwner()->GetPosition() - (movementPerInvertedMass * components[1]->GetInvertedMass()));
 	}

@@ -56,7 +56,7 @@ Vector3 IPhysicComponent::GetAcceleration()
 	return acceleration;
 }
 
-void IPhysicComponent::AddImpulse(Vector3 impulse)
+void IPhysicComponent::SetVelocity(Vector3 value)
 {
-	velocity = velocity + (impulse * GetInvertedMass());
+	velocity = value;
 }
