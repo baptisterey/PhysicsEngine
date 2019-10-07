@@ -23,10 +23,11 @@ Vector3::~Vector3()
 void Vector3::Normalize()
 {
 	float magnitude = GetMagnitude();
-
-	x = x / magnitude;
-	y = y / magnitude;
-	z = z / magnitude;
+	if (magnitude != 0) {
+		x = x / magnitude;
+		y = y / magnitude;
+		z = z / magnitude;
+	}
 }
 
 float Vector3::GetSquaredMagnitude() const

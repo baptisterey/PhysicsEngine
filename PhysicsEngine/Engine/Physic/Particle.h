@@ -12,11 +12,15 @@ public:
 
 	Particle();
 	Particle(Vector3 vel, float mass = 1);
+	Particle(Vector3 vel, float mass, float kDrag1, float kDrag2);
 
 	~Particle();
 
 	void Update(float deltaTime);
 	void UpdatePhysics(float deltaTime);
+
+	void SetGravity(bool gravity);
+	bool IsAffectedByGravity();
 
 private:
 

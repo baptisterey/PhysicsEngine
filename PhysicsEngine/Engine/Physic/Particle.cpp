@@ -10,10 +10,17 @@
 
 Particle::Particle() : ILogicComponent(), IPhysicComponent()  {
 	SetMass(1);
+	velocity = Vector3();
 }
 
 
 Particle::Particle(Vector3 vel, float mass) : ILogicComponent(), IPhysicComponent() {
+	velocity = vel;
+	SetMass(mass);
+}
+
+Particle::Particle(Vector3 vel, float mass, float kDrag1, float kDrag2) : kDrag1(kDrag1), kDrag2(kDrag2)
+{
 	velocity = vel;
 	SetMass(mass);
 }
@@ -47,5 +54,15 @@ void Particle::UpdatePhysics(float deltaTime)
 	velocity = velocity + accumForce * deltaTime;
 
 	ClearAccumForce();
+}
+
+void Particle::SetGravity(bool value)
+{
+	gravity = value;
+}
+
+bool Particle::IsAffectedByGravity()
+{
+	return gravity;
 }
 

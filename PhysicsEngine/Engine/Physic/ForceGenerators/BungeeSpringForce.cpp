@@ -28,7 +28,7 @@ BungeeSpringForce::~BungeeSpringForce()
 
 void BungeeSpringForce::UpdateForce(IPhysicComponent* physicComponent, float deltaTime)
 {
-	if (attachedEntity != NULL)//calcul avec une entité
+	if (attachedEntity != NULL) //calcul avec une entité
 	{
 		if (l0 - Vector3::Distance(physicComponent->GetOwner()->GetPosition(), attachedEntity->GetPosition()) <= 0)
 		{
@@ -39,7 +39,7 @@ void BungeeSpringForce::UpdateForce(IPhysicComponent* physicComponent, float del
 			physicComponent->AddForce(Vector3());
 		}
 	}
-	else//calcul avec une ancre
+	else //calcul avec une ancre
 	{
 		if (l0 - Vector3::Distance(physicComponent->GetOwner()->GetPosition(), anchor) <= 0)
 		{

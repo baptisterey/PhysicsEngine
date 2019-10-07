@@ -50,3 +50,13 @@ Vector3 IPhysicComponent::GetVelocity()
 {
 	return velocity;
 }
+
+Vector3 IPhysicComponent::GetAcceleration()
+{
+	return acceleration;
+}
+
+void IPhysicComponent::AddImpulse(Vector3 impulse)
+{
+	velocity = velocity + (impulse * GetInvertedMass());
+}
