@@ -72,5 +72,5 @@ std::vector<IForce*> Spring::GetForces(float time)
 		}
 	}
 
-	return std::vector<IForce*>();
+	return forces;
 }
