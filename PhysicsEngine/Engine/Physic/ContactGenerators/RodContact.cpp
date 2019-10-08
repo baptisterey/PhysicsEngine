@@ -1,22 +1,25 @@
 #include "RodContact.h"
 
 
-RodContact::RodContact(float maxLenght, IPhysicComponent* component1, IPhysicComponent* component2) :
-	LinkContact(maxLenght, component1, component2)
+RodContact::RodContact(float maxLenght, IPhysicComponent* component) :
+	LinkContact(maxLenght, component)
 {
 }
 
-
-Contact* RodContact::AddContact(float time)
+RodContact::~RodContact()
 {
-	if (CurrentLenght() < maxLenght) {
+}
 
-		return nullptr;
-	}
-	else
-	{
-		Contact cable = Contact(linkComponents[0], linkComponents[1], CurrentLenght() - maxLenght);
+Contact* RodContact::GetContact(float time)
+{
+
+	IPhysicComponent* mine = GetOwner()->GetComponentByType<IPhysicComponent>();
+	if (CurrentLenght() >= maxLenght && mine != nullptr) {
+
+		Contact cable = Contact(mine, linkComponent, CurrentLenght() - maxLenght);
 		cable.SetKRestitution(0.0f);
 		return &cable;
 	}
+
+	return nullptr;
 }

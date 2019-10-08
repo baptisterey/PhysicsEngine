@@ -2,15 +2,21 @@
 
 
 
-LinkContact::LinkContact(float maxLenght, IPhysicComponent* component1, IPhysicComponent* component2) : maxLenght(maxLenght)
+LinkContact::LinkContact(float maxLenght, IPhysicComponent* component) : maxLenght(maxLenght), linkComponent(component)
 {
 
-	linkComponents.push_back(component1);
-	linkComponents.push_back(component2);
+}
+
+
+LinkContact::~LinkContact()
+{
 }
 
 float LinkContact::CurrentLenght()
 {
-
-	return Vector3::Distance(linkComponents[0]->GetOwner()->GetPosition(), linkComponents[1]->GetOwner()->GetPosition());
+	IPhysicComponent* mine = GetOwner()->GetComponentByType<IPhysicComponent>();
+	if (mine != nullptr) {
+		return Vector3::Distance(mine->GetOwner()->GetPosition(), linkComponent->GetOwner()->GetPosition());
+	}
+	return 0;
 }

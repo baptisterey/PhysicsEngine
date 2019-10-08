@@ -50,6 +50,9 @@ void BallSpawner::Update(float deltaTime)
 		case SDLK_q:
 			SpawnSuperBallBuoyancy();
 			break;
+		case SDLK_d:
+			SpawnSuperBallRod();
+			break;
 		}
 		break;
 	}
@@ -103,4 +106,19 @@ void BallSpawner::SpawnSuperBallBuoyancy()
 	newEntity->SetPosition(Vector3(350, 450, 0));
 
 	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(superballTexture);
+}
+
+void BallSpawner::SpawnSuperBallRod()
+{
+
+	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new TextureRenderer(), new Particle() });
+	newEntity->SetPosition(Vector3(420, 420, 0));
+
+	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(pokeballTexture);
+
+	Entity* newEntity2 = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(5, 0, 0), 1 , 0.1, 0), new TextureRenderer(), new RodContact(20.0f, newEntity->GetComponentByType<Particle>()) });
+	newEntity2->SetPosition(Vector3(400, 420, 0));
+
+	newEntity2->GetComponentByType<TextureRenderer>()->SetTexture(pokeballTexture);
+
 }

@@ -9,10 +9,10 @@ class CableContact : public LinkContact
 
 public :
 
-	CableContact::CableContact(float maxLength, float kRestitution, IPhysicComponent* component1, IPhysicComponent* component2);
+	CableContact::CableContact(float maxLength, float kRestitution, IPhysicComponent* component);
+	CableContact::~CableContact();
 
-
-	Contact* AddContact(float time);
+	Contact* GetContact(float time);
 
 
 private :
