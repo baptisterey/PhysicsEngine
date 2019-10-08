@@ -20,7 +20,7 @@ public:
 	Vector3 GetVelocity();
 	Vector3 GetAcceleration();
 
-	void AddImpulse(Vector3 impulse);
+	void SetVelocity(Vector3 value);
 
 protected:
 	Vector3 velocity, accumForce, acceleration;

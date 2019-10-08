@@ -39,11 +39,12 @@ void PhysicSystem::Update()
 	// Generate the interpenetration contacts
 	GenerateInterprenationContacts();
 
+	// Generate the ground contacts
+	GenerateGroundContacts();
 
 	// Resolve the contacts
 	ResolveContacts();
 	
-
 	// Clear all contacts for this frame
 	for (auto contact : contacts) {
 		delete contact;
@@ -92,6 +93,22 @@ void PhysicSystem::GenerateInterprenationContacts()
 	}
 }
 
+void PhysicSystem::GenerateGroundContacts()
+{
+	// Temporary solution to detect collision with the ground
+	for (int i = 0; i < components.size(); i++) {
+
+		float groundPosition = 550;
+
+		// The particle is in contact with the ground if its position is inferior to groundPosition
+		if (components[i]->GetOwner()->GetPosition().y > groundPosition) {
+
+			Contact* newContact = new Contact(components[i], components[i]->GetOwner()->GetPosition().y - groundPosition);
+			contacts.push_back(newContact);
+		}
+	}
+}
+
 void PhysicSystem::ResolveContacts()
 {
 	int iterationsLeft = contacts.size() * 2; // We only do 2n iterations for performances purposes and to avoid infinite loop
@@ -123,6 +140,13 @@ void PhysicSystem::ResolveContacts()
 }
 
 
+PhysicSystem::Contact::Contact(IPhysicComponent * component1, float penetration) : penetration(penetration)
+{
+	components.push_back(component1);
+
+	contactNormal = Vector3(0, -1, 0);
+}
+
 PhysicSystem::Contact::Contact(IPhysicComponent * component1, IPhysicComponent * component2, float penetration) : penetration(penetration)
 {
 	components.push_back(component1);
@@ -133,7 +157,12 @@ PhysicSystem::Contact::Contact(IPhysicComponent * component1, IPhysicComponent *
 
 float PhysicSystem::Contact::CalculateSeparatingVelocity() const
 {
-	return Vector3::Dot(components[0]->GetVelocity() - components[1]->GetVelocity(), contactNormal);
+	Vector3 velocity = components[0]->GetVelocity();
+	if (components.size() > 1) {
+		velocity = velocity - components[1]->GetVelocity();
+	}
+
+	return Vector3::Dot(velocity, contactNormal);
 }
 
 void PhysicSystem::Contact::Resolve(float time)
@@ -147,20 +176,28 @@ void PhysicSystem::Contact::ResolveVelocity(float time)
 	float separatingVelocity = CalculateSeparatingVelocity();
 
 	// Calculate the separating velocity after the collision.
-	float newSeparatingVelocity = -separatingVelocity * kRestitution;
+	float newSeparatingVelocity = separatingVelocity * -kRestitution;
 
-	// Get the velocity on "total interveted mass unit"
+	// Get the final velocity by substracting the separating velocity after collision with the separating velocity before collision
+	// In order the keep the correct momentum.
+	float totalVelocity = newSeparatingVelocity - separatingVelocity;
+
+	// Find the total inverted mass of the objects
 	float totalInvertedMass = 0;
 	totalInvertedMass += components[0]->GetInvertedMass();
-	totalInvertedMass += components[1]->GetInvertedMass();
+	if (components.size() > 1) {
+		totalInvertedMass += components[1]->GetInvertedMass();
+	}
 
-	float impulse = newSeparatingVelocity / totalInvertedMass;
+	// Get the impulse perf "inverted mass" unit
+	float impulse = totalVelocity / totalInvertedMass;
+	Vector3 impulsePerInvertedMassUnit = contactNormal * impulse;
 
-	Vector3 impulsePerInvertedMass = contactNormal * impulse;
-
-	// Add the impulsion for each object in proportion to their inverted mass
-	components[0]->AddImpulse(impulsePerInvertedMass * components[0]->GetMass());
-	components[1]->AddImpulse(impulsePerInvertedMass * components[0]->GetMass() * -1);
+	// Set the velocity for each object in proportion to their inverted mass
+	components[0]->SetVelocity(components[0]->GetVelocity() + impulsePerInvertedMassUnit * components[0]->GetInvertedMass());
+	if (components.size() > 1) {
+		components[1]->SetVelocity(components[1]->GetVelocity() - impulsePerInvertedMassUnit * components[1]->GetInvertedMass());
+	}
 }
 
 void PhysicSystem::Contact::ResolvePenetration(float time)
@@ -170,14 +207,21 @@ void PhysicSystem::Contact::ResolvePenetration(float time)
 
 		float totalInvertedMass = 0;
 		totalInvertedMass += components[0]->GetInvertedMass();
-		totalInvertedMass += components[1]->GetInvertedMass();
+
+		if (components.size() > 1) {
+			totalInvertedMass += components[1]->GetInvertedMass();
+		}
 
 		// Calculate the movement on total inverted mass unit
 		Vector3 movementPerInvertedMass = contactNormal * (penetration / totalInvertedMass);
 
-		// Set the position by proportion to the inverted mass of each objects
+		// Add the impulse by proportion to the inverted mass of each objects
 		components[0]->GetOwner()->SetPosition(components[0]->GetOwner()->GetPosition() + (movementPerInvertedMass * components[0]->GetInvertedMass()));
-		components[1]->GetOwner()->SetPosition(components[1]->GetOwner()->GetPosition() - (movementPerInvertedMass * components[1]->GetInvertedMass()));
+
+		if (components.size() > 1) {
+			components[1]->GetOwner()->SetPosition(components[1]->GetOwner()->GetPosition() - (movementPerInvertedMass * components[1]->GetInvertedMass()));
+		}
+
 	}
 }
 

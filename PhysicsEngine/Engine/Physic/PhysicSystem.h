@@ -44,6 +44,7 @@ private:
 
 	struct Contact {
 
+		Contact(IPhysicComponent* component1, float penetration);
 		Contact(IPhysicComponent* component1, IPhysicComponent* component2, float penetration);
 
 		float CalculateSeparatingVelocity() const;
@@ -59,7 +60,7 @@ private:
 	private:
 		Vector3 contactNormal;
 
-		float kRestitution = 1;
+		float kRestitution = 0.5;
 		float penetration;
 
 		std::vector<IPhysicComponent*> components;
@@ -67,6 +68,8 @@ private:
 	std::vector<Contact*> contacts;
 
 	void GenerateInterprenationContacts();
+	void GenerateGroundContacts();
+
 	void ResolveContacts();
 };
 
