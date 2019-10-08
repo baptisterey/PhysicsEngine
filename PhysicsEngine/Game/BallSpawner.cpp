@@ -9,9 +9,9 @@ BallSpawner::BallSpawner() : BaseComponent(), ILogicComponent()
 
 	SDL_Renderer* renderer = SystemManager::GetSystemByType<RendererSystem>()->GetRenderer();
 
-	superballTexture = TextureRenderer::LoadTexture("../Images/superball.png", renderer);
-	pokeballTexture = TextureRenderer::LoadTexture("../Images/pokeball.png", renderer);
-	ultraballTexture = TextureRenderer::LoadTexture("../Images/ultra-ball.png", renderer);
+	superballTexture = TextureRenderer::LoadTexture("./Images/superball.png", renderer);
+	pokeballTexture = TextureRenderer::LoadTexture("./Images/pokeball.png", renderer);
+	ultraballTexture = TextureRenderer::LoadTexture("./Images/ultra-ball.png", renderer);
 }
 
 BallSpawner::~BallSpawner()
@@ -33,22 +33,25 @@ void BallSpawner::Update(float deltaTime)
 {
 	SDL_Event* event = &SystemManager::GetSystemByType<EventSystem>()->event;
 	switch (event->type) {
-		case SDL_KEYDOWN:
-			switch (event->key.keysym.sym) {
-				case SDLK_a:
-					SpawnPokeBall();
-					break;
-				case SDLK_z:
-					SpawnSuperBall();
-					break;
-				case SDLK_e:
-					SpawnUltraBall();
-					break;
-				case SDLK_r:
-					SpawnUltraBallSpring();
-					break;
-			}
+	case SDL_KEYDOWN:
+		switch (event->key.keysym.sym) {
+		case SDLK_a:
+			SpawnPokeBall();
 			break;
+		case SDLK_z:
+			SpawnSuperBall();
+			break;
+		case SDLK_e:
+			SpawnUltraBall();
+			break;
+		case SDLK_r:
+			SpawnUltraBallSpring();
+			break;
+		case SDLK_q:
+			SpawnSuperBallBuoyancy();
+			break;
+		}
+		break;
 	}
 }
 
@@ -67,7 +70,7 @@ void BallSpawner::SpawnSuperBall()
 
 	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(superballTexture);
 
-	newEntity = EntityManager::CreateEntity("BasketBall", { new TextureRenderer()});
+	newEntity = EntityManager::CreateEntity("BasketBall", { new TextureRenderer() });
 	newEntity->SetPosition(Vector3(150, 400, 0));
 
 	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(superballTexture);
@@ -79,11 +82,6 @@ void BallSpawner::SpawnUltraBall()
 	newEntity->SetPosition(Vector3(150, 450, 0));
 
 	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(ultraballTexture);
-
-	newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(-60, -18, 0), 1 , 0.1, 0), new TextureRenderer() });
-	newEntity->SetPosition(Vector3(350, 449, 0));
-
-	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(superballTexture);
 }
 
 void BallSpawner::SpawnUltraBallSpring()
@@ -99,3 +97,15 @@ void BallSpawner::SpawnUltraBallSpring()
 	newEntity2->GetComponentByType<TextureRenderer>()->SetTexture(ultraballTexture);
 }
 
+void BallSpawner::SpawnSuperBallBuoyancy()
+{
+	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new TextureRenderer() });
+	newEntity->SetPosition(Vector3(350, 400, 0));
+
+	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(superballTexture);
+
+	newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(5, 0, 0), 1 , 0.1, 0), new TextureRenderer(), new Buoyancy(1,1,400,11) });
+	newEntity->SetPosition(Vector3(350, 450, 0));
+
+	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(superballTexture);
+}

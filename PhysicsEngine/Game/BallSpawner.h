@@ -33,6 +33,7 @@ private:
 	void SpawnUltraBall();
 
 	void SpawnUltraBallSpring();
+	void SpawnSuperBallBuoyancy();
 
 	SDL_Texture* ultraballTexture = nullptr;
 	SDL_Texture* superballTexture = nullptr;

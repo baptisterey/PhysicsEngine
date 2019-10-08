@@ -4,16 +4,13 @@
 
 TextureRenderer::TextureRenderer() : BaseComponent(), IRendererComponent()
 {
-
 }
-
 
 TextureRenderer::~TextureRenderer()
 {
-
 }
 
-void TextureRenderer::Render(SDL_Renderer * renderer)
+void TextureRenderer::Render(SDL_Renderer* renderer)
 {
 	// Where to draw the texture on the screen
 	SDL_Rect destRect;
@@ -23,19 +20,19 @@ void TextureRenderer::Render(SDL_Renderer * renderer)
 
 	Vector3 position = GetOwner()->GetPosition();
 
-	destRect.x = (int) position.x;
-	destRect.y = (int) position.y;
+	destRect.x = (int)position.x;
+	destRect.y = (int)position.y;
 
 	// Set render color to blue ( rect will be rendered in this color )
-	SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+	//SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
 
 	// Render rect
-	SDL_RenderFillRect(renderer, &destRect);
+	//SDL_RenderFillRect(renderer, &destRect);
 
 	SDL_RenderCopyEx(renderer, texture, NULL, &destRect, NULL, NULL, SDL_FLIP_NONE);
 }
 
-void TextureRenderer::SetTexture(SDL_Texture * _texture)
+void TextureRenderer::SetTexture(SDL_Texture* _texture)
 {
 	if (_texture != nullptr) {
 		texture = _texture;
@@ -55,5 +52,3 @@ SDL_Texture* TextureRenderer::LoadTexture(std::string fileName, SDL_Renderer* re
 
 	return NULL;
 }
-
-
