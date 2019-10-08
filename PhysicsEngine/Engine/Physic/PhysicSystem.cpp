@@ -178,7 +178,8 @@ void PhysicSystem::Contact::ResolveVelocity(float time)
 	// Calculate the separating velocity after the collision.
 	float newSeparatingVelocity = separatingVelocity * -kRestitution;
 
-	// Get the final velocity by substracting the separating velocity after collision with the separating velocity before collision.
+	// Get the final velocity by substracting the separating velocity after collision with the separating velocity before collision
+	// In order the keep the correct momentum.
 	float totalVelocity = newSeparatingVelocity - separatingVelocity;
 
 	// Find the total inverted mass of the objects
