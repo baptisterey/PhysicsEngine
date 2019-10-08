@@ -35,12 +35,22 @@ void PhysicSystem::Update()
 	}
 	forcesRegister.clear();
 
-
 	// Generate the interpenetration contacts
 	GenerateInterprenationContacts();
 
 	// Generate the ground contacts
 	GenerateGroundContacts();
+
+	// Go through all the contact generators and test if they generate an contact for this frame
+	for (auto contactGenerator : contactGenerators) {
+
+		// Try to get an contact for this contact generator
+		Contact* contact = contactGenerator->GetContact(Time::deltaTime);
+		if (contact != nullptr) {
+			// Add the contact only if there is one
+			contacts.push_back(contact); 
+		}
+	}
 
 	// Resolve the contacts
 	ResolveContacts();
@@ -64,9 +74,18 @@ void PhysicSystem::RemovePhysicComponent(IPhysicComponent * component)
 	components.erase(std::remove(components.begin(), components.end(), component), components.end());
 }
 
-void PhysicSystem::AddForce(IPhysicComponent * component, IForceGenerator * force)
+
+
+void PhysicSystem::AddContactGenerator(IContactGenerator * contactGenerator)
 {
-	forcesRegister.push_back(new ForceRegister(component, force));
+	if (contactGenerator != nullptr) {
+		contactGenerators.push_back(contactGenerator);
+	}
+}
+
+void PhysicSystem::RemoveContactGenerator(IContactGenerator * contactGenerator)
+{
+	contactGenerators.erase(std::remove(contactGenerators.begin(), contactGenerators.end(), contactGenerator), contactGenerators.end());
 }
 
 void PhysicSystem::GenerateInterprenationContacts()
@@ -91,6 +110,11 @@ void PhysicSystem::GenerateInterprenationContacts()
 
 		}
 	}
+}
+
+void PhysicSystem::AddForce(IPhysicComponent * component, IForceGenerator * force)
+{
+	forcesRegister.push_back(new ForceRegister(component, force));
 }
 
 void PhysicSystem::GenerateGroundContacts()
@@ -140,97 +164,4 @@ void PhysicSystem::ResolveContacts()
 }
 
 
-PhysicSystem::Contact::Contact(IPhysicComponent * component1, float penetration) : penetration(penetration)
-{
-	components.push_back(component1);
 
-	contactNormal = Vector3(0, -1, 0);
-}
-
-PhysicSystem::Contact::Contact(IPhysicComponent * component1, IPhysicComponent * component2, float penetration) : penetration(penetration)
-{
-	components.push_back(component1);
-	components.push_back(component2);
-
-	contactNormal = Vector3::Normalized(component1->GetOwner()->GetPosition() - component2->GetOwner()->GetPosition());
-}
-
-float PhysicSystem::Contact::CalculateSeparatingVelocity() const
-{
-	Vector3 velocity = components[0]->GetVelocity();
-	if (components.size() > 1) {
-		velocity = velocity - components[1]->GetVelocity();
-	}
-
-	return Vector3::Dot(velocity, contactNormal);
-}
-
-void PhysicSystem::Contact::Resolve(float time)
-{
-	ResolveVelocity(time);
-	ResolvePenetration(time);
-}
-
-void PhysicSystem::Contact::ResolveVelocity(float time)
-{
-	float separatingVelocity = CalculateSeparatingVelocity();
-
-	// Calculate the separating velocity after the collision.
-	float newSeparatingVelocity = separatingVelocity * -kRestitution;
-
-	// Get the final velocity by substracting the separating velocity after collision with the separating velocity before collision
-	// In order the keep the correct momentum.
-	float totalVelocity = newSeparatingVelocity - separatingVelocity;
-
-	// Find the total inverted mass of the objects
-	float totalInvertedMass = 0;
-	totalInvertedMass += components[0]->GetInvertedMass();
-	if (components.size() > 1) {
-		totalInvertedMass += components[1]->GetInvertedMass();
-	}
-
-	// Get the impulse perf "inverted mass" unit
-	float impulse = totalVelocity / totalInvertedMass;
-	Vector3 impulsePerInvertedMassUnit = contactNormal * impulse;
-
-	// Set the velocity for each object in proportion to their inverted mass
-	components[0]->SetVelocity(components[0]->GetVelocity() + impulsePerInvertedMassUnit * components[0]->GetInvertedMass());
-	if (components.size() > 1) {
-		components[1]->SetVelocity(components[1]->GetVelocity() - impulsePerInvertedMassUnit * components[1]->GetInvertedMass());
-	}
-}
-
-void PhysicSystem::Contact::ResolvePenetration(float time)
-{
-	// Do anything only if there is a penetration
-	if (penetration > 0) {
-
-		float totalInvertedMass = 0;
-		totalInvertedMass += components[0]->GetInvertedMass();
-
-		if (components.size() > 1) {
-			totalInvertedMass += components[1]->GetInvertedMass();
-		}
-
-		// Calculate the movement on total inverted mass unit
-		Vector3 movementPerInvertedMass = contactNormal * (penetration / totalInvertedMass);
-
-		// Add the impulse by proportion to the inverted mass of each objects
-		components[0]->GetOwner()->SetPosition(components[0]->GetOwner()->GetPosition() + (movementPerInvertedMass * components[0]->GetInvertedMass()));
-
-		if (components.size() > 1) {
-			components[1]->GetOwner()->SetPosition(components[1]->GetOwner()->GetPosition() - (movementPerInvertedMass * components[1]->GetInvertedMass()));
-		}
-
-	}
-}
-
-void PhysicSystem::Contact::SetKRestitution(float value)
-{
-	kRestitution = std::max(0.0f, std::min(value, 1.0f));
-}
-
-float PhysicSystem::Contact::GetKRestitution()
-{
-	return kRestitution;
-}
