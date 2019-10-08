@@ -7,7 +7,7 @@
 #include "../Engine/Renderer/TextureRenderer.h"
 #include "../Engine/Managers/SystemManager.h"
 #include "../Engine/Renderer/RendererSystem.h"
-#include "../Engine/Physic/Spring.h"
+#include "../Engine/Physic/ForceGenerators/Spring.h"
 
 #include "KeyController.h"
 
