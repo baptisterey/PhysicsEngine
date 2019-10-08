@@ -26,8 +26,7 @@ public:
 
 	template< class ComponentType >
 	ComponentType* GetComponentByType() {
-		for (auto && component : components) {
-
+		for (auto&& component : components) {
 			if (ComponentType* t = dynamic_cast<ComponentType*>(component.second)) {
 				return t;
 			}
@@ -35,7 +34,6 @@ public:
 
 		return nullptr;
 	}
-
 
 	Vector3 GetPosition();
 	void SetPosition(Vector3& const value);
@@ -46,4 +44,3 @@ private:
 
 	Vector3 position;
 };
-

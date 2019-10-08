@@ -10,7 +10,9 @@
 #include "Utils/Time.h"
 
 #include "EventSystem.h"
+
 #include "../Game/BallSpawner.h"
+#include "../Game/Blob.h"
 
 #include <SDL.h>
 #include <gl\glew.h>
@@ -19,7 +21,6 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
-
 
 bool InitSDL()
 {
@@ -36,10 +37,7 @@ bool InitSDL()
 	return success;
 }
 
-
 int main(int argc, char* args[]) {
-
-
 	if (InitSDL() == false) {
 		printf("Failed to initialize SDL! \n");
 
@@ -57,10 +55,10 @@ int main(int argc, char* args[]) {
 	SystemManager::GetSystemByType<RendererSystem>()->InitRenderer("Bullet Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1020, 720, false);
 
 	EntityManager::CreateEntity("Ball Spawner", { new BallSpawner() });
+	EntityManager::CreateEntity("Blob", { new Blob(15,0.1) });
 
 	bool running = true;
 	while (running) {
-
 		switch (SystemManager::GetSystemByType<EventSystem>()->event.type)
 		{
 		case SDL_QUIT:
@@ -71,7 +69,6 @@ int main(int argc, char* args[]) {
 			break;
 		}
 
-		
 		for (ISystem* system : SystemManager::GetSystems()) {
 			system->Update();
 		}
@@ -79,7 +76,7 @@ int main(int argc, char* args[]) {
 		//handle the deltatime
 		timeLast = timeNow;
 		timeNow = SDL_GetPerformanceCounter();
-		Time::deltaTime = (float) ((timeNow - timeLast) * 1000 / (double)SDL_GetPerformanceFrequency()) * 0.001 * Time::timeScale;
+		Time::deltaTime = (float)((timeNow - timeLast) * 1000 / (double)SDL_GetPerformanceFrequency()) * 0.001 * Time::timeScale;
 	}
 
 	//Quit SDL subsystems
