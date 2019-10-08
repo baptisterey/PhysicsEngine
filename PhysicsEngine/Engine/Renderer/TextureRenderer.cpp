@@ -18,8 +18,8 @@ void TextureRenderer::Render(SDL_Renderer * renderer)
 	// Where to draw the texture on the screen
 	SDL_Rect destRect;
 
-	destRect.h = 40;
-	destRect.w = 40;
+	destRect.h = 40; // TODO : Removed the hardcoded values
+	destRect.w = 40; // TODO : Removed the hardcoded values
 
 	Vector3 position = GetOwner()->GetPosition();
 
