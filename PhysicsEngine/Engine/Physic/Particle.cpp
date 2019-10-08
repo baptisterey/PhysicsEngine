@@ -4,22 +4,22 @@
 #include "PhysicSystem.h"
 #include <iostream>
 
-#include "./ForceGenerators/DragForce.h"
-#include "./ForceGenerators/GravityForce.h"
+#include "./ForceGenerators/Forces/DragForce.h"
+#include "./ForceGenerators/Forces/GravityForce.h"
 #include "../Managers/SystemManager.h"
 
-Particle::Particle() : ILogicComponent(), IPhysicComponent()  {
+Particle::Particle() : IPhysicComponent(), IForceGenerator() {
 	SetMass(1);
 	velocity = Vector3();
 }
 
 
-Particle::Particle(Vector3 vel, float mass) : ILogicComponent(), IPhysicComponent() {
+Particle::Particle(Vector3 vel, float mass) : IPhysicComponent(), IForceGenerator() {
 	velocity = vel;
 	SetMass(mass);
 }
 
-Particle::Particle(Vector3 vel, float mass, float kDrag1, float kDrag2) : kDrag1(kDrag1), kDrag2(kDrag2)
+Particle::Particle(Vector3 vel, float mass, float kDrag1, float kDrag2) : kDrag1(kDrag1), kDrag2(kDrag2), IForceGenerator()
 {
 	velocity = vel;
 	SetMass(mass);
@@ -30,16 +30,19 @@ Particle::~Particle() {
 
 }
 
-void Particle::Update(float deltaTime)
+std::vector<IForce*> Particle::GetForces(float time)
 {
-	PhysicSystem* physicSystem = SystemManager::GetSystemByType<PhysicSystem>();
+	std::vector<IForce*> forces = std::vector<IForce*>();
 
 	if (gravity) {
-		physicSystem->AddForce(this, new GravityForce());
+		forces.push_back( new GravityForce(this));
 	}
 
-	physicSystem->AddForce(this, new DragForce(kDrag1, kDrag2));
+	forces.push_back(new DragForce(this, kDrag1, kDrag2));
+
+	return forces;
 }
+
 
 // Update is called once per frame
 void Particle::UpdatePhysics(float deltaTime)

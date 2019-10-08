@@ -5,7 +5,9 @@
 #include "../Base/BaseComponent.h"
 #include "../Logic/ILogicComponent.h"
 
-class Particle : public IPhysicComponent, public ILogicComponent
+#include "./ForceGenerators/IForceGenerator.h"
+
+class Particle : public IPhysicComponent, public IForceGenerator
 {
 
 public:
@@ -16,7 +18,8 @@ public:
 
 	~Particle();
 
-	void Update(float deltaTime);
+	std::vector<IForce*> GetForces(float time);
+
 	void UpdatePhysics(float deltaTime);
 
 	void SetGravity(bool gravity);

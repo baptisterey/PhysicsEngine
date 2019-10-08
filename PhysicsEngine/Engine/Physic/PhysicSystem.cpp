@@ -1,6 +1,4 @@
 #include "PhysicSystem.h"
-#include "ForceGenerators/GravityForce.h"
-#include "ForceGenerators/DragForce.h"
 
 #include <limits>
 #include <algorithm> 
@@ -18,9 +16,19 @@ PhysicSystem::~PhysicSystem()
 
 void PhysicSystem::Update()
 {
+
+	// ----------- MANAGE FORCES -----------
+
+	// Loop through all the force generators and add their forces
+	for (IForceGenerator* forceGenerator : forceGenerators) {
+
+		std::vector<IForce*> newForces = forceGenerator->GetForces(Time::deltaTime);
+		forces.insert(std::end(forces), std::begin(newForces), std::end(newForces));
+	}
+
 	// Update all forces available
-	for (ForceRegister* force : forcesRegister) {
-		force->forceGenerator->UpdateForce(force->physicComponent, Time::deltaTime);
+	for (IForce* force : forces) {
+		force->UpdateForce(Time::deltaTime);
 	}
 
 	// Update every physic components
@@ -29,11 +37,16 @@ void PhysicSystem::Update()
 	}
 
 	// Clear all forces for this frame
-	for (auto forceRegister : forcesRegister)
+	for (auto force : forces)
 	{
-		delete forceRegister;
+		delete force;
 	}
-	forcesRegister.clear();
+	forces.clear();
+
+	// -------------------------------------
+
+
+	// ---------- MANAGE CONTACTS ----------
 
 	// Generate the interpenetration contacts
 	GenerateInterprenationContacts();
@@ -41,7 +54,7 @@ void PhysicSystem::Update()
 	// Generate the ground contacts
 	GenerateGroundContacts();
 
-	// Go through all the contact generators and test if they generate an contact for this frame
+	// Loop through all the contact generators and test if they generate an contact for this frame
 	for (auto contactGenerator : contactGenerators) {
 
 		// Try to get an contact for this contact generator
@@ -60,6 +73,8 @@ void PhysicSystem::Update()
 		delete contact;
 	}
 	contacts.clear();
+
+	// -------------------------------------
 }
 
 void PhysicSystem::AddPhysicComponent(IPhysicComponent * component)
@@ -75,7 +90,6 @@ void PhysicSystem::RemovePhysicComponent(IPhysicComponent * component)
 }
 
 
-
 void PhysicSystem::AddContactGenerator(IContactGenerator * contactGenerator)
 {
 	if (contactGenerator != nullptr) {
@@ -86,6 +100,18 @@ void PhysicSystem::AddContactGenerator(IContactGenerator * contactGenerator)
 void PhysicSystem::RemoveContactGenerator(IContactGenerator * contactGenerator)
 {
 	contactGenerators.erase(std::remove(contactGenerators.begin(), contactGenerators.end(), contactGenerator), contactGenerators.end());
+}
+
+void PhysicSystem::AddForceGenerator(IForceGenerator * forceGenerator)
+{
+	if (forceGenerator != nullptr) {
+		forceGenerators.push_back(forceGenerator);
+	}
+}
+
+void PhysicSystem::RemoveForceGenerator(IForceGenerator * forceGenerator)
+{
+	forceGenerators.erase(std::remove(forceGenerators.begin(), forceGenerators.end(), forceGenerator), forceGenerators.end());
 }
 
 void PhysicSystem::GenerateInterprenationContacts()
@@ -110,11 +136,6 @@ void PhysicSystem::GenerateInterprenationContacts()
 
 		}
 	}
-}
-
-void PhysicSystem::AddForce(IPhysicComponent * component, IForceGenerator * force)
-{
-	forcesRegister.push_back(new ForceRegister(component, force));
 }
 
 void PhysicSystem::GenerateGroundContacts()
