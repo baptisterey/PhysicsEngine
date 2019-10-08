@@ -16,6 +16,8 @@
 #include "../Engine/Physic/Buoyancy.h"
 #include "KeyController.h"
 
+#include "../Engine/Physic/ContactGenerators/RodContact.h"
+
 #include <SDL.h>
 
 class BallSpawner : public BaseComponent, public ILogicComponent
@@ -34,6 +36,8 @@ private:
 
 	void SpawnUltraBallSpring();
 	void SpawnSuperBallBuoyancy();
+
+	void SpawnSuperBallRod();
 
 	SDL_Texture* ultraballTexture = nullptr;
 	SDL_Texture* superballTexture = nullptr;

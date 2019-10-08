@@ -6,7 +6,7 @@ class IContactGenerator
 {
 public:
 	IContactGenerator();
-	~IContactGenerator();
+	virtual ~IContactGenerator();
 
 	virtual Contact* GetContact(float time) = 0;
 };
