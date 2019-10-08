@@ -2,16 +2,15 @@
 
 #include <vector>
 #include <algorithm>
+#include "../Utils/Time.h"
 
 #include "../Base/ISystem.h"
 #include "Base/IPhysicComponent.h"
-#include "Base/IForceGenerator.h"
-
-#include "../Utils/Time.h"
 
 #include "./ContactGenerators/IContactGenerator.h";
+#include "./ContactGenerators/Contact.h";
 
-#include "Contact.h";
+#include "./ForceGenerators/IForceGenerator.h"
 
 class PhysicSystem : public ISystem
 {
@@ -29,25 +28,16 @@ public:
 	void AddContactGenerator(IContactGenerator* contactGenerator);
 	void RemoveContactGenerator(IContactGenerator* contactGenerator);
 
-	void AddForce(IPhysicComponent* component, IForceGenerator* force);
+	void AddForceGenerator(IForceGenerator* forceGenerator);
+	void RemoveForceGenerator(IForceGenerator* forceGenerator);
 
 private:
 
-	std::vector<IPhysicComponent*> components; // All the physics component currently in game
-	std::vector<IContactGenerator*> contactGenerators; // All the component that can generate an contact
+	std::vector<IPhysicComponent*> components; // The physics component currently in game
+	std::vector<IContactGenerator*> contactGenerators; // The components that can generate an contact
+	std::vector<IForceGenerator*> forceGenerators; // The components that can generate forces
 
-	struct ForceRegister {
-		IPhysicComponent* physicComponent;
-		IForceGenerator* forceGenerator;
-
-		ForceRegister(IPhysicComponent* _physicComponent, IForceGenerator* _forceGenerator) : physicComponent(_physicComponent), forceGenerator(_forceGenerator) {}
-
-		~ForceRegister() {
-			delete this->forceGenerator;
-		}
-	};
-	std::vector<ForceRegister*> forcesRegister;
-
+	std::vector<IForce*> forces;
 	std::vector<Contact*> contacts;
 
 	void GenerateInterprenationContacts();

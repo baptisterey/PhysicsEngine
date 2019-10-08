@@ -1,10 +1,10 @@
 #include "StiffSpringForce.h"
 
-StiffSpringForce::StiffSpringForce() : IForceGenerator(), anchor(Vector3()), k(0), damping(NULL)
+StiffSpringForce::StiffSpringForce(IPhysicComponent* physicComponent) : IForce(physicComponent), anchor(Vector3()), k(0), damping(NULL)
 {
 }
 
-StiffSpringForce::StiffSpringForce(Vector3 anchor, float k, float damping) : IForceGenerator(), anchor(anchor), k(k), damping(damping)
+StiffSpringForce::StiffSpringForce(IPhysicComponent* physicComponent, Vector3 anchor, float k, float damping) : IForce(physicComponent), anchor(anchor), k(k), damping(damping)
 {
 }
 
@@ -12,7 +12,7 @@ StiffSpringForce::~StiffSpringForce()
 {
 }
 
-void StiffSpringForce::UpdateForce(IPhysicComponent* physicComponent, float deltaTime)
+void StiffSpringForce::UpdateForce(float deltaTime)
 {
 	Vector3 pt;
 	Vector3 p0 = physicComponent->GetOwner()->GetPosition();

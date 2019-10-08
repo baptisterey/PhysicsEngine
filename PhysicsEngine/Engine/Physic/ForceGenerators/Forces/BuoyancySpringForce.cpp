@@ -2,20 +2,24 @@
 
 #include <iostream>
 
-BuoyancySpringForce::BuoyancySpringForce() : IForceGenerator(), maxDepth(0), objectVolume(1), liquidLevel(0), liquidDensity(1)
+BuoyancySpringForce::BuoyancySpringForce(IPhysicComponent* physicComponent) : IForce(physicComponent), maxDepth(0), objectVolume(1), liquidLevel(0), liquidDensity(1)
 {
+
 }
 
-BuoyancySpringForce::BuoyancySpringForce(float maxDepth, float objectVolume, float liquidLevel, float liquidDensity) :
-	IForceGenerator(), maxDepth(maxDepth), objectVolume(objectVolume), liquidLevel(liquidLevel), liquidDensity(liquidDensity)
+
+BuoyancySpringForce::BuoyancySpringForce(IPhysicComponent* physicComponent, float maxDepth, float objectVolume, float liquidLevel, float liquidDensity) :
+	IForce(physicComponent), maxDepth(maxDepth), objectVolume(objectVolume), liquidLevel(liquidLevel), liquidDensity(liquidDensity)
 {
+
 }
 
 BuoyancySpringForce::~BuoyancySpringForce()
 {
+
 }
 
-void BuoyancySpringForce::UpdateForce(IPhysicComponent* physicComponent, float deltaTime)
+void BuoyancySpringForce::UpdateForce(float deltaTime)
 {
 	if (maxDepth != 0) {
 		//Compute d, used to determine how the object interacts with the liquid_

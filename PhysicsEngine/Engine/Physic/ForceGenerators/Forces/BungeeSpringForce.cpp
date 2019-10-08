@@ -1,22 +1,19 @@
 #include "BungeeSpringForce.h"
-#include "../PhysicSystem.h"
 
 
-
-
-BungeeSpringForce::BungeeSpringForce() : k(0), l0(1), attachedEntity(NULL), anchor(Vector3())
+BungeeSpringForce::BungeeSpringForce(IPhysicComponent* physicComponent) : IForce(physicComponent), k(0), l0(1), attachedEntity(NULL), anchor(Vector3())
 {
 }
 
-BungeeSpringForce::BungeeSpringForce(float k, float l0) : k(k), l0(l0), attachedEntity(NULL), anchor(Vector3())
+BungeeSpringForce::BungeeSpringForce(IPhysicComponent* physicComponent, float k, float l0) : IForce(physicComponent), k(k), l0(l0), attachedEntity(NULL), anchor(Vector3())
 {
 }
 
-BungeeSpringForce::BungeeSpringForce(float k, float l0, Vector3 anchor) : k(k), l0(l0), attachedEntity(NULL), anchor(anchor)
+BungeeSpringForce::BungeeSpringForce(IPhysicComponent* physicComponent, float k, float l0, Vector3 anchor) : IForce(physicComponent), k(k), l0(l0), attachedEntity(NULL), anchor(anchor)
 {
 }
 
-BungeeSpringForce::BungeeSpringForce(float k, float l0, Entity* attachedEntity) : k(k), l0(l0), attachedEntity(attachedEntity), anchor(Vector3())
+BungeeSpringForce::BungeeSpringForce(IPhysicComponent* physicComponent, float k, float l0, Entity* attachedEntity) : IForce(physicComponent), k(k), l0(l0), attachedEntity(attachedEntity), anchor(Vector3())
 {
 }
 
@@ -25,8 +22,7 @@ BungeeSpringForce::~BungeeSpringForce()
 }
 
 
-
-void BungeeSpringForce::UpdateForce(IPhysicComponent* physicComponent, float deltaTime)
+void BungeeSpringForce::UpdateForce(float deltaTime)
 {
 	if (attachedEntity != NULL) //calcul avec une entité
 	{

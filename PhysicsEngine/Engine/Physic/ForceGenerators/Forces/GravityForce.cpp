@@ -1,9 +1,8 @@
 #include "GravityForce.h"
 
-#include "../PhysicSystem.h"
-
-GravityForce::GravityForce() : IForceGenerator()
+GravityForce::GravityForce(IPhysicComponent* physicComponent) : IForce(physicComponent)
 {
+
 }
 
 
@@ -11,7 +10,7 @@ GravityForce::~GravityForce()
 {
 }
 
-void GravityForce::UpdateForce(IPhysicComponent * physicComponent, float deltaTime)
+void GravityForce::UpdateForce(float deltaTime)
 {
 	physicComponent->AddForce(Vector3(0, -PhysicSystem::GRAVITY_CONST * physicComponent->GetMass(), 0));
 }

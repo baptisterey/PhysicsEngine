@@ -12,10 +12,8 @@ Stiff::~Stiff()
 {
 }
 
-void Stiff::Update(float deltaTime)
+std::vector<IForce*> Stiff::GetForces(float time)
 {
 	IPhysicComponent* physicComponent = GetOwner()->GetComponentByType<IPhysicComponent>();
-	PhysicSystem* physicSystem = SystemManager::GetSystemByType<PhysicSystem>();
-
-	physicSystem->AddForce(physicComponent, new StiffSpringForce(anchor, k, damping));
+	return { new StiffSpringForce(physicComponent, anchor, k, damping) };
 }

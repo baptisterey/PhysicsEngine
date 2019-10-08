@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Base/IPhysicComponent.h";
-#include "../Math/Vector3.h";
+#include "../Base/IPhysicComponent.h";
+#include "../../Math/Vector3.h";
 
 class Contact
 {

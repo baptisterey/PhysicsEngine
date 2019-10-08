@@ -1,13 +1,12 @@
 #pragma once
 
-#include "../Base/BaseComponent.h"
-#include "../Logic/ILogicComponent.h"
+#include "../../Base/BaseComponent.h"
+#include "../Base/IPhysicComponent.h"
+#include "../../Math/Vector3.h"
 
-#include "Base/IPhysicComponent.h"
+#include "IForceGenerator.h"
 
-#include "../Math/Vector3.h"
-
-class Spring : public BaseComponent, public ILogicComponent
+class Spring : public BaseComponent, public IForceGenerator
 {
 public:
 	Spring();
@@ -19,6 +18,8 @@ public:
 
 	void SetIsSpringBungee(bool value);
 	bool IsSpringBungee();
+
+	std::vector<IForce*> GetForces(float time);
 
 private:
 
