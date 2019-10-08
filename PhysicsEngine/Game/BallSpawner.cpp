@@ -57,7 +57,7 @@ void BallSpawner::Update(float deltaTime)
 
 void BallSpawner::SpawnPokeBall()
 {
-	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(45, -50, 0)), new TextureRenderer() });
+	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(45, -50, 0), 1 , 0.1, 0), new TextureRenderer() });
 	newEntity->SetPosition(Vector3(150, 450, 0));
 
 	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(pokeballTexture);
@@ -65,7 +65,7 @@ void BallSpawner::SpawnPokeBall()
 
 void BallSpawner::SpawnSuperBall()
 {
-	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(0, 0, 0)), new TextureRenderer() });
+	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(0, 0, 0), 1 , 0.1, 0), new TextureRenderer() });
 	newEntity->SetPosition(Vector3(150, 450, 0));
 
 	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(superballTexture);
@@ -73,12 +73,12 @@ void BallSpawner::SpawnSuperBall()
 
 void BallSpawner::SpawnUltraBall()
 {
-	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(60, -18, 0)), new TextureRenderer() });
+	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(60, -18, 0), 1 , 0.1, 0), new TextureRenderer() });
 	newEntity->SetPosition(Vector3(150, 450, 0));
 
 	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(ultraballTexture);
 
-	newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(-200, -18, 0)), new TextureRenderer() });
+	newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(-60, -18, 0), 1 , 0.1, 0), new TextureRenderer() });
 	newEntity->SetPosition(Vector3(350, 449, 0));
 
 	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(superballTexture);
