@@ -33,8 +33,6 @@ void TextureRenderer::Render(SDL_Renderer * renderer)
 	SDL_RenderFillRect(renderer, &destRect);
 
 	SDL_RenderCopyEx(renderer, texture, NULL, &destRect, NULL, NULL, SDL_FLIP_NONE);
-
-	
 }
 
 void TextureRenderer::SetTexture(SDL_Texture * _texture)

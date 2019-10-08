@@ -49,8 +49,6 @@ void BallSpawner::Update(float deltaTime)
 					break;
 			}
 			break;
-		}
-		break;
 	}
 }
 
