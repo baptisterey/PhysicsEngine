@@ -2,12 +2,12 @@
 
 
 RodContact::RodContact(float maxLenght, IPhysicComponent* component1, IPhysicComponent* component2) :
-	LinkContact(maxLenght, component1, component2),
+	LinkContact(maxLenght, component1, component2)
 {
 }
 
 
-Contact* CableContact::AddContact(float time)
+Contact* RodContact::AddContact(float time)
 {
 	if (CurrentLenght() < maxLenght) {
 
