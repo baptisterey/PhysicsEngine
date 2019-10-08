@@ -13,6 +13,7 @@
 #include "../Engine/Managers/SystemManager.h"
 #include "../Engine/EventSystem.h"
 
+#include "../Engine/Physic/Buoyancy.h"
 #include "KeyController.h"
 
 #include <SDL.h>
@@ -37,4 +38,3 @@ private:
 	SDL_Texture* superballTexture = nullptr;
 	SDL_Texture* pokeballTexture = nullptr;
 };
-
