@@ -16,7 +16,11 @@ float LinkContact::CurrentLenght()
 {
 	IPhysicComponent* mine = GetOwner()->GetComponentByType<IPhysicComponent>();
 	if (mine != nullptr) {
-		return Vector3::Distance(mine->GetOwner()->GetPosition(), linkComponent->GetOwner()->GetPosition());
+
+		float distance = Vector3::Distance(mine->GetOwner()->GetPosition(), linkComponent->GetOwner()->GetPosition());
+		distance = distance < 0 ? distance *= -1 : distance;
+
+		return distance;
 	}
 	return 0;
 }

@@ -112,11 +112,12 @@ void BallSpawner::SpawnSuperBallRod()
 {
 
 	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new TextureRenderer(), new Particle() });
-	newEntity->SetPosition(Vector3(420, 420, 0));
+	newEntity->SetPosition(Vector3(400, 350, 0));
+	newEntity->GetComponentByType<Particle>()->SetGravity(false);
 
 	newEntity->GetComponentByType<TextureRenderer>()->SetTexture(pokeballTexture);
 
-	Entity* newEntity2 = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(5, 0, 0), 1 , 0.1, 0), new TextureRenderer(), new RodContact(20.0f, newEntity->GetComponentByType<Particle>()) });
+	Entity* newEntity2 = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(5, 0, 0), 1 , 0.1, 0), new TextureRenderer(), new RodContact(80.0f, newEntity->GetComponentByType<Particle>()) });
 	newEntity2->SetPosition(Vector3(400, 420, 0));
 
 	newEntity2->GetComponentByType<TextureRenderer>()->SetTexture(pokeballTexture);

@@ -7,12 +7,14 @@ Contact::Contact(IPhysicComponent * component1, float penetration) : penetration
 	contactNormal = Vector3(0, -1, 0);
 }
 
-Contact::Contact(IPhysicComponent * component1, IPhysicComponent * component2, float penetration) : penetration(penetration)
+Contact::Contact(IPhysicComponent * component1, IPhysicComponent * component2, float penetration, bool inverseContactNormal) : penetration(penetration)
 {
 	components.push_back(component1);
 	components.push_back(component2);
 
 	contactNormal = Vector3::Normalized(component1->GetOwner()->GetPosition() - component2->GetOwner()->GetPosition());
+
+	contactNormal = inverseContactNormal ? contactNormal * -1 : contactNormal;
 }
 
 float Contact::CalculateSeparatingVelocity() const

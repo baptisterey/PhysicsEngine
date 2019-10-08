@@ -17,6 +17,7 @@
 #include "KeyController.h"
 
 #include "../Engine/Physic/ContactGenerators/RodContact.h"
+#include "../Engine/Physic/ContactGenerators/CableContact.h"
 
 #include <SDL.h>
 

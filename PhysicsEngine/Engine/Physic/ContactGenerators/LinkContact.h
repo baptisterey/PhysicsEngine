@@ -1,7 +1,7 @@
 #include "IContactGenerator.h"
 #include "../Base/IPhysicComponent.h"
 #include "../../Base/Entity.h"
-#include "../Contact.h"
+#include "./Contact.h"
 
 #pragma once
 class LinkContact : public IContactGenerator, public BaseComponent

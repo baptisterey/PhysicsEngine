@@ -7,7 +7,7 @@ class Contact
 {
 public:
 	Contact(IPhysicComponent* component1, float penetration);
-	Contact(IPhysicComponent* component1, IPhysicComponent* component2, float penetration);
+	Contact(IPhysicComponent* component1, IPhysicComponent* component2, float penetration, bool inverseContactNormal = false);
 
 	float CalculateSeparatingVelocity() const;
 
@@ -22,7 +22,7 @@ public:
 private:
 	Vector3 contactNormal;
 
-	float kRestitution = 0.5;
+	float kRestitution = 1;
 	float penetration;
 
 	std::vector<IPhysicComponent*> components;

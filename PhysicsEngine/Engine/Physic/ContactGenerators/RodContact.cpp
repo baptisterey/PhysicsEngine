@@ -16,9 +16,14 @@ Contact* RodContact::GetContact(float time)
 	IPhysicComponent* mine = GetOwner()->GetComponentByType<IPhysicComponent>();
 	if (CurrentLenght() >= maxLenght && mine != nullptr) {
 
-		Contact cable = Contact(mine, linkComponent, CurrentLenght() - maxLenght);
-		cable.SetKRestitution(0.0f);
-		return &cable;
+		Contact* rod = new Contact(mine, linkComponent, CurrentLenght() - maxLenght, true);
+		rod->SetKRestitution(0.0f);
+		return rod;
+	}
+	else if (CurrentLenght() < maxLenght && mine != nullptr) {
+		Contact* rod = new Contact(mine, linkComponent, CurrentLenght() - maxLenght);
+		rod->SetKRestitution(0.0f);
+		return rod;
 	}
 
 	return nullptr;
