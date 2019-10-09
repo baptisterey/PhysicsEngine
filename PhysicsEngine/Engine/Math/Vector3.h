@@ -22,10 +22,11 @@ public:
 
 
 	// ---- OPERATOR OVERLOADING ----
-	Vector3 operator+ (Vector3 const& vect);
+	Vector3 operator+ (Vector3 const& vect) const;
 	Vector3 operator+= (Vector3 const& vect);
 
-	Vector3 operator- (Vector3 const& vect);
+	Vector3 operator- () const;
+	Vector3 operator- (Vector3 const& vect) const;
 	Vector3 operator-= (Vector3 const& vect);
 
 	Vector3 operator* (Vector3 const& vect);
