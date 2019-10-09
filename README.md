@@ -11,12 +11,12 @@ Le dossier du projet comprend les fichiers nécessaires à la compilation via CM
 + Le projet est normalement fonctionnel. Si l'explorateur de projet affiche des filtres (séparant les headers des sources), il est conseillé de cliquer sur 'Afficher tous les fichiers'
 
 ## Commandes du jeu
-a : Envoie une balle simple
-z : Fait apparaitre une balle tombante
-e : Envoie une balle simple
-r : Fait apparaitre deux balles, dont une retenue grace à un ressort
-q : Fait apparaitre une balle avec un effet de flottaison, ainsi qu'une balle repère pour la surface de l'eau
-d : Fait apparaitre deux balles, reliées par une tige solide
++ a : Envoie une balle simple
++ z : Fait apparaitre une balle tombante
++ e : Envoie une balle simple
++ r : Fait apparaitre deux balles, dont une retenue grace à un ressort
++ q : Fait apparaitre une balle avec un effet de flottaison, ainsi qu'une balle repère pour la surface de l'eau
++ d : Fait apparaitre deux balles, reliées par une tige solide
 
-Flèches directionnelles : Permet de controller la particule au centre du Blob
-Espace : Assemble et désassemble le Blob
++ Flèches directionnelles : Permet de controller la particule au centre du Blob
++ Espace : Assemble et désassemble le Blob
