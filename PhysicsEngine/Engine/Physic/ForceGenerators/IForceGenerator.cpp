@@ -4,7 +4,7 @@
 #include "../PhysicSystem.h"
 
 
-IForceGenerator::IForceGenerator()
+IForceGenerator::IForceGenerator() : BaseComponent()
 {
 	PhysicSystem* physicSystem = SystemManager::GetSystemByType<PhysicSystem>();
 	if (physicSystem != nullptr) {

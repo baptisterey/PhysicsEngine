@@ -1,12 +1,11 @@
 #pragma once
 
-#include "../Base/BaseComponent.h"
 #include "IRendererComponent.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
 
-class TextureRenderer : public BaseComponent, public IRendererComponent
+class TextureRenderer : public IRendererComponent
 {
 public:
 	TextureRenderer();

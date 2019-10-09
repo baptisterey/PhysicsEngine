@@ -1,12 +1,12 @@
 #include "Buoyancy.h"
 
-Buoyancy::Buoyancy() : maxDepth(0), objectVolume(1), liquidLevel(0), liquidDensity(1), BaseComponent(), IForceGenerator()
+Buoyancy::Buoyancy() : maxDepth(0), objectVolume(1), liquidLevel(0), liquidDensity(1), IForceGenerator()
 {
 
 }
 
 Buoyancy::Buoyancy(float maxDepth, float objectVolume, float liquidLevel, float liquidDensity) :
-	maxDepth(maxDepth), objectVolume(objectVolume), liquidLevel(liquidLevel), liquidDensity(liquidDensity), BaseComponent(), IForceGenerator()
+	maxDepth(maxDepth), objectVolume(objectVolume), liquidLevel(liquidLevel), liquidDensity(liquidDensity), IForceGenerator()
 {
 
 }

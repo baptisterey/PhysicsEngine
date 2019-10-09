@@ -3,7 +3,7 @@
 #include <SDL.h>
 #include <iostream>
 
-BallSpawner::BallSpawner() : BaseComponent(), ILogicComponent()
+BallSpawner::BallSpawner() : ILogicComponent()
 {
 	Time::timeScale = 5.0f; // For the sake of the demonstration
 

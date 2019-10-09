@@ -8,13 +8,17 @@
 #include "../Engine/Managers/SystemManager.h"
 #include "../Engine/Renderer/RendererSystem.h"
 #include "../Engine/Physic/ForceGenerators/Spring.h"
+#include "../Engine/Physic/ContactGenerators/CableContact.h"
+
+#include "../Engine/Managers/SystemManager.h"
+#include "../Engine/EventSystem.h"
 
 #include "KeyController.h"
 
 #include <vector>
 #include <SDL.h>
 
-class Blob : public BaseComponent, public ILogicComponent
+class Blob : public ILogicComponent
 {
 public:
 
@@ -34,7 +38,13 @@ private:
 	int nbParticles; //Number of surrounding particles
 	float k; //Spring force coefficient
 
+	float cableLength = 110.0f;
+
 	SDL_Texture* ultraballTexture = nullptr;
 	SDL_Texture* superballTexture = nullptr;
 	SDL_Texture* pokeballTexture = nullptr;
+
+	void Init();
+
+	bool isComplete = true;
 };

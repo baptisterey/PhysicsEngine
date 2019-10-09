@@ -21,7 +21,7 @@
 
 #include <SDL.h>
 
-class BallSpawner : public BaseComponent, public ILogicComponent
+class BallSpawner : public ILogicComponent
 {
 public:
 	BallSpawner();

@@ -2,7 +2,7 @@
 #include "../../Math/Vector3.h"
 #include "../../Base/BaseComponent.h"
 
-class IPhysicComponent : public BaseComponent 
+class IPhysicComponent : virtual public BaseComponent 
 {
 public:
 	IPhysicComponent();

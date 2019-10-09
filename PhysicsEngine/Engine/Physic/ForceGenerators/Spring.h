@@ -1,12 +1,11 @@
 #pragma once
 
-#include "../../Base/BaseComponent.h"
 #include "../Base/IPhysicComponent.h"
 #include "../../Math/Vector3.h"
 
 #include "IForceGenerator.h"
 
-class Spring : public BaseComponent, public IForceGenerator
+class Spring : public IForceGenerator
 {
 public:
 	Spring();

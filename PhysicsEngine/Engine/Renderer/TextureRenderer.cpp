@@ -2,7 +2,7 @@
 
 #include "../Physic/Particle.h"
 
-TextureRenderer::TextureRenderer() : BaseComponent(), IRendererComponent()
+TextureRenderer::TextureRenderer() : IRendererComponent()
 {
 }
 

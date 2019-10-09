@@ -21,9 +21,10 @@ void PhysicSystem::Update()
 
 	// Loop through all the force generators and add their forces
 	for (IForceGenerator* forceGenerator : forceGenerators) {
-
-		std::vector<IForce*> newForces = forceGenerator->GetForces(Time::deltaTime);
-		forces.insert(std::end(forces), std::begin(newForces), std::end(newForces));
+		if (forceGenerator->IsActive()) {
+			std::vector<IForce*> newForces = forceGenerator->GetForces(Time::deltaTime);
+			forces.insert(std::end(forces), std::begin(newForces), std::end(newForces));
+		}
 	}
 
 	// Update all forces available
@@ -33,7 +34,10 @@ void PhysicSystem::Update()
 
 	// Update every physic components
 	for (IPhysicComponent* component : components) {
-		component->UpdatePhysics(Time::deltaTime);
+		if (component->IsActive()) {
+			component->UpdatePhysics(Time::deltaTime);
+		}
+		
 	}
 
 	// Clear all forces for this frame
@@ -57,11 +61,13 @@ void PhysicSystem::Update()
 	// Loop through all the contact generators and test if they generate an contact for this frame
 	for (auto contactGenerator : contactGenerators) {
 
-		// Try to get an contact for this contact generator
-		Contact* contact = contactGenerator->GetContact(Time::deltaTime);
-		if (contact != nullptr) {
-			// Add the contact only if there is one
-			contacts.push_back(contact); 
+		if (contactGenerator->IsActive()) {
+			// Try to get an contact for this contact generator
+			Contact* contact = contactGenerator->GetContact(Time::deltaTime);
+			if (contact != nullptr) {
+				// Add the contact only if there is one
+				contacts.push_back(contact);
+			}
 		}
 	}
 

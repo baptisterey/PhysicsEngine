@@ -1,9 +1,10 @@
 #pragma once
 
 #include <vector>
-#include "./Forces/IForce.h"
+#include "./Forces/IForce.h";
+#include "../../Base/BaseComponent.h";
 
-class IForceGenerator
+class IForceGenerator : virtual public BaseComponent
 {
 public:
 

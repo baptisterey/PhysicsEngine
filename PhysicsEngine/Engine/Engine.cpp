@@ -55,7 +55,7 @@ int main(int argc, char* args[]) {
 	SystemManager::GetSystemByType<RendererSystem>()->InitRenderer("Bullet Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1020, 720, false);
 
 	EntityManager::CreateEntity("Ball Spawner", { new BallSpawner() });
-	EntityManager::CreateEntity("Blob", { new Blob(15,0.1) });
+	EntityManager::CreateEntity("Blob", { new Blob(15, 0.1) });
 
 	bool running = true;
 	while (running) {

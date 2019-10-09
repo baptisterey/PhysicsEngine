@@ -1,6 +1,6 @@
 #include "KeyController.h"
 
-KeyController::KeyController() : ILogicComponent(), BaseComponent()
+KeyController::KeyController() : ILogicComponent()
 {
 }
 
@@ -32,6 +32,7 @@ void KeyController::Update(float deltaTime)
 	}
 
 	IPhysicComponent* physicComponent = GetOwner()->GetComponentByType<IPhysicComponent>();
-
-	physicComponent->AddForce(direction * movementSpeed);
+	if (physicComponent != nullptr) {
+		physicComponent->AddForce(direction * movementSpeed);
+	}
 }

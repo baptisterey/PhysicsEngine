@@ -5,7 +5,7 @@
 #include "./IForceGenerator.h"
 #include "./Forces/BuoyancySpringForce.h"
 
-class Buoyancy : public BaseComponent, public IForceGenerator {
+class Buoyancy : public IForceGenerator {
 public:
 
 	Buoyancy();

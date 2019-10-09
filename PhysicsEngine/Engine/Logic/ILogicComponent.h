@@ -1,6 +1,7 @@
 #pragma once
+#include "../Base/BaseComponent.h"
 
-class ILogicComponent
+class ILogicComponent : virtual public BaseComponent
 {
 public:
 

@@ -1,8 +1,9 @@
 #pragma once
 
 #include <SDL.h>
+#include "../Base/BaseComponent.h"
 
-class IRendererComponent
+class IRendererComponent : virtual public BaseComponent
 {
 public:
 	IRendererComponent();

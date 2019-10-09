@@ -18,7 +18,9 @@ void RendererSystem::Update()
 	SDL_RenderClear(renderer);
 
 	for (IRendererComponent* component : components) {
-		component->Render(renderer);
+		if (component->IsActive()) {
+			component->Render(renderer);
+		}
 	}
 
 	SDL_RenderPresent(renderer);

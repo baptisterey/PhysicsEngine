@@ -15,7 +15,9 @@ void LogicSystem::Update()
 {
 	int size = components.size();
 	for (int i = 0; i < size; i++) {
-		components[i]->Update(Time::deltaTime);
+		if (components[i]->IsActive()) {
+			components[i]->Update(Time::deltaTime);
+		}
 	}
 }
 

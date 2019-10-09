@@ -4,7 +4,7 @@
 #include "./Contact.h"
 
 #pragma once
-class LinkContact : public IContactGenerator, public BaseComponent
+class LinkContact : public IContactGenerator
 {
 
 public :

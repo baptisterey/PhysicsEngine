@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../../Base/BaseComponent.h"
 #include "../Base/IPhysicComponent.h"
 #include "../../Math/Vector3.h"
 
@@ -8,7 +7,7 @@
 
 #include "./Forces/StiffSpringForce.h"
 
-class Stiff : public IForceGenerator, public BaseComponent
+class Stiff : public IForceGenerator
 {
 public:
 	Stiff();

@@ -1,7 +1,5 @@
 #include "LinkContact.h"
 
-
-
 LinkContact::LinkContact(float maxLenght, IPhysicComponent* component) : maxLenght(maxLenght), linkComponent(component)
 {
 

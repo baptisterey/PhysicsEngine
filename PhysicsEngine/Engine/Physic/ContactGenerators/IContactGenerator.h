@@ -1,8 +1,9 @@
 #pragma once
 
 #include "./Contact.h"
+#include "../../Base/BaseComponent.h"
 
-class IContactGenerator
+class IContactGenerator : virtual public BaseComponent
 {
 public:
 	IContactGenerator();

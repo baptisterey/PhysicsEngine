@@ -5,22 +5,22 @@
 
 
 
-Spring::Spring() : BaseComponent(), IForceGenerator()
+Spring::Spring() : IForceGenerator()
 {
 
 }
 
-Spring::Spring(float k, float initDistance) : k(k), initDistance(initDistance), BaseComponent(), IForceGenerator()
+Spring::Spring(float k, float initDistance) : k(k), initDistance(initDistance), IForceGenerator()
 {
 
 }
 
-Spring::Spring(float k, float initDistance, Vector3 connectedAnchor) : k(k), initDistance(initDistance), connectedAnchor(connectedAnchor), BaseComponent(), IForceGenerator()
+Spring::Spring(float k, float initDistance, Vector3 connectedAnchor) : k(k), initDistance(initDistance), connectedAnchor(connectedAnchor), IForceGenerator()
 {
 
 }
 
-Spring::Spring(float k, float initDistance, IPhysicComponent* connectedComponent) : k(k), initDistance(initDistance), connectedComponent(connectedComponent), BaseComponent(), IForceGenerator()
+Spring::Spring(float k, float initDistance, IPhysicComponent* connectedComponent) : k(k), initDistance(initDistance), connectedComponent(connectedComponent), IForceGenerator()
 {
 
 }

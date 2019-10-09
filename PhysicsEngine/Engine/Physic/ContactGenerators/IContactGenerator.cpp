@@ -3,7 +3,7 @@
 #include "../../Managers/SystemManager.h"
 #include "../PhysicSystem.h"
 
-IContactGenerator::IContactGenerator()
+IContactGenerator::IContactGenerator() : BaseComponent()
 {
 	PhysicSystem* physicSystem = SystemManager::GetSystemByType<PhysicSystem>();
 	if (physicSystem != nullptr) {
