@@ -40,9 +40,8 @@ private:
 
 	float cableLength = 110.0f;
 
-	SDL_Texture* ultraballTexture = nullptr;
-	SDL_Texture* superballTexture = nullptr;
-	SDL_Texture* pokeballTexture = nullptr;
+	SDL_Texture* slimeBall = nullptr;
+	SDL_Texture* blobCore = nullptr;
 
 	void Init();
 

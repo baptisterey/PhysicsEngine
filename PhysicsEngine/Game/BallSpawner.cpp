@@ -9,9 +9,9 @@ BallSpawner::BallSpawner() : ILogicComponent()
 
 	SDL_Renderer* renderer = SystemManager::GetSystemByType<RendererSystem>()->GetRenderer();
 
-	superballTexture = TextureRenderer::LoadTexture("./Images/superball.png", renderer);
-	pokeballTexture = TextureRenderer::LoadTexture("./Images/pokeball.png", renderer);
-	ultraballTexture = TextureRenderer::LoadTexture("./Images/ultra-ball.png", renderer);
+	superballTexture = TextureRenderer::LoadTexture("../Images/superball.png", renderer);
+	pokeballTexture = TextureRenderer::LoadTexture("../Images/pokeball.png", renderer);
+	ultraballTexture = TextureRenderer::LoadTexture("../Images/ultra-ball.png", renderer);
 }
 
 BallSpawner::~BallSpawner()
@@ -110,7 +110,6 @@ void BallSpawner::SpawnSuperBallBuoyancy()
 
 void BallSpawner::SpawnSuperBallRod()
 {
-
 	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new TextureRenderer(), new Particle() });
 	newEntity->SetPosition(Vector3(400, 350, 0));
 	newEntity->GetComponentByType<Particle>()->SetGravity(false);
@@ -121,5 +120,4 @@ void BallSpawner::SpawnSuperBallRod()
 	newEntity2->SetPosition(Vector3(400, 420, 0));
 
 	newEntity2->GetComponentByType<TextureRenderer>()->SetTexture(pokeballTexture);
-
 }
