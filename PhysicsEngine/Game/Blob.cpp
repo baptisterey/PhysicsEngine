@@ -8,7 +8,7 @@ Blob::Blob(int nbParticles, float k) : nbParticles(nbParticles), k(k), core(NULL
 {
 	SDL_Renderer* renderer = SystemManager::GetSystemByType<RendererSystem>()->GetRenderer();
 
-	slimeBall = TextureRenderer::LoadTexture("../Images/Slimeball.png", renderer);
+	slimeBall = TextureRenderer::LoadTexture("./Images/Slimeball.png", renderer);
 	blobCore = TextureRenderer::LoadTexture("./Images/Magma_Cream.png", renderer);
 }
 
@@ -70,8 +70,8 @@ void Blob::Init()
 	core = new Particle(Vector3(0, 0, 0), 2, 0.1f, 0);
 	GetOwner()->AddComponent(core);
 	GetOwner()->AddComponent(new TextureRenderer());
-	GetOwner()->GetComponentByType<TextureRenderer>()->SetTexture(slimeBall);
-	GetOwner()->SetPosition(Vector3(300, 500, 0));
+	GetOwner()->GetComponentByType<TextureRenderer>()->SetTexture(blobCore);
+	GetOwner()->SetPosition(Vector3(500, 150, 0));
 	GetOwner()->name = "BlobCore";
 
 	//Init movement
@@ -87,7 +87,7 @@ void Blob::Init()
 		Entity* newEntity = EntityManager::CreateEntity("BlobParticle", { new Particle(Vector3(0, 0, 0), 0.2, 0.1, 0), new TextureRenderer(), new Spring(k, distance , core), new CableContact(cableLength, 0.75f, core) });
 		newEntity->SetPosition(Vector3(corePos.x + distance * sin(angle), corePos.y + distance * cos(angle), corePos.z));
 
-		newEntity->GetComponentByType<TextureRenderer>()->SetTexture(blobCore);
+		newEntity->GetComponentByType<TextureRenderer>()->SetTexture(slimeBall);
 		particles.push_back(newEntity->GetComponentByType<Particle>());
 	}
 }

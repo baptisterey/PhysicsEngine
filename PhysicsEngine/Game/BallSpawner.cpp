@@ -9,9 +9,9 @@ BallSpawner::BallSpawner() : ILogicComponent()
 
 	SDL_Renderer* renderer = SystemManager::GetSystemByType<RendererSystem>()->GetRenderer();
 
-	superballTexture = TextureRenderer::LoadTexture("../Images/superball.png", renderer);
-	pokeballTexture = TextureRenderer::LoadTexture("../Images/pokeball.png", renderer);
-	ultraballTexture = TextureRenderer::LoadTexture("../Images/ultra-ball.png", renderer);
+	superballTexture = TextureRenderer::LoadTexture("./Images/superball.png", renderer);
+	pokeballTexture = TextureRenderer::LoadTexture("./Images/pokeball.png", renderer);
+	ultraballTexture = TextureRenderer::LoadTexture("./Images/ultra-ball.png", renderer);
 }
 
 BallSpawner::~BallSpawner()

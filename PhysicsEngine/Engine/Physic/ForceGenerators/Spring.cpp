@@ -66,7 +66,7 @@ std::vector<IForce*> Spring::GetForces(float time)
 				forces.push_back(new BungeeSpringForce(physicComponent, k, initDistance, connectedAnchor));
 			}
 			else {
-				forces.push_back(new SpringForce(physicComponent, k, initDistance, connectedComponent->GetOwner()));
+				forces.push_back(new SpringForce(physicComponent, k, initDistance, connectedAnchor));
 			}
 
 		}
