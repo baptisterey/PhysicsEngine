@@ -109,7 +109,7 @@ Matrix4 Camera::getViewProjectionMatrix()
 
 #define AXES {
 const Vector3 Camera::initialDirectionVector(0.f, 0.f, -1.f);
-const Vector3 Camera::initialUpVector(0.f, 1.f, 0.f);
+const Vector3 Camera::initialUpVector(0.f, -1.f, 0.f);
 
 void Camera::getCameraAxis(Vector3& directionAxis, Vector3& upAxis, bool useCurrentAxis) {
 	Quaternion cameraRotation;

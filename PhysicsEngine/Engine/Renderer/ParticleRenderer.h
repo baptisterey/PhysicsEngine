@@ -2,8 +2,8 @@
 
 #include "../Base/BaseComponent.h"
 #include "../Physic/Particle.h"
+#include "../Math/Matrix4.h"
 #include "IRendererComponent.h"
-#include "Shaders/VertexData.h"
 
 #include <SDL.h>
 #include <gl\glew.h>
@@ -16,7 +16,7 @@ public:
 	ParticleRenderer();
 	~ParticleRenderer();
 
-	void Render(GLuint programID);
+	void Render(GLuint programID, Matrix4 VP);
 
 	void SetTexture(GLuint texture);
 

@@ -13,7 +13,7 @@ ParticleRenderer::~ParticleRenderer()
 
 }
 
-void ParticleRenderer::Render(GLuint programID)
+void ParticleRenderer::Render(GLuint programID, Matrix4 VP)
 {
 	// Where to draw the texture on the screen
 	Vector3 position = GetOwner()->GetPosition();
@@ -25,24 +25,27 @@ void ParticleRenderer::Render(GLuint programID)
 		z = (int)position.z;
 
 
-	/*VertexData*/float vertices[] = {
+	float vertices[] = {
 		// position			color (RGBA)		texture coords
-	//	x + w, y + h, z,	1.0, 1.0, 1.0,		1.0, 1.0,		// top right
-	//	x + w, y, z,		1.0, 1.0, 1.0,		1.0, 0.0,		// bottom right
-	//	x, y, z,			1.0, 1.0, 1.0,		0.0, 0.0,		// bottom left
-	//	x, y + h, z,		1.0, 1.0, 1.0,		0.0, 1.0		// top left
-	//};
-	///*VertexData*/float vertices[] = {
-		// position			color (RGBA)		texture coords
-		.5, .5, 0,			1.0, 1.0, 1.0,		1.0, 1.0,		// top right
-		-.5, .5, 0,			1.0, 1.0, 1.0,		1.0, 0.0,		// bottom right
-		-.5, -.5, 0,		1.0, 1.0, 1.0,		0.0, 0.0,		// bottom left
-		.5, -.5, 0,			1.0, 1.0, 1.0,		0.0, 1.0		// top left
+		x + w, y + h, z,	1.0, 1.0, 1.0,		0.0, 0.0,		// top right
+		x + w, y, z,		1.0, 1.0, 1.0,		0.0, 1.0,		// bottom right
+		x, y, z,			1.0, 1.0, 1.0,		1.0, 1.0,		// bottom left
+		x, y + h, z,		1.0, 1.0, 1.0,		1.0, 0.0		// top left
 	};
+
 	GLubyte indices[] = {
 		0, 1, 3, // first triangle
 		1, 2, 3  // second triangle
 	};
+
+	Vector3
+		op_tr(vertices[0], vertices[1], vertices[2]), op_br(vertices[8], vertices[9], vertices[10]), 
+		op_bl(vertices[16], vertices[17], vertices[18]), op_tl(vertices[24], vertices[25], vertices[26]),
+		np_tr = VP.TransformPoint(op_tr), np_br = VP.TransformPoint(op_br), np_bl = VP.TransformPoint(op_bl), np_tl = VP.TransformPoint(op_tl),
+		c_1 = np_tr / np_tr.z,
+		c_2 = np_br / np_br.z,
+		c_3 = np_bl / np_bl.z,
+		c_4 = np_tl / np_tl.z;
 
 	// Set up buffer arrays
 	glBindVertexArray(VAO[0]);
@@ -60,7 +63,8 @@ void ParticleRenderer::Render(GLuint programID)
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 
-	//glBindTexture(GL_TEXTURE_2D, texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glUniformMatrix4fv(3, 1, false, (const float*) &VP);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, 0);
 }
 

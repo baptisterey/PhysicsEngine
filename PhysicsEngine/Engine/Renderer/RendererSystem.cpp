@@ -1,11 +1,19 @@
 #include "RendererSystem.h"
-#include "../Utils/Utils.h"
 
 RendererSystem::RendererSystem() : ISystem()
 {
 	context = NULL;
 	window = nullptr;
 	programID = NULL;
+	mainCamera = new Camera(
+		.8f,			// View Angle
+		0.1f,			// Near Plane
+		5000,			// Far Plane
+		SCREEN_WIDTH,	// View Width
+		SCREEN_HEIGHT,	// View Height
+		Vector3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1000.f),	// Position
+		Quaternion::fromEulerAngles(-.1f, -.2f, 0.f)			// Rotation
+	);
 }
 
 RendererSystem::~RendererSystem()
@@ -17,9 +25,11 @@ void RendererSystem::Update()
 {
 	glUseProgram(programID);
 	glClear(GL_COLOR_BUFFER_BIT);
-
+	
+	// Matrix4 p = Matrix4::PerspectiveFov(.8f, 1, 0.1f, 100);
+	// Matrix4 v = Matrix4::LookAt(Vector3(0, 0, -4.f), Vector3(0, 0, 0), Vector3(0, 1, 0));
 	for (IRendererComponent* component : components) {
-		component->Render(programID);
+		component->Render(programID, mainCamera->getViewProjectionMatrix());
 	}
 
 	SDL_GL_SwapWindow(window);
@@ -77,10 +87,8 @@ bool RendererSystem::InitRenderer(const char* title, int xpos, int ypos, int wid
 
 	// OpenGL other settings
 	glEnable(GL_TEXTURE_2D);
+	//glCullFace(GL_FRONT_AND_BACK);
 
-
-	// Define a default view
-	glOrtho(0, width, 0, height, -1, 1);
 	// Define the background
 	glClearColor(.1f, .1f, .1f, 1.0);
 	// Clear the content of the screen

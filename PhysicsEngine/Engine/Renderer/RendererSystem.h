@@ -1,5 +1,6 @@
 #pragma once
 #include "../Base/ISystem.h"
+#include "../Utils/Utils.h"
 #include "IRendererComponent.h"
 
 #include <vector>
@@ -13,6 +14,8 @@
 #include <string>
 #include <GL\glew.h>
 #include <SDL_opengl.h>
+
+#include "Camera.h"
 
 class RendererSystem : public ISystem
 {
@@ -39,5 +42,6 @@ private:
 	SDL_Window* window;
 	SDL_GLContext context;
 	GLuint programID;
+	Camera* mainCamera;
 };
 

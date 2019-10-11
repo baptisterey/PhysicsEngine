@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../Math/Matrix4.h"
+
 #include <SDL.h>
 #include <gl\glew.h>
 #include <SDL_opengl.h>
@@ -10,6 +12,6 @@ public:
 	IRendererComponent();
 	virtual ~IRendererComponent();
 
-	virtual void Render(GLuint programID) {};
+	virtual void Render(GLuint programID, Matrix4 VP) {};
 };
 

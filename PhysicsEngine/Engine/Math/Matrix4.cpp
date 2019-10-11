@@ -242,85 +242,6 @@ Matrix4 Matrix4::Inverse() const
 		}
 	}
 	return FloatResult;
-
-	//
-	// Inversion by LU decomposition, alternate implementation
-	//
-	/*int i, j, k;
-
-	for (i = 1; i < 4; i++)
-	{
-		_Entries[0][i] /= _Entries[0][0];
-	}
-
-	for (i = 1; i < 4; i++)
-	{
-		for (j = i; j < 4; j++)
-		{
-			float sum = 0.0;
-			for (k = 0; k < i; k++)
-			{
-				sum += _Entries[j][k] * _Entries[k][i];
-			}
-			_Entries[j][i] -= sum;
-		}
-		if (i == 4-1) continue;
-		for (j=i+1; j < 4; j++)
-		{
-			float sum = 0.0;
-			for (int k = 0; k < i; k++)
-				sum += _Entries[i][k]*_Entries[k][j];
-			_Entries[i][j] =
-			   (_Entries[i][j]-sum) / _Entries[i][i];
-		}
-	}
-
-	//
-	// Invert L
-	//
-	for ( i = 0; i < 4; i++ )
-	{
-		for ( int j = i; j < 4; j++ )
-		{
-			float x = 1.0;
-			if ( i != j )
-			{
-				x = 0.0;
-				for ( int k = i; k < j; k++ )
-					x -= _Entries[j][k]*_Entries[k][i];
-			}
-			_Entries[j][i] = x / _Entries[j][j];
-		}
-	}
-
-	//
-	// Invert U
-	//
-	for ( i = 0; i < 4; i++ )
-	{
-		for ( j = i; j < 4; j++ )
-		{
-			if ( i == j ) continue;
-			float sum = 0.0;
-			for ( int k = i; k < j; k++ )
-				sum += _Entries[k][j]*( (i==k) ? 1.0f : _Entries[i][k] );
-			_Entries[i][j] = -sum;
-		}
-	}
-
-	//
-	// Final Inversion
-	//
-	for ( i = 0; i < 4; i++ )
-	{
-		for ( int j = 0; j < 4; j++ )
-		{
-			float sum = 0.0;
-			for ( int k = ((i>j)?i:j); k < 4; k++ )
-				sum += ((j==k)?1.0f:_Entries[j][k])*_Entries[k][i];
-			_Entries[j][i] = sum;
-		}
-	}*/
 }
 
 Matrix4 Matrix4::Transpose() const
@@ -697,30 +618,6 @@ Matrix4 Matrix4::ChangeOfBasis(const Vector3& Source0, const Vector3& Source1, c
 	//return Translation(TargetOrigin - SourceOrigin);
 }
 
-/*Matrix4 Matrix4::Face(const Vector3& V0, const Vector3& V1)
-{
-	//
-	// Rotate about the cross product of the two vectors by the angle between the two vectors
-	//
-	Vector3 Axis = Vector3::Cross(V0, V1);
-	float Angle = Vector3::AngleBetween(V0, V1);
-
-	if (Angle == 0.0f)
-	{
-		return Identity();
-	}
-	else if (Axis.GetMagnitude() == 0.0f)
-	{
-		Vector3 basis0, basis1;
-		Vector3::CompleteOrthonormalBasis(V0, basis0, basis1);
-		return Rotation(basis0, Angle);
-	}
-	else
-	{
-		return Rotation(Axis, Angle);
-	}
-}*/
-
 Matrix4 Matrix4::Viewport(float Width, float Height)
 {
 	return Matrix4::Scaling(Vector3(Width * 0.5f, -Height * 0.5f, 1.0f)) * Matrix4::Translation(Vector3(Width * 0.5f, Height * 0.5f, 0.0f));
@@ -738,40 +635,6 @@ float Matrix4::CompareMatrices(const Matrix4& Left, const Matrix4& Right)
 	}
 	return Sum / 16.0f;
 }
-
-/*Vector3 Matrix4::TransformPoint(const Vector3 &Point) const
-{
-	Vec4f UnprojectedResult = Vec4f(Point, 1.0f) * (*this);
-	if(UnprojectedResult.w == 0.0f || UnprojectedResult.w == 1.0f)
-	{
-		return Vector3(UnprojectedResult.x, UnprojectedResult.y, UnprojectedResult.z);
-	}
-	else
-	{
-		return Vector3(UnprojectedResult.x / UnprojectedResult.w,
-					 UnprojectedResult.y / UnprojectedResult.w,
-					 UnprojectedResult.z / UnprojectedResult.w);
-	}
-}
-
-Vector3 Matrix4::TransformNormal(const Vector3 &Normal) const
-{
-	Vec4f UnprojectedResult = Vec4f(Normal, 0.0f) * (*this);
-	if(UnprojectedResult.w == 0.0f)
-	{
-		UnprojectedResult.w = 1.0f;
-	}
-
-	Vector3 Result(UnprojectedResult.x / UnprojectedResult.w,
-				UnprojectedResult.y / UnprojectedResult.w,
-				UnprojectedResult.z / UnprojectedResult.w);
-
-	if(UnprojectedResult.w < 0.0f)
-	{
-		Result = -Result;
-	}
-	return Result;
-}*/
 
 #ifdef USE_D3D
 Matrix4::operator D3DXMATRIX() const
