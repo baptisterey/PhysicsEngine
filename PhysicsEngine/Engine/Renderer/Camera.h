@@ -14,6 +14,7 @@ public:
 		int viewWidth = 1, int viewHeight = 1,
 		Vector3 position = Vector3(0.f, 0.f, 0.f),
 		Quaternion rotation = Quaternion::fromEulerAngles(0.f, 0.f, 0.f));
+	~Camera();
 
 #define CAMERA_TRANSLATE_FUNCTIONS {
 	void translate(Vector3 translationVector);
@@ -36,6 +37,7 @@ public:
 	void setViewAngle(float angle);
 	Matrix4 getViewMatrix();
 	Matrix4 getProjectionMatrix();
+	Matrix4 getViewProjectionMatrix();
 #define CAMERA_PROJECTION_FUNCTIONS_END }
 
 private:
@@ -64,6 +66,7 @@ private:
 #define CAMERA_MATRIXES {
 	Matrix4 viewMatrix;
 	Matrix4 projectionMatrix;
+	Matrix4 viewProjectionMatrix;
 	void computeViewMatrix();
 	void computeProjectionMatrix();
 #define CAMERA_MATRIXES_END }

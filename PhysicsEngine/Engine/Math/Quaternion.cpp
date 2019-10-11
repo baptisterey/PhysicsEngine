@@ -57,22 +57,28 @@ Vector3 Quaternion::rotatedVector(Vector3 vector)
 {
 	// ret QR * QV * QR'
 	// QR: rotation; QV: vector; QR': reverse rotation
-	return ((*this) * Quaternion::fromAngleAndAxis(0, vector) * (*this).conjugated()).vector();
+	Quaternion
+		a = (*this),
+		b = Quaternion::fromAngleAndAxis(0, vector),
+		c = (*this).conjugated(),
+		d = a * b * c;
+	return d.vector();
 }
 
 Quaternion Quaternion::operator*(Quaternion const& q) const
 {
-	Vector3 v0 = vector(), v1(q.x, q.y, q.z);
-	return Quaternion::fromAngleAndAxis(
+	Vector3 v0(x, y, z), v1(q.x, q.y, q.z);
+	Quaternion qr = Quaternion::fromAngleAndAxis(
 		w * q.w - Vector3::Dot(v0, v1),
-		v1 * w + v0 * q.w + v0 * v1
+		v1 * w + v0 * q.w + Vector3::Cross(v0, v1)
 	);
+	return qr;
 }
 
 Quaternion& Quaternion::operator*=(Quaternion const& q)
 {
 	Vector3 v0(x, y, z), v1(q.x, q.y, q.z);
-	Vector3 vf = v1 * w + v0 * q.w + v0 * v1;
+	Vector3 vf = v1 * w + v0 * q.w + Vector3::Cross(v0, v1);
 
 	w = w * q.w - Vector3::Dot(v0, v1);
 	x = vf.x;

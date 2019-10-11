@@ -8,6 +8,10 @@ Camera::Camera(float viewAngle, float nearPlane, float farPlane, int viewWidth, 
 	setAspectRatio(viewWidth, viewHeight);   // Contains a call to "computeProjectionMatrix"
 }
 
+Camera::~Camera()
+{
+}
+
 #define PROJECTION_FUNCTIONS {
 void Camera::setAspectRatio(int viewWidth, int viewHeight) {
 	aspectRatio = viewWidth * 1.0f / viewHeight;
@@ -85,10 +89,11 @@ void Camera::computeViewMatrix() {
 
 	projectionMatrix = Matrix4::Identity();
 	viewMatrix = Matrix4::LookAt(position, position + directionVector, upVector);
+	viewProjectionMatrix = projectionMatrix * viewMatrix;
 }
 void Camera::computeProjectionMatrix() {
-	projectionMatrix = Matrix4::Identity();
-	projectionMatrix.Perspective(viewAngle, aspectRatio, nearPlane, farPlane);
+	projectionMatrix = Matrix4::PerspectiveFov(viewAngle, aspectRatio, nearPlane, farPlane);
+	viewProjectionMatrix = projectionMatrix * viewMatrix;
 }
 Matrix4 Camera::getViewMatrix() {
 	return viewMatrix;
@@ -96,11 +101,15 @@ Matrix4 Camera::getViewMatrix() {
 Matrix4 Camera::getProjectionMatrix() {
 	return projectionMatrix;
 }
+Matrix4 Camera::getViewProjectionMatrix()
+{
+	return viewProjectionMatrix;
+}
 #define MATRIXES_FUNCTIONS_END }
 
 #define AXES {
-const Vector3 Camera::initialDirectionVector(0.f, 0.f, 1.f);
-const Vector3 Camera::initialUpVector(0.f, -1.f, 0.f);
+const Vector3 Camera::initialDirectionVector(0.f, 0.f, -1.f);
+const Vector3 Camera::initialUpVector(0.f, 1.f, 0.f);
 
 void Camera::getCameraAxis(Vector3& directionAxis, Vector3& upAxis, bool useCurrentAxis) {
 	Quaternion cameraRotation;

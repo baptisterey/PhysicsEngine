@@ -798,7 +798,7 @@ Matrix4 operator * (const Matrix4& Left, const Matrix4& Right)
 			float Total = 0.0f;
 			for (GLuint i3 = 0; i3 < 4; i3++)
 			{
-				Total += Left[i][i3] * Right[i3][i2];
+				Total += Right[i][i3] * Left[i3][i2];
 			}
 			Result[i][i2] = Total;
 		}
