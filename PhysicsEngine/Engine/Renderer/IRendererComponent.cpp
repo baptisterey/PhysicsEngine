@@ -3,7 +3,7 @@
 #include "RendererSystem.h"
 #include "../Managers/SystemManager.h"
 
-IRendererComponent::IRendererComponent()
+IRendererComponent::IRendererComponent() : BaseComponent()
 {
 	RendererSystem* rendererSystem = SystemManager::GetSystemByType<RendererSystem>();
 	if (rendererSystem != nullptr) {

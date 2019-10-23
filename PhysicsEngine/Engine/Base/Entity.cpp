@@ -6,7 +6,6 @@ Entity::Entity(std::string name) : name(name)
 	id = Utils::GenerateHex(8);
 }
 
-
 Entity::~Entity()
 {
 	for (const auto& kv : components) {
@@ -19,7 +18,7 @@ std::string Entity::GetId()
 	return id;
 }
 
-void Entity::AddComponent(BaseComponent * component)
+void Entity::AddComponent(BaseComponent* component)
 {
 	if (component == nullptr) {
 		return;
@@ -46,7 +45,7 @@ Vector3 Entity::GetPosition()
 	return position;
 }
 
-void Entity::SetPosition(Vector3 & const value)
+void Entity::SetPosition(Vector3& const value)
 {
 	this->position = value;
 }

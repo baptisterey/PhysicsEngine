@@ -25,3 +25,13 @@ void BaseComponent::SetOwner(Entity * ow)
 {
 	this->owner = ow;
 }
+
+bool BaseComponent::IsActive()
+{
+	return isActive;
+}
+
+void BaseComponent::SetActive(bool value)
+{
+	isActive = value;
+}

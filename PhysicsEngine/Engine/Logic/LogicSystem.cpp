@@ -13,8 +13,11 @@ LogicSystem::~LogicSystem()
 
 void LogicSystem::Update()
 {
-	for (ILogicComponent* component : components) {
-		component->Update(Time::deltaTime);
+	int size = components.size();
+	for (int i = 0; i < size; i++) {
+		if (components[i]->IsActive()) {
+			components[i]->Update(Time::deltaTime);
+		}
 	}
 }
 

@@ -3,7 +3,7 @@
 #include "../../Managers/SystemManager.h"
 #include "../PhysicSystem.h"
 
-IPhysicComponent::IPhysicComponent()
+IPhysicComponent::IPhysicComponent() : BaseComponent()
 {
 	PhysicSystem* physicSystem = SystemManager::GetSystemByType<PhysicSystem>();
 	if (physicSystem != nullptr) {
@@ -49,4 +49,14 @@ void IPhysicComponent::ClearAccumForce()
 Vector3 IPhysicComponent::GetVelocity()
 {
 	return velocity;
+}
+
+Vector3 IPhysicComponent::GetAcceleration()
+{
+	return acceleration;
+}
+
+void IPhysicComponent::SetVelocity(Vector3 value)
+{
+	velocity = value;
 }

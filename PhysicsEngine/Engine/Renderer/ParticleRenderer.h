@@ -10,7 +10,7 @@
 #include <SDL_opengl.h>
 #include <SDL_image.h>
 
-class ParticleRenderer : public BaseComponent, public IRendererComponent
+class ParticleRenderer : public IRendererComponent
 {
 public:
 	ParticleRenderer();
