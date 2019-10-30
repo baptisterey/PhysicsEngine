@@ -11,7 +11,7 @@ RendererSystem::RendererSystem() : ISystem()
                             SCREEN_WIDTH,                                         // View Width
                             SCREEN_HEIGHT,                                        // View Height
                             Vector3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1750.f), // Position
-                            Quaternion::fromEulerAngles(-.1f, -.2f, 0.f)          // Rotation
+                            Quaternion(1, 0, 0, 0)                                // Rotation
     );
 }
 
@@ -19,15 +19,18 @@ RendererSystem::~RendererSystem() { close(); }
 
 void RendererSystem::Update()
 {
+	// Clear window before rendering
     glUseProgram(programID);
     glClear(GL_COLOR_BUFFER_BIT);
 
+	// Render each component
     for (IRendererComponent* component : components)
     {
         if (component->IsActive())
             component->Render(programID, mainCamera->getViewProjectionMatrix());
     }
 
+	// Display new frame
     SDL_GL_SwapWindow(window);
 }
 
