@@ -148,12 +148,10 @@ void PhysicSystem::GenerateGroundContacts()
 	// Temporary solution to detect collision with the ground
 	for (int i = 0; i < components.size(); i++) {
 
-		float groundPosition = 550;
-
 		// The particle is in contact with the ground if its position is inferior to groundPosition
-		if (components[i]->GetOwner()->GetPosition().y > groundPosition) {
+		if (components[i]->GetOwner()->GetPosition().y < PhysicSystem::GROUND_POSITION) {
 
-			Contact* newContact = new Contact(components[i], components[i]->GetOwner()->GetPosition().y - groundPosition);
+			Contact* newContact = new Contact(components[i], PhysicSystem::GROUND_POSITION - components[i]->GetOwner()->GetPosition().y);
 			contacts.push_back(newContact);
 		}
 	}

@@ -22,8 +22,6 @@ void RendererSystem::Update()
     glUseProgram(programID);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // Matrix4 p = Matrix4::PerspectiveFov(.8f, 1, 0.1f, 100);
-    // Matrix4 v = Matrix4::LookAt(Vector3(0, 0, -4.f), Vector3(0, 0, 0), Vector3(0, 1, 0));
     for (IRendererComponent* component : components)
     {
         if (component->IsActive())
