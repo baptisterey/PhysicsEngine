@@ -5,14 +5,18 @@ RendererSystem::RendererSystem() : ISystem()
     context = NULL;
     window = nullptr;
     programID = NULL;
+
     mainCamera = new Camera(.8f,                                                  // View Angle
                             0.1f,                                                 // Near Plane
                             5000,                                                 // Far Plane
                             SCREEN_WIDTH,                                         // View Width
-                            SCREEN_HEIGHT,                                        // View Height
-                            Vector3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1750.f), // Position
-                            Quaternion(1, 0, 0, 0)                                // Rotation
+                            SCREEN_HEIGHT                                         // View Height
     );
+
+	Entity* defaultCamera = EntityManager::CreateEntity("Camera", { mainCamera });
+	defaultCamera->SetPosition(Vector3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1750.f));
+	defaultCamera->SetRotation(Quaternion(1, 0, 0, 0));
+	mainCamera->Initialize();
 }
 
 RendererSystem::~RendererSystem() { close(); }

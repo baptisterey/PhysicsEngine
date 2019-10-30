@@ -1,6 +1,7 @@
 #pragma once
 #include "../Base/ISystem.h"
 #include "../Utils/Utils.h"
+#include "../Managers/EntityManager.h"
 #include "IRendererComponent.h"
 
 #include <vector>

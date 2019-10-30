@@ -49,3 +49,13 @@ void Entity::SetPosition(Vector3& const value)
 {
 	this->position = value;
 }
+
+Quaternion Entity::GetRotation()
+{
+	return rotation;
+}
+
+void Entity::SetRotation(Quaternion& const value)
+{
+	this->rotation = value;
+}
