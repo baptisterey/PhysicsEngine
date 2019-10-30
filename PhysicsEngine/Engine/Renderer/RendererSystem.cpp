@@ -21,7 +21,7 @@ void RendererSystem::Update()
 {
 	// Clear window before rendering
     glUseProgram(programID);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Render each component
     for (IRendererComponent* component : components)
@@ -86,7 +86,8 @@ bool RendererSystem::InitRenderer(const char* title, int xpos, int ypos, int wid
 
     // OpenGL other settings
     glEnable(GL_TEXTURE_2D);
-    // glCullFace(GL_FRONT_AND_BACK);
+	glEnable(GL_DEPTH_TEST);
+	glDepthMask(GL_ALWAYS);
 
     // Define the background
     glClearColor(.1f, .1f, .1f, 1.0);
