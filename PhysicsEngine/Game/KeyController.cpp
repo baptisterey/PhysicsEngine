@@ -22,10 +22,10 @@ void KeyController::Update(float deltaTime)
 			direction = Vector3(-1, 0, 0);
 			break;
 		case SDLK_UP:
-			direction = Vector3(0, -1, 0);
+			direction = Vector3(0, 1, 0);
 			break;
 		case SDLK_DOWN:
-			direction = Vector3(0, 1, 0);
+			direction = Vector3(0, -1, 0);
 			break;
 		}
 		break;

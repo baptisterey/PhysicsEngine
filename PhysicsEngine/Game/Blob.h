@@ -4,9 +4,9 @@
 
 #include "../Engine/Physic/Particle.h"
 #include "../Engine/Managers/EntityManager.h"
-#include "../Engine/Renderer/TextureRenderer.h"
 #include "../Engine/Managers/SystemManager.h"
 #include "../Engine/Renderer/RendererSystem.h"
+#include "../Engine/Renderer/ParticleRenderer.h"
 #include "../Engine/Physic/ForceGenerators/Spring.h"
 #include "../Engine/Physic/ContactGenerators/CableContact.h"
 
@@ -40,8 +40,8 @@ private:
 
 	float cableLength = 110.0f;
 
-	SDL_Texture* slimeBall = nullptr;
-	SDL_Texture* blobCore = nullptr;
+	GLuint slimeBall = NULL;
+	GLuint blobCore = NULL;
 
 	void Init();
 

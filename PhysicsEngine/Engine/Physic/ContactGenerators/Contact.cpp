@@ -4,7 +4,7 @@ Contact::Contact(IPhysicComponent * component1, float penetration) : penetration
 {
 	components.push_back(component1);
 
-	contactNormal = Vector3(0, -1, 0);
+	contactNormal = Vector3(0, 1, 0);
 }
 
 Contact::Contact(IPhysicComponent * component1, IPhysicComponent * component2, float penetration, bool inverseContactNormal) : penetration(penetration)
