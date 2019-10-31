@@ -87,7 +87,7 @@ void Camera::computeViewMatrix() {
 	Vector3 directionVector, upVector;
 	getCameraAxis(directionVector, upVector, true);
 
-	projectionMatrix = Matrix4::Identity();
+	projectionMatrix = Matrix4();
 	viewMatrix = Matrix4::LookAt(position, position + directionVector, upVector);
 	viewProjectionMatrix = projectionMatrix * viewMatrix;
 }
