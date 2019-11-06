@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector3.h"
 #include "Matrix3.h"
+#include <vector>
 
 class Matrix4
 {
@@ -9,7 +10,7 @@ public:
 	//Constructor
     Matrix4();
     Matrix4(Matrix4& copyMatrix);
-    Matrix4(float matrixTable[]);
+    Matrix4(std::vector<float> matrixTable);
 
 	//Methode
     float matrix4Det();
@@ -24,5 +25,5 @@ public:
     Vector3 operator*(Vector3 const& v);
 
 private:
-    float matrix[16];
+    std::vector<float> matrix;
 };
