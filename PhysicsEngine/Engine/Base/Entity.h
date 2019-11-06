@@ -3,6 +3,7 @@
 #include <map>
 
 #include "../Math/Vector3.h"
+#include "../Math/Quaternion.h"
 
 class BaseComponent;
 
@@ -37,10 +38,13 @@ public:
 
 	Vector3 GetPosition();
 	void SetPosition(Vector3& const value);
+	Quaternion GetRotation();
+	void SetRotation(Quaternion& const value);
 
 private:
 	std::map<std::string, BaseComponent*> components;
 	std::string id;
 
 	Vector3 position;
+	Quaternion rotation = Quaternion(1, 0, 0, 0);
 };

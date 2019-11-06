@@ -1,15 +1,18 @@
 #include "camera.h"
 
-Camera::Camera(float viewAngle, float nearPlane, float farPlane, int viewWidth, int viewHeight, Vector3 position, Quaternion rotation) :
-	position(position), rotation(rotation), currentRotationChanges(0.f, 0.f, 0.f),
-	viewAngle(viewAngle), nearPlane(nearPlane), farPlane(farPlane)
+Camera::Camera(float viewAngle, float nearPlane, float farPlane, int viewWidth, int viewHeight) :
+	currentRotationChanges(0.f, 0.f, 0.f), viewAngle(viewAngle), nearPlane(nearPlane), 
+	farPlane(farPlane), viewWidth(viewWidth), viewHeight(viewHeight)
 {
-	computeViewMatrix();
-	setAspectRatio(viewWidth, viewHeight);   // Contains a call to "computeProjectionMatrix"
 }
 
 Camera::~Camera()
 {
+}
+
+void Camera::Initialize() {
+	computeViewMatrix();
+	setAspectRatio(viewWidth, viewHeight);   // Contains a call to "computeProjectionMatrix"
 }
 
 #define PROJECTION_FUNCTIONS {
@@ -35,7 +38,7 @@ void Camera::translate(Vector3 translationVector) {
 
 	// Translation from the camera point of view (not from the point of view of the global axes)
 	Vector3 newPosition = xVector * translationVector.x + upVector * translationVector.y + directionVector * translationVector.z;
-	position += newPosition;
+	GetOwner()->SetPosition(GetOwner()->GetPosition() + newPosition);
 
 	computeViewMatrix();
 }
@@ -47,9 +50,6 @@ void Camera::translateY(float y) {
 }
 void Camera::translateZ(float z) {
 	translate(Vector3(0, 0, z));
-}
-Vector3 Camera::getPosition() {
-	return position;
 }
 #define TRANSLATE_FUNCTIONS_END }
 
@@ -67,7 +67,7 @@ void Camera::rotateZ(float angle) {
 	computeViewMatrix();
 }
 void Camera::validateCurrentRotation() {
-	rotation = getCurrentRotation();
+	GetOwner()->SetRotation(getCurrentRotation());
 	currentRotationChanges = Vector3(0, 0, 0);
 }
 Quaternion Camera::getCurrentRotation() {
@@ -78,7 +78,7 @@ Quaternion Camera::getCurrentRotation() {
 	Quaternion newRotation = Quaternion::fromAngleAndAxis(currentRotationChanges.y, Vector3(0.f, 1.f, 0.f));
 	newRotation *= Quaternion::fromAngleAndAxis(currentRotationChanges.x, xVector);
 
-	return (newRotation * rotation).normalized();
+	return (newRotation * GetOwner()->GetRotation()).normalized();
 }
 #define ROTATION_FUNCTIONS_END }
 
@@ -87,8 +87,8 @@ void Camera::computeViewMatrix() {
 	Vector3 directionVector, upVector;
 	getCameraAxis(directionVector, upVector, true);
 
-	projectionMatrix = Matrix4();
-	viewMatrix = Matrix4::LookAt(position, position + directionVector, upVector);
+	projectionMatrix = Matrix4::Identity();
+	viewMatrix = Matrix4::LookAt(GetOwner()->GetPosition(), GetOwner()->GetPosition() + directionVector, upVector);
 	viewProjectionMatrix = projectionMatrix * viewMatrix;
 }
 void Camera::computeProjectionMatrix() {
@@ -115,7 +115,7 @@ void Camera::getCameraAxis(Vector3& directionAxis, Vector3& upAxis, bool useCurr
 	Quaternion cameraRotation;
 
 	if (!useCurrentAxis) {
-		cameraRotation = rotation;
+		cameraRotation = GetOwner()->GetRotation();
 	}
 	else {
 		cameraRotation = getCurrentRotation();

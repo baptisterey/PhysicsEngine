@@ -5,29 +5,36 @@ RendererSystem::RendererSystem() : ISystem()
     context = NULL;
     window = nullptr;
     programID = NULL;
+
     mainCamera = new Camera(.8f,                                                  // View Angle
                             0.1f,                                                 // Near Plane
                             5000,                                                 // Far Plane
                             SCREEN_WIDTH,                                         // View Width
-                            SCREEN_HEIGHT,                                        // View Height
-                            Vector3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1750.f), // Position
-                            Quaternion::fromEulerAngles(-.1f, -.2f, 0.f)          // Rotation
+                            SCREEN_HEIGHT                                         // View Height
     );
+
+	Entity* defaultCamera = EntityManager::CreateEntity("Camera", { mainCamera });
+	defaultCamera->SetPosition(Vector3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1750.f));
+	defaultCamera->SetRotation(Quaternion(1, 0, 0, 0));
+	mainCamera->Initialize();
 }
 
 RendererSystem::~RendererSystem() { close(); }
 
 void RendererSystem::Update()
 {
+	// Clear window before rendering
     glUseProgram(programID);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	// Render each component
     for (IRendererComponent* component : components)
     {
         if (component->IsActive())
             component->Render(programID, mainCamera->getViewProjectionMatrix());
     }
 
+	// Display new frame
     SDL_GL_SwapWindow(window);
 }
 
@@ -83,7 +90,8 @@ bool RendererSystem::InitRenderer(const char* title, int xpos, int ypos, int wid
 
     // OpenGL other settings
     glEnable(GL_TEXTURE_2D);
-    // glCullFace(GL_FRONT_AND_BACK);
+	glEnable(GL_DEPTH_TEST);
+	glDepthMask(GL_ALWAYS);
 
     // Define the background
     glClearColor(.1f, .1f, .1f, 1.0);

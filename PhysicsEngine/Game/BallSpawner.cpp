@@ -57,7 +57,7 @@ void BallSpawner::Update(float deltaTime)
 
 void BallSpawner::SpawnPokeBall()
 {
-	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(45, 50, -25)), new ParticleRenderer() });
+	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new Particle(Vector3(45, 50, 25)), new ParticleRenderer() });
 	newEntity->SetPosition(Vector3(150, 250, 0));
 	newEntity->GetComponentByType<ParticleRenderer>()->SetTexture(pokeballTexture);
 }

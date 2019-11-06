@@ -3,25 +3,24 @@
 #include "../Math/Vector3.h"
 #include "../Math/Matrix4.h"
 #include "../Math/Quaternion.h";
+#include "../Base/BaseComponent.h"
 
 #include <GL\glew.h>
 #include <SDL_opengl.h>
 
-class Camera
+class Camera : public BaseComponent
 {
 public:
 	Camera(float viewAngle, float nearPlane, float farPlane,
-		int viewWidth = 1, int viewHeight = 1,
-		Vector3 position = Vector3(0.f, 0.f, 0.f),
-		Quaternion rotation = Quaternion::fromEulerAngles(0.f, 0.f, 0.f));
+		int viewWidth = 1, int viewHeight = 1);
 	~Camera();
+	void Initialize();
 
 #define CAMERA_TRANSLATE_FUNCTIONS {
 	void translate(Vector3 translationVector);
 	void translateX(float x);
 	void translateY(float y);
 	void translateZ(float z);
-	Vector3 getPosition();
 #define CAMERA_TRANSLATE_FUNCTIONS_END }
 
 #define CAMERA_ROTATION_FUNCTIONS {
@@ -42,8 +41,6 @@ public:
 
 private:
 #define CAMERA_POSITION_AND_ROTATION {
-	Vector3 position;
-	Quaternion rotation;
 	Vector3 currentRotationChanges;  // Changes during a camera rotation
 	Quaternion getCurrentRotation();  // The camera rotation with the changes of the current rotation
 #define CAMERA_POSITION_AND_ROTATION_END }
@@ -61,6 +58,8 @@ private:
 	float aspectRatio;
 	float nearPlane;
 	float farPlane;
+	int viewWidth;
+	int viewHeight;
 #define CAMERA_PROJECTION_PARAMS_END }
 
 #define CAMERA_MATRIXES {
