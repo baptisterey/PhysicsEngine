@@ -9,6 +9,7 @@
 #include "Renderer/RendererSystem.h"
 #include "Utils/Time.h"
 
+
 #include "EventSystem.h"
 
 #include "../Game/BallSpawner.h"
@@ -44,6 +45,8 @@ int main(int argc, char* args[])
         printf("Failed to initialize SDL! \n");
         return 1;
     }
+
+
 
     Uint64 timeNow = SDL_GetPerformanceCounter();
     Uint64 timeLast = 0;
