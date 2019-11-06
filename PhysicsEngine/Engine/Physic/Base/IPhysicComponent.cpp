@@ -11,7 +11,6 @@ IPhysicComponent::IPhysicComponent() : BaseComponent()
 	}
 }
 
-
 IPhysicComponent::~IPhysicComponent()
 {
 	PhysicSystem* physicSystem = SystemManager::GetSystemByType<PhysicSystem>();
@@ -35,8 +34,7 @@ float IPhysicComponent::GetMass() { return mass; }
 
 float IPhysicComponent::GetInvertedMass() { return invertedMass; }
 
-
-void IPhysicComponent::AddForce(const Vector3 & value)
+void IPhysicComponent::AddForce(const Vector3& value)
 {
 	accumForce = accumForce + value;
 }
