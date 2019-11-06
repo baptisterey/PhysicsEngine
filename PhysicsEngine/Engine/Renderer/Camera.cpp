@@ -38,7 +38,7 @@ void Camera::translate(Vector3 translationVector) {
 
 	// Translation from the camera point of view (not from the point of view of the global axes)
 	Vector3 newPosition = xVector * translationVector.x + upVector * translationVector.y + directionVector * translationVector.z;
-	GetOwner()->SetPosition(GetOwner()->GetPosition() + newPosition);
+	GetOwner()->GetTransform()->SetPosition(GetOwner()->GetTransform()->GetPosition() + newPosition);
 
 	computeViewMatrix();
 }
@@ -67,7 +67,7 @@ void Camera::rotateZ(float angle) {
 	computeViewMatrix();
 }
 void Camera::validateCurrentRotation() {
-	GetOwner()->SetRotation(getCurrentRotation());
+	GetOwner()->GetTransform()->SetRotation(getCurrentRotation());
 	currentRotationChanges = Vector3(0, 0, 0);
 }
 Quaternion Camera::getCurrentRotation() {
@@ -78,7 +78,7 @@ Quaternion Camera::getCurrentRotation() {
 	Quaternion newRotation = Quaternion::fromAngleAndAxis(currentRotationChanges.y, Vector3(0.f, 1.f, 0.f));
 	newRotation *= Quaternion::fromAngleAndAxis(currentRotationChanges.x, xVector);
 
-	return (newRotation * GetOwner()->GetRotation()).normalized();
+	return (newRotation * GetOwner()->GetTransform()->GetRotation()).normalized();
 }
 #define ROTATION_FUNCTIONS_END }
 
@@ -87,8 +87,8 @@ void Camera::computeViewMatrix() {
 	Vector3 directionVector, upVector;
 	getCameraAxis(directionVector, upVector, true);
 
-	projectionMatrix = Matrix4::Identity();
-	viewMatrix = Matrix4::LookAt(GetOwner()->GetPosition(), GetOwner()->GetPosition() + directionVector, upVector);
+	projectionMatrix = Matrix4();
+	viewMatrix = Matrix4::LookAt(GetOwner()->GetTransform()->GetPosition(), GetOwner()->GetTransform()->GetPosition() + directionVector, upVector);
 	viewProjectionMatrix = projectionMatrix * viewMatrix;
 }
 void Camera::computeProjectionMatrix() {
@@ -115,7 +115,7 @@ void Camera::getCameraAxis(Vector3& directionAxis, Vector3& upAxis, bool useCurr
 	Quaternion cameraRotation;
 
 	if (!useCurrentAxis) {
-		cameraRotation = GetOwner()->GetRotation();
+		cameraRotation = GetOwner()->GetTransform()->GetRotation();
 	}
 	else {
 		cameraRotation = getCurrentRotation();

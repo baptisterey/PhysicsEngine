@@ -4,6 +4,8 @@
 Entity::Entity(std::string name) : name(name)
 {
 	id = Utils::GenerateHex(8);
+
+	transform = new Transform();
 }
 
 Entity::~Entity()
@@ -11,6 +13,8 @@ Entity::~Entity()
 	for (const auto& kv : components) {
 		RemoveComponent(kv.first);
 	}
+
+	delete transform;
 }
 
 std::string Entity::GetId()
@@ -40,22 +44,7 @@ void Entity::RemoveComponent(std::string id)
 	}
 }
 
-Vector3 Entity::GetPosition()
+Transform * Entity::GetTransform()
 {
-	return position;
-}
-
-void Entity::SetPosition(Vector3& const value)
-{
-	this->position = value;
-}
-
-Quaternion Entity::GetRotation()
-{
-	return rotation;
-}
-
-void Entity::SetRotation(Quaternion& const value)
-{
-	this->rotation = value;
+	return transform;
 }

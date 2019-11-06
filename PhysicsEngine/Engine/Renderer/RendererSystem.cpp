@@ -14,8 +14,8 @@ RendererSystem::RendererSystem() : ISystem()
     );
 
 	Entity* defaultCamera = EntityManager::CreateEntity("Camera", { mainCamera });
-	defaultCamera->SetPosition(Vector3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1750.f));
-	defaultCamera->SetRotation(Quaternion(1, 0, 0, 0));
+	defaultCamera->GetTransform()->SetPosition(Vector3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 1750.f));
+	defaultCamera->GetTransform()->SetRotation(Quaternion(1, 0, 0, 0));
 	mainCamera->Initialize();
 }
 

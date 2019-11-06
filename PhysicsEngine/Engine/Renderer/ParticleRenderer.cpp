@@ -16,7 +16,7 @@ ParticleRenderer::~ParticleRenderer()
 void ParticleRenderer::Render(GLuint programID, Matrix4 VP)
 {
 	// Where to draw the texture on the screen
-	Vector3 position = GetOwner()->GetPosition();
+	Vector3 position = GetOwner()->GetTransform()->GetPosition();
 	float
 		w = 40,
 		h = 40,

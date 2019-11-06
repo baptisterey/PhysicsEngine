@@ -29,10 +29,10 @@ void SpringForce::UpdateForce(float deltaTime)
 {
 	if (attachedEntity != NULL) // calcul avec une entité
 	{
-		physicComponent->AddForce(Vector3::Normalized(physicComponent->GetOwner()->GetPosition() - attachedEntity->GetPosition()) * (k * (l0 - Vector3::Distance(physicComponent->GetOwner()->GetPosition(), attachedEntity->GetPosition()))));
+		physicComponent->AddForce(Vector3::Normalized(physicComponent->GetOwner()->GetTransform()->GetPosition() - attachedEntity->GetTransform()->GetPosition()) * (k * (l0 - Vector3::Distance(physicComponent->GetOwner()->GetTransform()->GetPosition(), attachedEntity->GetTransform()->GetPosition()))));
 	}
 	else // calcul avec une ancre 
 	{
-		physicComponent->AddForce(Vector3::Normalized(physicComponent->GetOwner()->GetPosition() - anchor) * (k * (l0 - Vector3::Distance(physicComponent->GetOwner()->GetPosition(), anchor))));
+		physicComponent->AddForce(Vector3::Normalized(physicComponent->GetOwner()->GetTransform()->GetPosition() - anchor) * (k * (l0 - Vector3::Distance(physicComponent->GetOwner()->GetTransform()->GetPosition(), anchor))));
 	}
 }

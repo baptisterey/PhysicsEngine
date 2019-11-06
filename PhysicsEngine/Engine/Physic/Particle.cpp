@@ -51,7 +51,7 @@ void Particle::UpdatePhysics(float deltaTime)
 		return;
 	}
 
-	GetOwner()->SetPosition( GetOwner()->GetPosition() + velocity * deltaTime); // Update position based on velocity
+	GetOwner()->GetTransform()->SetPosition( GetOwner()->GetTransform()->GetPosition() + velocity * deltaTime); // Update position based on velocity
 	acceleration = accumForce * GetInvertedMass();
 
 	velocity = velocity + accumForce * deltaTime;
