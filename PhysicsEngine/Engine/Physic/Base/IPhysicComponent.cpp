@@ -39,6 +39,10 @@ void IPhysicComponent::AddForce(const Vector3& value)
 	accumForce = accumForce + value;
 }
 
+void IPhysicComponent::AddTorque()
+{
+}
+
 void IPhysicComponent::ClearAccumForce()
 {
 	accumForce = Vector3();

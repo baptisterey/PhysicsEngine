@@ -15,7 +15,7 @@ public:
 	virtual void UpdatePhysics(float deltaTime) {};
 
 	void AddForce(const Vector3& value);
-	void AddTorque(const&);
+	void AddTorque();
 	void ClearAccumForce();
 
 	Vector3 GetVelocity();
