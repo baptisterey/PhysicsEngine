@@ -12,7 +12,7 @@ Contact::Contact(IPhysicComponent * component1, IPhysicComponent * component2, f
 	components.push_back(component1);
 	components.push_back(component2);
 
-	contactNormal = Vector3::Normalized(component1->GetOwner()->GetPosition() - component2->GetOwner()->GetPosition());
+	contactNormal = Vector3::Normalized(component1->GetOwner()->GetTransform()->GetPosition() - component2->GetOwner()->GetTransform()->GetPosition());
 
 	contactNormal = inverseContactNormal ? contactNormal * -1 : contactNormal;
 }
@@ -78,10 +78,10 @@ void Contact::ResolvePenetration(float time)
 		Vector3 movementPerInvertedMass = contactNormal * (penetration / totalInvertedMass);
 
 		// Add the impulse by proportion to the inverted mass of each objects
-		components[0]->GetOwner()->SetPosition(components[0]->GetOwner()->GetPosition() + (movementPerInvertedMass * components[0]->GetInvertedMass()));
+		components[0]->GetOwner()->GetTransform()->SetPosition(components[0]->GetOwner()->GetTransform()->GetPosition() + (movementPerInvertedMass * components[0]->GetInvertedMass()));
 
 		if (components.size() > 1) {
-			components[1]->GetOwner()->SetPosition(components[1]->GetOwner()->GetPosition() - (movementPerInvertedMass * components[1]->GetInvertedMass()));
+			components[1]->GetOwner()->GetTransform()->SetPosition(components[1]->GetOwner()->GetTransform()->GetPosition() - (movementPerInvertedMass * components[1]->GetInvertedMass()));
 		}
 
 	}

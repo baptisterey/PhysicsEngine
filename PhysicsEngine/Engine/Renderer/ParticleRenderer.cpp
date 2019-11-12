@@ -16,7 +16,7 @@ ParticleRenderer::~ParticleRenderer()
 void ParticleRenderer::Render(GLuint programID, Matrix4 VP)
 {
 	// Where to draw the texture on the screen
-	Vector3 position = GetOwner()->GetPosition();
+	Vector3 position = GetOwner()->GetTransform()->GetPosition();
 	float
 		w = 40,
 		h = 40,
@@ -37,15 +37,6 @@ void ParticleRenderer::Render(GLuint programID, Matrix4 VP)
 		0, 1, 3, // first triangle
 		1, 2, 3  // second triangle
 	};
-
-	Vector3
-		op_tr(vertices[0], vertices[1], vertices[2]), op_br(vertices[8], vertices[9], vertices[10]), 
-		op_bl(vertices[16], vertices[17], vertices[18]), op_tl(vertices[24], vertices[25], vertices[26]),
-		np_tr = VP.TransformPoint(op_tr), np_br = VP.TransformPoint(op_br), np_bl = VP.TransformPoint(op_bl), np_tl = VP.TransformPoint(op_tl),
-		c_1 = np_tr / np_tr.z,
-		c_2 = np_br / np_br.z,
-		c_3 = np_bl / np_bl.z,
-		c_4 = np_tl / np_tl.z;
 
 	// Set up buffer arrays
 	glBindVertexArray(VAO[0]);

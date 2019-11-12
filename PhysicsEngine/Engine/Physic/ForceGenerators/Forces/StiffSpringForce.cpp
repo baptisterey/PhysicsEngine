@@ -15,7 +15,7 @@ StiffSpringForce::~StiffSpringForce()
 void StiffSpringForce::UpdateForce(float deltaTime)
 {
 	Vector3 pt;
-	Vector3 p0 = physicComponent->GetOwner()->GetPosition();
+	Vector3 p0 = physicComponent->GetOwner()->GetTransform()->GetPosition();
 	Vector3 velocity = physicComponent->GetVelocity();
 
 	if (damping == 1 || damping == NULL) { // infinite oscillation

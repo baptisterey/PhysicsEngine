@@ -23,7 +23,7 @@ void BuoyancySpringForce::UpdateForce(float deltaTime)
 {
 	if (maxDepth != 0) {
 		//Compute d, used to determine how the object interacts with the liquid_
-		float d = (physicComponent->GetOwner()->GetPosition().y - liquidLevel - maxDepth) / (2 * maxDepth);
+		float d = (physicComponent->GetOwner()->GetTransform()->GetPosition().y - liquidLevel - maxDepth) / (2 * maxDepth);
 
 		if (d >= 1) { //Submerged entity
 			physicComponent->AddForce(Vector3(0, (objectVolume * liquidDensity) * -1, 0));

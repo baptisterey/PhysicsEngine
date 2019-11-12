@@ -3,6 +3,8 @@
 #include <map>
 
 #include "../Math/Vector3.h"
+#include "../Math/Quaternion.h"
+#include "./Transform.h"
 
 class BaseComponent;
 
@@ -35,12 +37,12 @@ public:
 		return nullptr;
 	}
 
-	Vector3 GetPosition();
-	void SetPosition(Vector3& const value);
+	Transform* GetTransform();
 
 private:
+
 	std::map<std::string, BaseComponent*> components;
 	std::string id;
 
-	Vector3 position;
+	Transform* transform;
 };

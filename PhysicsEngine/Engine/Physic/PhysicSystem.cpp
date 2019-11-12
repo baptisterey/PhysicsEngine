@@ -124,7 +124,7 @@ void PhysicSystem::GenerateInterprenationContacts()
 	for (int i = 0; i < components.size(); i++) {
 		for (int y = i + 1; y < components.size(); y++) {
 
-			const float distance = Vector3::Distance(components[i]->GetOwner()->GetPosition(), components[y]->GetOwner()->GetPosition());
+			const float distance = Vector3::Distance(components[i]->GetOwner()->GetTransform()->GetPosition(), components[y]->GetOwner()->GetTransform()->GetPosition());
 
 			// For now : If the distance between the two objects is less or equal to 40, then there is interpenetration
 			if (distance < 40.0f) {
@@ -149,9 +149,9 @@ void PhysicSystem::GenerateGroundContacts()
 	for (int i = 0; i < components.size(); i++) {
 
 		// The particle is in contact with the ground if its position is inferior to groundPosition
-		if (components[i]->GetOwner()->GetPosition().y < PhysicSystem::GROUND_POSITION) {
+		if (components[i]->GetOwner()->GetTransform()->GetPosition().y < PhysicSystem::GROUND_POSITION) {
 
-			Contact* newContact = new Contact(components[i], PhysicSystem::GROUND_POSITION - components[i]->GetOwner()->GetPosition().y);
+			Contact* newContact = new Contact(components[i], PhysicSystem::GROUND_POSITION - components[i]->GetOwner()->GetTransform()->GetPosition().y);
 			contacts.push_back(newContact);
 		}
 	}
