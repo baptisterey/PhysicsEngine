@@ -30,3 +30,13 @@ void Transform::SetRotation(Quaternion & const value)
 {
 	rotation = value;
 }
+
+Vector3 Transform::WorldToLocal(Vector3 & const value)
+{
+	return value - position;
+}
+
+Vector3 Transform::LocalToWorld(Vector3 & const value)
+{
+	return value + position;
+}

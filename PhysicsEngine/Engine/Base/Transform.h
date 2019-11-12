@@ -34,8 +34,23 @@ public:
 	/// <param name="value">The value (quaternion) to be set.</param>
 	void SetRotation(Quaternion& const value);
 
-private:
+	/// <summary>
+	/// Convert the position form world space to local space.
+	/// </summary>
+	/// <param name="value">The value to convert.</param>
+	/// <returns>The position relative to the transform.</returns>
+	Vector3 WorldToLocal(Vector3& const value);
 
+	/// <summary>
+	/// Convert the position from local space to world space.
+	/// </summary>
+	/// <param name="value">The value to convert.</param>
+	/// <returns>The world position.</returns>
+	Vector3 LocalToWorld(Vector3& const value);
+
+
+private:
+	
 	Vector3 position;
 	Quaternion rotation = Quaternion(1, 0, 0, 0);
 };
