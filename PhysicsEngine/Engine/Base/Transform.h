@@ -6,6 +6,7 @@
 class Transform
 {
 public:
+
 	Transform();
 	~Transform();
 
@@ -38,4 +39,3 @@ private:
 	Vector3 position;
 	Quaternion rotation = Quaternion(1, 0, 0, 0);
 };
-

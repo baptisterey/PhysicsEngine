@@ -24,6 +24,6 @@ private:
 	Quaternion orientation;
 	Vector3 rotation;
 	Matrix4 transformMatrix;
-	//Matrix3 inverseInertiatensor;
+	Matrix3 inverseInertiaTensor;
 	float linearDamping, angularDamping;
 };
