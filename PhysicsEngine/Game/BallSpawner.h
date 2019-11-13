@@ -7,6 +7,7 @@
 #include "../Engine/Physic/ForceGenerators/Spring.h"
 #include "../Engine/Physic/Particle.h"
 #include "../Engine/Renderer/ParticleRenderer.h"
+#include "../Engine/Renderer/CubeRenderer.h"
 #include "../Engine/Renderer/RendererSystem.h"
 #include "../Engine/Utils/Time.h"
 
@@ -37,7 +38,8 @@ private:
 
     void SpawnUltraBallSpring();
     void SpawnSuperBallBuoyancy();
-    void SpawnSuperBallRod();
+	void SpawnSuperBallRod();
+	void SpawnCubeBall();
 
     GLuint ultraballTexture = NULL;
     GLuint superballTexture = NULL;

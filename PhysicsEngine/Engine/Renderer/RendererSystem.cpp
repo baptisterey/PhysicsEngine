@@ -8,7 +8,7 @@ RendererSystem::RendererSystem() : ISystem()
 
     mainCamera = new Camera(.8f,                                                  // View Angle
                             0.1f,                                                 // Near Plane
-                            5000,                                                 // Far Plane
+                            10000,                                                // Far Plane
                             SCREEN_WIDTH,                                         // View Width
                             SCREEN_HEIGHT                                         // View Height
     );
