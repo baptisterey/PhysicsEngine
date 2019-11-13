@@ -50,6 +50,9 @@ void BallSpawner::Update(float deltaTime)
 		case SDLK_d:
 			SpawnSuperBallRod();
 			break;
+		case SDLK_c:
+			SpawnCubeBall();
+			break;
 		}
 		break;
 	}
@@ -114,4 +117,11 @@ void BallSpawner::SpawnSuperBallRod()
 	newEntity2->GetTransform()->SetPosition(Vector3(400, 280, 0));
 
 	newEntity2->GetComponentByType<ParticleRenderer>()->SetTexture(pokeballTexture);
+}
+
+void BallSpawner::SpawnCubeBall()
+{
+	Entity* newEntity = EntityManager::CreateEntity("Cube", { new Particle(Vector3(45, 50, 25)), new CubeRenderer() });
+	newEntity->GetTransform()->SetPosition(Vector3(150, 250, 0));
+	newEntity->GetComponentByType<CubeRenderer>()->SetTexture(pokeballTexture);
 }

@@ -58,6 +58,8 @@ void ParticleRenderer::Render(GLuint programID, Matrix4 VP)
 	float f[4][4];
 	VP.getTransformedMatrix(f);
 	glUniformMatrix4fv(3, 1, false, (const float*) f);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, 0);
 }
 
