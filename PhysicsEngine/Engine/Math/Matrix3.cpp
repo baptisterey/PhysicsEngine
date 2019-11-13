@@ -102,9 +102,9 @@ Matrix3 Matrix3::operator*(Matrix3 const& mat)
 
 Matrix3 Matrix3::operator*(float value)
 {
-	float index[9];
+	std::vector<float> index = std::vector<float>();
 	for (int i = 0; i < 10; i++) {
-		index[i] = matrix[i] * value;
+		index.push_back(matrix[i] * value);
 	}
 	return Matrix3(index);
 }

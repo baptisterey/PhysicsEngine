@@ -22,5 +22,5 @@ public:
 	Matrix3 operator*(Matrix3 const& matrix);
 	Matrix3 operator*(float value);
 
-	float matrix[9];
+	std::vector<float> matrix;
 };
