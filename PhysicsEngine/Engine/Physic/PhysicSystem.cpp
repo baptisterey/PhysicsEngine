@@ -51,6 +51,7 @@ void PhysicSystem::Update()
 
 	// ---------- MANAGE CONTACTS ----------
 
+	/*
 	// Generate the interpenetration contacts
 	GenerateInterprenationContacts();
 
@@ -78,7 +79,7 @@ void PhysicSystem::Update()
 		delete contact;
 	}
 	contacts.clear();
-
+	*/
 	// -------------------------------------
 }
 

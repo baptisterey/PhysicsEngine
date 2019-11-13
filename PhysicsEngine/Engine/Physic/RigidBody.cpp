@@ -1,6 +1,6 @@
 #include "RigidBody.h"
 
-RigidBody::RigidBody(float mass, float radius, float linearDamping, float angularDamping) : linearDamping(linearDamping), angularDamping(angularDamping)
+RigidBody::RigidBody(float mass, float radius, float linearDamping, float angularDamping) : linearDamping(linearDamping), angularDamping(angularDamping), IPhysicComponent(), IForceGenerator()
 {
 	SetMass(mass);
 	SetLocalInverseInertialTensorFromSphere(radius);
@@ -23,6 +23,7 @@ void RigidBody::UpdatePhysics(float deltaTime)
 	if (GetInvertedMass() < 0 || deltaTime <= 0) {
 		return;
 	}
+	
 
 	// Calculate acceleration
 	acceleration = accumForce * GetInvertedMass();
