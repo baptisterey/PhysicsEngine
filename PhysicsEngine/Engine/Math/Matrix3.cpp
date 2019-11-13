@@ -5,21 +5,21 @@ Matrix3::Matrix3()
 {
     for (int i = 0; i < 9; i++)
 	{ 
-		if (i%4 == 0){matrix[i] = 1;}
-        else{matrix[i] = 0;}
+		if (i%4 == 0) { matrix.push_back(1); }
+		else { matrix.push_back(0); }
 	}
 }
 
-Matrix3::Matrix3(float matrixTable[9])
+Matrix3::Matrix3(std::vector<float> matrixTable)
 {
     for (int i = 0; i < 9; i++)
 	{
-        if (i%4 == 0){matrix[i] = 1;}
-        else{matrix[i] = 0;}
+        if (i%4 == 0) { matrix.push_back(1); }
+		else { matrix.push_back(0); }
 	}
 
 	{
-        for (int i = 0; i < 9; i++) 
+        for (int i = 0; i < matrixTable.size(); i++) 
 		{ 
 			matrix[i] = matrixTable[i]; 
 		}
@@ -28,23 +28,23 @@ Matrix3::Matrix3(float matrixTable[9])
 
 Matrix3::Matrix3(float i0, float i1, float i2, float i3, float i4, float i5, float i6, float i7, float i8)
 {
-    matrix[0] = i0;
-    matrix[1] = i1;
-    matrix[2] = i2;
+    matrix.push_back(i0);
+    matrix.push_back(i1);
+    matrix.push_back(i2);
 
-    matrix[3] = i3;
-    matrix[4] = i4;
-    matrix[5] = i5;
+    matrix.push_back(i3);
+    matrix.push_back(i4);
+	matrix.push_back(i5);
 
-    matrix[6] = i6;
-    matrix[7] = i7;
-    matrix[8] = i8;
+	matrix.push_back(i6);
+	matrix.push_back(i7);
+	matrix.push_back(i8);
 }
 
 Matrix3::Matrix3(Matrix3& copyMatrix) {
     for (int i = 0; i < 9; i++)
 	{
-		matrix[i] = copyMatrix.matrix[i];
+		matrix.push_back(copyMatrix.matrix[i]);
 	}
 }
 
@@ -87,13 +87,13 @@ Matrix3 Matrix3::matrix3Transpose() {
 //Operator
 Matrix3 Matrix3::operator*(Matrix3 const& mat)
 {
-    float index[9];
+    std::vector<float> index;
     for (int i = 0; i < 3; i++)
     {
         for (int j = 0; j < 3; j++)
         {
 
-            index[3 * i + j] = matrix[3* i] * mat.matrix[j] + matrix[3*i + 1] * mat.matrix[j + 3] +  matrix[3*i + 2] * mat.matrix[j + 6];
+            index.push_back(matrix[3* i] * mat.matrix[j] + matrix[3*i + 1] * mat.matrix[j + 3] +  matrix[3*i + 2] * mat.matrix[j + 6]);
         }
     }
 

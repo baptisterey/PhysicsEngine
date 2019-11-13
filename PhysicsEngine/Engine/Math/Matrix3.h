@@ -1,5 +1,6 @@
 #pragma once
 #include "Vector3.h"
+#include <vector>
 
 class Matrix3
 {
@@ -7,7 +8,7 @@ public:
 
 	//Constructor
 	Matrix3();
-    Matrix3(float matrixTable[9]);
+    Matrix3(std::vector<float> matrixTable);
     Matrix3(float i0, float i1, float i2, float i3, float i4, float i5, float i6, float i7, float i8);
     Matrix3(Matrix3& copyMatrix);
 
