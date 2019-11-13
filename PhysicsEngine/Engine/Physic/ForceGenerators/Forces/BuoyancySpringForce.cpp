@@ -26,10 +26,10 @@ void BuoyancySpringForce::UpdateForce(float deltaTime)
 		float d = (physicComponent->GetOwner()->GetTransform()->GetPosition().y - liquidLevel - maxDepth) / (2 * maxDepth);
 
 		if (d >= 1) { //Submerged entity
-			physicComponent->AddForce(Vector3(0, (objectVolume * liquidDensity) * -1, 0));
+			//physicComponent->AddForce(Vector3(0, (objectVolume * liquidDensity) * -1, 0));
 		}
 		else if (d >= 0) { //Partially submerded entity
-			physicComponent->AddForce(Vector3(0, (objectVolume * liquidDensity * d) * -1, 0));
+			//physicComponent->AddForce(Vector3(0, (objectVolume * liquidDensity * d) * -1, 0));
 		}
 		//else : object out of water, no force applied by the spring
 	}

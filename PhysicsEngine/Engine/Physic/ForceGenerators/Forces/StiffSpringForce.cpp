@@ -27,5 +27,5 @@ void StiffSpringForce::UpdateForce(float deltaTime)
 		Vector3 c = (p0 * damping / (2 * gamma)) + (physicComponent->GetVelocity() * 1 / gamma);
 		pt = (p0 * cos(gamma * deltaTime) + c * sin(gamma * deltaTime)) * exp((-1 / 2) * damping * deltaTime);
 	}
-	physicComponent->AddForce((pt - p0) * 1 / (deltaTime * deltaTime) - velocity);
+	//physicComponent->AddForce((pt - p0) * 1 / (deltaTime * deltaTime) - velocity);
 }

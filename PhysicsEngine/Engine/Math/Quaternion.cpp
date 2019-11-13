@@ -2,7 +2,10 @@
 
 Quaternion::Quaternion()
 {
-	w = x = y = z = norme = 0;
+	x = y = z = 0;
+	w = 1;
+
+	norme = 1;
 }
 
 Quaternion::Quaternion(float _w, float _x, float _y, float _z)
@@ -86,4 +89,39 @@ Quaternion& Quaternion::operator*=(Quaternion const& q)
 	z = vf.z;
 	norme = sqrt(w * w + x * x + y * y + z * z);
 	return (*this);
+}
+
+Matrix3 Quaternion::ToMatrix3(Quaternion const & q)
+{
+	// Precalculate coordinate products
+	float x = q.x * 2.0F;
+	float y = q.y * 2.0F;
+	float z = q.z * 2.0F;
+	float xx = q.x * x;
+	float yy = q.y * y;
+	float zz = q.z * z;
+	float xy = q.x * y;
+	float xz = q.x * z;
+	float yz = q.y * z;
+	float wx = q.w * x;
+	float wy = q.w * y;
+	float wz = q.w * z;
+
+	// Calculate 3x3 matrix from orthonormal basis
+	Matrix3 m;
+	m.matrix[0] = 1.0f - (yy + zz); m.matrix[1] = xy + wz; m.matrix[2] = xz - wy;
+	m.matrix[3] = xy - wz; m.matrix[4] = 1.0f - (xx + zz); m.matrix[5] = yz + wx;
+	m.matrix[6] = xz + wy; m.matrix[7] = yz - wx; m.matrix[8] = 1.0f - (xx + yy);
+
+	return m;
+}
+
+Quaternion Quaternion::RotateByVector(Quaternion const & q, Vector3 const & vector)
+{
+	Quaternion
+		a = q,
+		b = Quaternion::fromAngleAndAxis(0, vector),
+		c = q.conjugated(),
+		d = a * b * c;
+	return d;
 }

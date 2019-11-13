@@ -3,6 +3,8 @@
 #include "../Math/Vector3.h"
 #include "../Math/Quaternion.h"
 
+#include "../Math/Matrix4.h"
+
 class Transform
 {
 public:
@@ -48,9 +50,17 @@ public:
 	/// <returns>The world position.</returns>
 	Vector3 LocalToWorld(Vector3& const value);
 
+	/// <summary>
+	/// Get the transform matrix (rotation) of this transform
+	/// </summary>
+	/// <returns></returns>
+	Matrix3 GetTransformMatrix();
+
 
 private:
 	
 	Vector3 position;
 	Quaternion rotation = Quaternion(1, 0, 0, 0);
+
+	Matrix3 transformMatrix;
 };

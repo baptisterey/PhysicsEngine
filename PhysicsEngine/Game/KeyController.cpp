@@ -33,6 +33,6 @@ void KeyController::Update(float deltaTime)
 
 	IPhysicComponent* physicComponent = GetOwner()->GetComponentByType<IPhysicComponent>();
 	if (physicComponent != nullptr) {
-		physicComponent->AddForce(direction * movementSpeed);
+		physicComponent->AddForceAtBodyPoint(direction * movementSpeed, Vector3());
 	}
 }

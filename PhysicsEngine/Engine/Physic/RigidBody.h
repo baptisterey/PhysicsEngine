@@ -3,27 +3,40 @@
 #include "Base/IPhysicComponent.h"
 #include "../Math/Quaternion.h"
 #include "../Math/Vector3.h"
-//#include "../Math/Matrix3.h"
-#include "../Math/Matrix4.h"
+#include "./ForceGenerators/IForceGenerator.h"
+#include "./ForceGenerators/Forces/GravityForce.h"
 
-class RigidBody : public IPhysicComponent
+class RigidBody : public IPhysicComponent, public IForceGenerator
 {
 public:
 
-	RigidBody();
-	RigidBody(Quaternion orientation, Vector3 rotation, float linearDamping, Vector3 vel, float mass);
+	/// <summary>
+	/// Construct a rigidbody based on a sphere of radius.
+	/// </summary>
+	RigidBody(float mass, float radius, float linearDamping, float angularDamping);
+
+	/// <summary>
+	/// Construct a rigidbody based on a box of dx, dy, dz.
+	/// </summary>
+	RigidBody(float mass, float dx, float dy, float dz, float linearDamping, float angularDamping);
 
 	~RigidBody();
 
 	void UpdatePhysics(float deltaTime);
 
-	void addForceAtPoint(Vector3 force, Vector3 point);
-	void addForceAtBodyPoint(Vector3 force, Vector3 point);
+	std::vector<IForce*> GetForces(float time);
+
+	void SetGravity(bool value);
+	bool GetGravity();
+
 private:
 
-	Quaternion orientation;
-	Vector3 rotation;
-	Matrix4 transformMatrix;
-	Matrix3 inverseInertiaTensor;
+	Matrix3 globalInverseInertialTensor;
+	Matrix3 localInverseInertialTensor;
 	float linearDamping, angularDamping;
+
+	void SetLocalInverseInertialTensorFromSphere(float radius);
+	void SetLocalInverseInertialTensformFromBox(float dx, float dy, float dz);
+
+	bool gravity = true;
 };

@@ -23,6 +23,5 @@ public:
 	Matrix4 operator*(Matrix4 const& matrix);
     Vector3 operator*(Vector3 const& v);
 
-private:
-    float matrix[16];
+	float matrix[16];
 };

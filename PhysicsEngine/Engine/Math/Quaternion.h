@@ -3,6 +3,8 @@
 #include "Vector3.h"
 #include <math.h>
 
+#include "Matrix3.h"
+
 class Quaternion {
 public:
 	Quaternion();
@@ -17,6 +19,11 @@ public:
 	// ---- OPERATOR OVERLOADING ----
 	Quaternion operator*(Quaternion const& q) const;
 	Quaternion& operator*=(Quaternion const& q);
+	// ------------------------------
+
+	static Matrix3 ToMatrix3(Quaternion const& q);
+	static Quaternion RotateByVector(Quaternion const& q, Vector3 const & vector);
+
 private:
 	float x, y, z, w;
 	float norme;
