@@ -64,7 +64,9 @@ void ParticleRenderer::Render(GLuint programID, Matrix4 VP)
 	glEnableVertexAttribArray(2);
 
 	glBindTexture(GL_TEXTURE_2D, texture);
-	glUniformMatrix4fv(3, 1, false, (const float*) &VP);
+	float f[4][4];
+	VP.getTransformedMatrix(f);
+	glUniformMatrix4fv(3, 1, false, (const float*) f);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, 0);
 }
 

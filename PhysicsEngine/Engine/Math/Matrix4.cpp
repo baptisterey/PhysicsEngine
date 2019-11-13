@@ -242,3 +242,14 @@ Vector3 Matrix4::operator*(Vector3 const& v)// to multiplie a Vector3 with a Mat
     z = matrix[8] * v.x + matrix[9] * v.y + matrix[10] * v.z + matrix[11];
     return Vector3(x, y, z);
 }//
+
+void Matrix4::getTransformedMatrix(float temp[4][4])
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			temp[j][i] = matrix[4 * i + j];
+		}
+	}
+}
