@@ -121,7 +121,7 @@ void BallSpawner::SpawnSuperBallRod()
 
 void BallSpawner::SpawnCubeBall()
 {
-	Entity* newEntity = EntityManager::CreateEntity("Cube", { new Particle(Vector3(45, 50, 25)), new CubeRenderer() });
+	Entity* newEntity = EntityManager::CreateEntity("Cube", { new Particle(Vector3(45, 50, 25)), new CubeRenderer(40, 40, 40) });
 	newEntity->GetTransform()->SetPosition(Vector3(150, 250, 0));
 	newEntity->GetComponentByType<CubeRenderer>()->SetTexture(pokeballTexture);
 }

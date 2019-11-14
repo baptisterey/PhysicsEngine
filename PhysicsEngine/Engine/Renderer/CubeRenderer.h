@@ -13,7 +13,7 @@
 class CubeRenderer : public IRendererComponent
 {
 public:
-	CubeRenderer();
+	CubeRenderer(float width, float height, float depth);
 	~CubeRenderer();
 
 	void Render(GLuint programID, Matrix4 VP);
@@ -24,7 +24,7 @@ public:
 
 	bool wireframe = true;
 private:
-
+	float w, h, p;
 	GLuint texture;
 	GLuint VAO[1], VBO[1], EBO[1];
 };

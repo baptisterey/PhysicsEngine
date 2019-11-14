@@ -14,6 +14,7 @@ Quaternion::Quaternion(float _w, float _x, float _y, float _z)
 	x = _x;
 	y = _y;
 	z = _z;
+
 	norme = sqrt(w * w + x * x + y * y + z * z);
 }
 
@@ -38,7 +39,7 @@ Quaternion Quaternion::fromEulerAngles(float x, float y, float z)
 		cy * cp * sr - sy * sp * cr,
 		sy * cp * sr + cy * sp * cr,
 		sy * cp * cr - cy * sp * sr
-	);
+	).normalize();
 }
 
 Vector3 Quaternion::vector() const
@@ -51,6 +52,18 @@ Quaternion Quaternion::normalized() const
 	return Quaternion(w / norme, x / norme, y / norme, z / norme);
 }
 
+Quaternion& Quaternion::normalize()
+{
+	if (norme != 1) {
+		w /= norme;
+		x /= norme;
+		y /= norme;
+		z /= norme;
+		norme = 1;
+	}
+	return (*this);
+}
+
 Quaternion Quaternion::conjugated() const
 {
 	return Quaternion::fromAngleAndAxis(w, -vector());
@@ -58,8 +71,12 @@ Quaternion Quaternion::conjugated() const
 
 Vector3 Quaternion::rotatedVector(Vector3 vector)
 {
+	if (vector.x == vector.y && vector.x == vector.z && vector.x == 0)
+		return Vector3(0, 0, 0);
+
 	// ret QR * QV * QR'
 	// QR: rotation; QV: vector; QR': reverse rotation
+	normalize();
 	Quaternion
 		a = (*this),
 		b = Quaternion::fromAngleAndAxis(0, vector),
@@ -119,6 +136,6 @@ Matrix3 Quaternion::ToMatrix3(Quaternion const & q)
 
 Quaternion Quaternion::RotateByVector(Quaternion const & q, Vector3 const & vector)
 {
-	Quaternion quaternion = q * Quaternion(0, vector.x, vector.y, vector.z);
-	return Quaternion(quaternion.w, q.x, q.y, q.z);
+	Quaternion q2 = Quaternion::fromEulerAngles(vector.x, vector.y, vector.z);
+	return (q2 * q).normalize();
 }

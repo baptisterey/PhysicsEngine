@@ -1,6 +1,6 @@
 #include "CubeRenderer.h"
 
-CubeRenderer::CubeRenderer() : BaseComponent(), IRendererComponent()
+CubeRenderer::CubeRenderer(float width, float height, float depth) : w(width), h(height), p(depth), BaseComponent(), IRendererComponent()
 {
 	texture = NULL;
 	glGenVertexArrays(1, VAO);
@@ -20,9 +20,6 @@ void CubeRenderer::Render(GLuint programID, Matrix4 VP)
 	Quaternion rotation = GetOwner()->GetTransform()->GetRotation();
 
 	float
-		w = 80,
-		h = 40,
-		p = 40,
 		x = (int)position.x,
 		y = (int)position.y,
 		z = (int)position.z;
