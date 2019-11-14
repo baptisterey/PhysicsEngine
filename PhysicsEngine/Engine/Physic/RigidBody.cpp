@@ -41,7 +41,8 @@ void RigidBody::UpdatePhysics(float deltaTime)
 	GetOwner()->GetTransform()->SetPosition(GetOwner()->GetTransform()->GetPosition() + velocity * deltaTime);
 
 	// Update rotation
-	GetOwner()->GetTransform()->SetRotation(Quaternion::RotateByVector(GetOwner()->GetTransform()->GetRotation(), angularVelocity));
+	Quaternion newRotation = Quaternion::RotateByVector(GetOwner()->GetTransform()->GetRotation(), angularVelocity);
+	GetOwner()->GetTransform()->SetRotation(newRotation);
 
 	// Update the globaInverseInertialTensor for this object (the transform matrix is handle by the transform object)
 	globalInverseInertialTensor = GetOwner()->GetTransform()->GetTransformMatrix().matrix3Inverse() * localInverseInertialTensor * GetOwner()->GetTransform()->GetTransformMatrix();
@@ -74,12 +75,16 @@ bool RigidBody::GetGravity()
 
 void RigidBody::SetLocalInverseInertialTensorFromSphere(float radius)
 {
-	float value = (2 / 5) * GetMass() * radius * radius;
+	float value = (2.0f / 5.0f) * GetMass() * radius * radius;
 	localInverseInertialTensor = (Matrix3() * value).matrix3Inverse();
+
+	globalInverseInertialTensor = localInverseInertialTensor;
 }
 
 void RigidBody::SetLocalInverseInertialTensformFromBox(float dx, float dy, float dz)
 {
-	float k = (1 / 12) * GetMass();
+	float k = (1.0f / 12.0f) * GetMass();
 	localInverseInertialTensor = Matrix3(k*(dy*dy + dz * dz), 0, 0, 0, k*(dx*dx + dz * dz), 0, 0, 0, k*(dx*dx + dy * dy)).matrix3Inverse();
+
+	globalInverseInertialTensor = localInverseInertialTensor;
 }

@@ -18,14 +18,16 @@ void CubeRenderer::Render(GLuint programID, Matrix4 VP)
 	// Where to draw the texture on the screen
 	Vector3 position = GetOwner()->GetTransform()->GetPosition();
 	Quaternion rotation = GetOwner()->GetTransform()->GetRotation();
+
 	float
-		w = 40,
+		w = 80,
 		h = 40,
 		p = 40,
 		x = (int)position.x,
 		y = (int)position.y,
 		z = (int)position.z;
 	
+
 	Vector3
 		p0 = rotation.rotatedVector(Vector3(w, h, -p)) + position,		// top right back
 		p1 = rotation.rotatedVector(Vector3(w, -h, -p)) + position,		// bottom right back

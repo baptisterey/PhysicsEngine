@@ -4,7 +4,7 @@
 
 Transform::Transform()
 {
-	
+	transformMatrix = Quaternion::ToMatrix3(rotation);
 }
 
 
@@ -31,7 +31,8 @@ Quaternion Transform::GetRotation()
 void Transform::SetRotation(Quaternion & const value)
 {
 	rotation = value;
-	transformMatrix = Quaternion::ToMatrix3(value);
+
+	transformMatrix = Quaternion::ToMatrix3(rotation).matrix3Inverse();
 }
 
 Vector3 Transform::WorldToLocal(Vector3 & const value)
