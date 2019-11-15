@@ -41,8 +41,11 @@ void RigidbodySpawner::Update(float deltaTime)
 
 void RigidbodySpawner::SpawnRigidbodyTest()
 {
+
+	std::cout << "Cube created, what a beautiful cube flying in the air I love that guy!" << std::endl;
+
 	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new RigidBody(1, 80, 40, 40, 1, 1), new CubeRenderer(80, 40, 40) });
 	newEntity->GetTransform()->SetPosition(Vector3(150, 250, 0));
 
-	newEntity->GetComponentByType<RigidBody>()->AddForceAtBodyPoint(Vector3(0, 0, 500), Vector3(0, 0, -10));
+	newEntity->GetComponentByType<RigidBody>()->AddForceAtBodyPoint(Vector3(0, 0, 10), Vector3(-10, 0, 0));
 }

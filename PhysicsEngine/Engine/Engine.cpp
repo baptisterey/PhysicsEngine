@@ -41,6 +41,7 @@ bool InitSDL()
 
 int main(int argc, char* args[])
 {
+
     if (!InitSDL())
     {
         printf("Failed to initialize SDL! \n");
