@@ -25,21 +25,21 @@ Quaternion Quaternion::fromAngleAndAxis(float angle, Vector3 axis)
 
 Quaternion Quaternion::fromEulerAngles(float x, float y, float z)
 {
-	// Code inspired by https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
-	// Abbreviations for the various angular functions
-	double cy = cos(z * 0.5);
-	double sy = sin(z * 0.5);
-	double cp = cos(y * 0.5);
-	double sp = sin(y * 0.5);
-	double cr = cos(x * 0.5);
-	double sr = sin(x * 0.5);
+
+	float c1 = cos(z * 0.5f);
+	float c2 = cos(x * 0.5f);
+	float c3 = cos(y * 0.5f);
+
+	float s1 = sin(z * 0.5f);
+	float s2 = sin(x * 0.5f);
+	float s3 = sin(y * 0.5f);
 
 	return Quaternion(
-		cy * cp * cr + sy * sp * sr,
-		cy * cp * sr - sy * sp * cr,
-		sy * cp * sr + cy * sp * cr,
-		sy * cp * cr - cy * sp * sr
-	).normalize();
+		c1 * c2 * c3 - s1 * s2 * s3,
+		s1 * s2 * c3 + c1 * c2 * s3,
+		s1 * c2 * c3 + c1 * s2 * s3,
+		c1 * s2 * c3 - s1 * c2 * s3
+	);
 }
 
 Vector3 Quaternion::vector() const
@@ -47,19 +47,23 @@ Vector3 Quaternion::vector() const
 	return Vector3(x, y, z);
 }
 
-Quaternion Quaternion::normalized() const
-{
-	return Quaternion(w / norme, x / norme, y / norme, z / norme);
-}
-
 Quaternion& Quaternion::normalize()
 {
-	if (norme != 1) {
-		w /= norme;
-		x /= norme;
-		y /= norme;
-		z /= norme;
-		norme = 1;
+	float d = w * w + x * x + y * y + z * z;
+	if (d == 0) {
+		w = 1;
+		x = 0;
+		y = 0;
+		z = 0;
+	}
+	else {
+
+		d = 1 / sqrt(d);
+
+		w = w * d;
+		x = x * d;
+		y = y * d;
+		z = z * d;
 	}
 	return (*this);
 }
@@ -136,6 +140,6 @@ Matrix3 Quaternion::ToMatrix3(Quaternion const & q)
 
 Quaternion Quaternion::RotateByVector(Quaternion const & q, Vector3 const & vector)
 {
-	Quaternion q2 = Quaternion::fromEulerAngles(vector.x, vector.y, vector.z);
+	Quaternion q2 = Quaternion(0, vector.x, vector.y, vector.z);
 	return (q2 * q).normalize();
 }

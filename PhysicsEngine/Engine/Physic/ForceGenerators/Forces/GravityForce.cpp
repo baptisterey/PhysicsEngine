@@ -8,6 +8,7 @@ GravityForce::GravityForce(IPhysicComponent* physicComponent) : IForce(physicCom
 
 GravityForce::~GravityForce()
 {
+
 }
 
 void GravityForce::UpdateForce(float deltaTime)

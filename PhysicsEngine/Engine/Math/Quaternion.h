@@ -12,7 +12,6 @@ public:
 	static Quaternion fromAngleAndAxis(float angle, Vector3 axis);
 	static Quaternion fromEulerAngles(float x, float y, float z);
 	Vector3 vector() const;
-	Quaternion normalized() const;
 	Quaternion& normalize();
 	Quaternion conjugated() const;
 	Vector3 rotatedVector(Vector3 vector);

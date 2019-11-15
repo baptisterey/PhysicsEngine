@@ -24,7 +24,6 @@ void RigidBody::UpdatePhysics(float deltaTime)
 		return;
 	}
 	
-
 	// Calculate acceleration
 	acceleration = accumForce * GetInvertedMass();
 
