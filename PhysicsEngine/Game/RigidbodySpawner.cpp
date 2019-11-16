@@ -32,20 +32,25 @@ void RigidbodySpawner::Update(float deltaTime)
 	case SDL_KEYDOWN:
 		switch (event->key.keysym.sym) {
 		case SDLK_a:
-			SpawnRigidbodyTest();
+			SpawnRigidbodyTest(false);
+			break;
+		case SDLK_z:
+			SpawnRigidbodyTest(true);
 			break;
 		}
+
 		break;
 	}
 }
 
-void RigidbodySpawner::SpawnRigidbodyTest()
+void RigidbodySpawner::SpawnRigidbodyTest(bool force)
 {
 
-	std::cout << "Cube created, what a beautiful cube flying in the air I love that guy!" << std::endl;
-
-	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new RigidBody(1, 80, 40, 40, 1, 1), new CubeRenderer(80, 40, 40) });
+	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new RigidBody(1, 80, 40, 40, 1, 0.9f), new CubeRenderer(80, 40, 40) });
 	newEntity->GetTransform()->SetPosition(Vector3(150, 250, 0));
 
-	newEntity->GetComponentByType<RigidBody>()->AddForceAtBodyPoint(Vector3(0, 0, 10), Vector3(-10, 0, 0));
+	if (force) {
+		newEntity->GetComponentByType<RigidBody>()->AddForceAtBodyPoint(Vector3(0, 0, 100), Vector3(-10, 0, 0));
+	}
+	
 }

@@ -40,8 +40,8 @@ void IPhysicComponent::AddForceAtPoint( Vector3 & const force,  Vector3 & const 
 	accumForce = accumForce + force;
 
 	Vector3 localPoint = GetOwner()->GetTransform()->WorldToLocal(point);
-
 	Vector3 torqueToAdd = (Vector3::Cross(localPoint, force));
+
 	accumTorque = accumTorque + torqueToAdd;
 }
 

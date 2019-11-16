@@ -2,6 +2,7 @@
 
 #include "Vector3.h"
 #include <math.h>
+#include <string>
 
 #include "Matrix3.h"
 
@@ -23,6 +24,8 @@ public:
 
 	static Matrix3 ToMatrix3(Quaternion const& q);
 	static Quaternion RotateByVector(Quaternion const& q, Vector3 const & vector);
+
+	std::string ToString();
 
 private:
 	float x, y, z, w;

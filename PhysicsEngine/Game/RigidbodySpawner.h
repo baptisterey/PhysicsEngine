@@ -32,7 +32,7 @@ public:
 	void Update(float deltaTime);
 
 private:
-	void SpawnRigidbodyTest();
+	void SpawnRigidbodyTest(bool force);
 
 	GLuint ultraballTexture = NULL;
 	GLuint superballTexture = NULL;

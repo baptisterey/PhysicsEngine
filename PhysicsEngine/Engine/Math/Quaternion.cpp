@@ -26,19 +26,18 @@ Quaternion Quaternion::fromAngleAndAxis(float angle, Vector3 axis)
 Quaternion Quaternion::fromEulerAngles(float x, float y, float z)
 {
 
-	float c1 = cos(z * 0.5f);
-	float c2 = cos(x * 0.5f);
-	float c3 = cos(y * 0.5f);
-
-	float s1 = sin(z * 0.5f);
-	float s2 = sin(x * 0.5f);
-	float s3 = sin(y * 0.5f);
+	double cy = cos(z * 0.5);
+	double sy = sin(z * 0.5);
+	double cp = cos(y * 0.5);
+	double sp = sin(y * 0.5);
+	double cr = cos(x * 0.5);
+	double sr = sin(x * 0.5);
 
 	return Quaternion(
-		c1 * c2 * c3 - s1 * s2 * s3,
-		s1 * s2 * c3 + c1 * c2 * s3,
-		s1 * c2 * c3 + c1 * s2 * s3,
-		c1 * s2 * c3 - s1 * c2 * s3
+		cy * cp * cr + sy * sp * sr,
+		cy * cp * sr - sy * sp * cr,
+		sy * cp * sr + cy * sp * cr,
+		sy * cp * cr - cy * sp * sr
 	);
 }
 
@@ -119,17 +118,17 @@ Matrix3 Quaternion::ToMatrix3(Quaternion const & q)
 	double z = q.z;
 	double w = q.w;
 
-	double a = 1 - (2 * y*y + 2 * z*z);
-	double b = 2 * x*y + 2 * z*w;
-	double c = 2 * x*z - 2 * y*w;
+	double a = 1 - (2 * y*y - 2 * z*z);
+	double b = 2 * x*y - 2 * z*w;
+	double c = 2 * x*z + 2 * y*w;
 
-	double d = 2 * x*y - 2 * z*w;
-	double e = 1 - (2 * x*x + 2 * z*z);
-	double f = 2 * y*z + 2 * x*w;
+	double d = 2 * x*y + 2 * z*w;
+	double e = 1 - (2 * x*x - 2 * z*z);
+	double f = 2 * y*z - 2 * x*w;
 
-	double g = 2 * x*z + 2 * y*w;
-	double h = 2 * y*z - 2 * x*w;
-	double i = 1 - (2 * x*x + 2 * y*y);
+	double g = 2 * x*z - 2 * y*w;
+	double h = 2 * y*z + 2 * x*w;
+	double i = 1 - (2 * x*x - 2 * y*y);
 
 	return Matrix3(
 		a, b, c,
@@ -140,6 +139,12 @@ Matrix3 Quaternion::ToMatrix3(Quaternion const & q)
 
 Quaternion Quaternion::RotateByVector(Quaternion const & q, Vector3 const & vector)
 {
-	Quaternion q2 = Quaternion::fromEulerAngles(vector.x, vector.y, vector.z);
-	return (q * q2).normalize();
+	Quaternion q2 = q * Quaternion::fromEulerAngles(vector.x, vector.y, vector.z);
+	//Quaternion q2 = q * Quaternion(0, vector.x, vector.y, vector.z);
+	return q2;
+}
+
+std::string Quaternion::ToString()
+{
+	return "(w : " + std::to_string(w) + ", x : " + std::to_string(x) + ", y : " + std::to_string(y) + ", z : " + std::to_string(z) + ")";
 }

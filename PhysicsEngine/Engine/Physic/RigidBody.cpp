@@ -23,7 +23,10 @@ void RigidBody::UpdatePhysics(float deltaTime)
 	if (GetInvertedMass() < 0 || deltaTime <= 0) {
 		return;
 	}
-	
+
+
+	std::cout << " ------------ " << std::endl;
+
 	// Calculate acceleration
 	acceleration = accumForce * GetInvertedMass();
 
@@ -36,12 +39,18 @@ void RigidBody::UpdatePhysics(float deltaTime)
 	// Update angular velocity
 	angularVelocity = angularVelocity * pow(angularDamping, deltaTime) + angularAcceleration * deltaTime;
 
+
+	std::cout << angularAcceleration.ToString() << std::endl;
+	std::cout << angularVelocity.ToString() << std::endl;
+
 	// Update position
 	GetOwner()->GetTransform()->SetPosition(GetOwner()->GetTransform()->GetPosition() + velocity * deltaTime);
 
 	// Update rotation
 	Quaternion newRotation = Quaternion::RotateByVector(GetOwner()->GetTransform()->GetRotation(), angularVelocity);
 	GetOwner()->GetTransform()->SetRotation(newRotation);
+
+	std::cout << newRotation.ToString() << std::endl;
 
 	// Update the globaInverseInertialTensor for this object (the transform matrix is handle by the transform object)
 	globalInverseInertialTensor = GetOwner()->GetTransform()->GetTransformMatrix().matrix3Inverse() * localInverseInertialTensor * GetOwner()->GetTransform()->GetTransformMatrix();
