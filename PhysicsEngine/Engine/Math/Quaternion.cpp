@@ -140,6 +140,6 @@ Matrix3 Quaternion::ToMatrix3(Quaternion const & q)
 
 Quaternion Quaternion::RotateByVector(Quaternion const & q, Vector3 const & vector)
 {
-	Quaternion q2 = Quaternion(0, vector.x, vector.y, vector.z);
-	return (q2 * q).normalize();
+	Quaternion q2 = Quaternion::fromEulerAngles(vector.x, vector.y, vector.z);
+	return (q * q2).normalize();
 }
