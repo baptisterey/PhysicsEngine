@@ -139,9 +139,14 @@ Matrix3 Quaternion::ToMatrix3(Quaternion const & q)
 
 Quaternion Quaternion::RotateByVector(Quaternion const & q, Vector3 const & vector)
 {
-	Quaternion q2 = q * Quaternion::fromEulerAngles(vector.x, vector.y, vector.z);
-	//Quaternion q2 = q * Quaternion(0, vector.x, vector.y, vector.z);
-	return q2;
+	// return q * Quaternion::fromEulerAngles(vector.x, vector.y, vector.z).normalize();
+	Quaternion q2 = q * Quaternion(0, vector.x, vector.y, vector.z);
+	return Quaternion(
+		q2.w + q.w,
+		q2.x + q.x,
+		q2.y + q.y,
+		q2.z + q.z
+	).normalize();
 }
 
 std::string Quaternion::ToString()
