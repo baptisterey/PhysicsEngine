@@ -28,22 +28,22 @@ void BungeeSpringForce::UpdateForce(float deltaTime)
 	{
 		if (l0 - Vector3::Distance(physicComponent->GetOwner()->GetTransform()->GetPosition(), attachedEntity->GetTransform()->GetPosition()) <= 0)
 		{
-			physicComponent->AddForce(Vector3::Normalized(physicComponent->GetOwner()->GetTransform()->GetPosition() - attachedEntity->GetTransform()->GetPosition()) * (k * (l0 - Vector3::Distance(physicComponent->GetOwner()->GetTransform()->GetPosition(), attachedEntity->GetTransform()->GetPosition()))));
+			//physicComponent->AddForce(Vector3::Normalized(physicComponent->GetOwner()->GetTransform()->GetPosition() - attachedEntity->GetTransform()->GetPosition()) * (k * (l0 - Vector3::Distance(physicComponent->GetOwner()->GetTransform()->GetPosition(), attachedEntity->GetTransform()->GetPosition()))));
 		}
 		else 
 		{
-			physicComponent->AddForce(Vector3());
+			//physicComponent->AddForce(Vector3());
 		}
 	}
 	else //calcul avec une ancre
 	{
 		if (l0 - Vector3::Distance(physicComponent->GetOwner()->GetTransform()->GetPosition(), anchor) <= 0)
 		{
-			physicComponent->AddForce(Vector3::Normalized(physicComponent->GetOwner()->GetTransform()->GetPosition() - anchor) * (k * (l0 - Vector3::Distance(physicComponent->GetOwner()->GetTransform()->GetPosition(), anchor))));
+			//physicComponent->AddForce(Vector3::Normalized(physicComponent->GetOwner()->GetTransform()->GetPosition() - anchor) * (k * (l0 - Vector3::Distance(physicComponent->GetOwner()->GetTransform()->GetPosition(), anchor))));
 		}
 		else
 		{
-			physicComponent->AddForce(Vector3());
+			//physicComponent->AddForce(Vector3());
 		}
 	}
 }

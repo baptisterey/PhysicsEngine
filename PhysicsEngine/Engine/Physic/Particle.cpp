@@ -1,5 +1,5 @@
 #include "Particle.h"
-#include <math.h> 
+#include <math.h>
 
 #include "PhysicSystem.h"
 #include <iostream>
@@ -13,7 +13,6 @@ Particle::Particle() : IPhysicComponent(), IForceGenerator() {
 	velocity = Vector3();
 }
 
-
 Particle::Particle(Vector3 vel, float mass) : IPhysicComponent(), IForceGenerator() {
 	velocity = vel;
 	SetMass(mass);
@@ -25,9 +24,7 @@ Particle::Particle(Vector3 vel, float mass, float kDrag1, float kDrag2) : kDrag1
 	SetMass(mass);
 }
 
-
 Particle::~Particle() {
-
 }
 
 std::vector<IForce*> Particle::GetForces(float time)
@@ -35,14 +32,13 @@ std::vector<IForce*> Particle::GetForces(float time)
 	std::vector<IForce*> forces = std::vector<IForce*>();
 
 	if (gravity) {
-		forces.push_back( new GravityForce(this));
+		forces.push_back(new GravityForce(this));
 	}
 
 	forces.push_back(new DragForce(this, kDrag1, kDrag2));
 
 	return forces;
 }
-
 
 // Update is called once per frame
 void Particle::UpdatePhysics(float deltaTime)
@@ -68,4 +64,3 @@ bool Particle::IsAffectedByGravity()
 {
 	return gravity;
 }
-

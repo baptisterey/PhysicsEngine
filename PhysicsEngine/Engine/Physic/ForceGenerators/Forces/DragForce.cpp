@@ -22,5 +22,5 @@ void DragForce::UpdateForce(float deltaTime)
 	Vector3 absVelocity = Vector3::Abs(physicComponent->GetVelocity());
 	Vector3 drag = (Vector3::Normalized(physicComponent->GetVelocity()) * -1.0f) * (absVelocity * k1 + (absVelocity * absVelocity) * k2);
 
-	physicComponent->AddForce(drag);
+	//physicComponent->AddForce(drag);
 }

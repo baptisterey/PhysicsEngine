@@ -20,8 +20,7 @@ public:
 	//Operator
 	Vector3 operator*(Vector3 const& v);
 	Matrix3 operator*(Matrix3 const& matrix);
+	Matrix3 operator*(float value);
 
-private:
 	std::vector<float> matrix;
-
 };

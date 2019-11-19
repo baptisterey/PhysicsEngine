@@ -78,7 +78,7 @@ Quaternion Camera::getCurrentRotation() {
 	Quaternion newRotation = Quaternion::fromAngleAndAxis(currentRotationChanges.y, Vector3(0.f, 1.f, 0.f));
 	newRotation *= Quaternion::fromAngleAndAxis(currentRotationChanges.x, xVector);
 
-	return (newRotation * GetOwner()->GetTransform()->GetRotation()).normalized();
+	return newRotation * GetOwner()->GetTransform()->GetRotation();
 }
 #define ROTATION_FUNCTIONS_END }
 

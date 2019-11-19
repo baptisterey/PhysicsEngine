@@ -8,9 +8,10 @@ GravityForce::GravityForce(IPhysicComponent* physicComponent) : IForce(physicCom
 
 GravityForce::~GravityForce()
 {
+
 }
 
 void GravityForce::UpdateForce(float deltaTime)
 {
-	physicComponent->AddForce(Vector3(0, -PhysicSystem::GRAVITY_CONST * physicComponent->GetMass(), 0));
+	physicComponent->AddForceAtBodyPoint(Vector3(0, -PhysicSystem::GRAVITY_CONST * physicComponent->GetMass(), 0), Vector3());
 }

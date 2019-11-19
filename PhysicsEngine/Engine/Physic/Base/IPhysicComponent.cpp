@@ -11,7 +11,6 @@ IPhysicComponent::IPhysicComponent() : BaseComponent()
 	}
 }
 
-
 IPhysicComponent::~IPhysicComponent()
 {
 	PhysicSystem* physicSystem = SystemManager::GetSystemByType<PhysicSystem>();
@@ -36,14 +35,30 @@ float IPhysicComponent::GetMass() { return mass; }
 float IPhysicComponent::GetInvertedMass() { return invertedMass; }
 
 
-void IPhysicComponent::AddForce(const Vector3 & value)
+void IPhysicComponent::AddForceAtPoint( Vector3 & const force,  Vector3 & const point)
 {
-	accumForce = accumForce + value;
+	accumForce = accumForce + force;
+
+	Vector3 localPoint = GetOwner()->GetTransform()->WorldToLocal(point);
+	Vector3 torqueToAdd = (Vector3::Cross(localPoint, force));
+
+	accumTorque = accumTorque + torqueToAdd;
+}
+
+void IPhysicComponent::AddForceAtBodyPoint( Vector3 & const force,  Vector3 & const point)
+{
+	Vector3 worldPoint = GetOwner()->GetTransform()->LocalToWorld(point);
+	AddForceAtPoint(force, worldPoint);
 }
 
 void IPhysicComponent::ClearAccumForce()
 {
 	accumForce = Vector3();
+}
+
+void IPhysicComponent::ClearAccumTorqueForce()
+{
+	accumTorque = Vector3();
 }
 
 Vector3 IPhysicComponent::GetVelocity()

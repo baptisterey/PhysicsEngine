@@ -5,9 +5,9 @@
 #include "../Engine/Managers/EntityManager.h"
 #include "../Engine/Managers/SystemManager.h"
 #include "../Engine/Physic/ForceGenerators/Spring.h"
-#include "../Engine/Physic/Particle.h"
-#include "../Engine/Renderer/ParticleRenderer.h"
+#include "../Engine/Physic/RigidBody.h"
 #include "../Engine/Renderer/CubeRenderer.h"
+#include "../Engine/Renderer/ParticleRenderer.h"
 #include "../Engine/Renderer/RendererSystem.h"
 #include "../Engine/Utils/Time.h"
 
@@ -23,25 +23,19 @@
 #include <SDL.h>
 #include <iostream>
 
-class BallSpawner : public ILogicComponent
+class RigidbodySpawner : public ILogicComponent
 {
 public:
-    BallSpawner();
-    ~BallSpawner();
+	RigidbodySpawner();
+	~RigidbodySpawner();
 
-    void Update(float deltaTime);
+	void Update(float deltaTime);
 
 private:
-    void SpawnSuperBall();
-    void SpawnPokeBall();
-    void SpawnUltraBall();
+	void SpawnRigidbodyTest(bool force);
 
-    void SpawnUltraBallSpring();
-    void SpawnSuperBallBuoyancy();
-	void SpawnSuperBallRod();
-	void SpawnCubeBall();
-
-    GLuint ultraballTexture = NULL;
-    GLuint superballTexture = NULL;
-    GLuint pokeballTexture = NULL;
+	GLuint ultraballTexture = NULL;
+	GLuint superballTexture = NULL;
+	GLuint pokeballTexture = NULL;
 };
+

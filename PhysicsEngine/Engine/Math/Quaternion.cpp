@@ -2,7 +2,10 @@
 
 Quaternion::Quaternion()
 {
-	w = x = y = z = norme = 0;
+	x = y = z = 0;
+	w = 1;
+
+	norme = 1;
 }
 
 Quaternion::Quaternion(float _w, float _x, float _y, float _z)
@@ -11,6 +14,7 @@ Quaternion::Quaternion(float _w, float _x, float _y, float _z)
 	x = _x;
 	y = _y;
 	z = _z;
+
 	norme = sqrt(w * w + x * x + y * y + z * z);
 }
 
@@ -21,8 +25,7 @@ Quaternion Quaternion::fromAngleAndAxis(float angle, Vector3 axis)
 
 Quaternion Quaternion::fromEulerAngles(float x, float y, float z)
 {
-	// Code inspired by https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
-	// Abbreviations for the various angular functions
+
 	double cy = cos(z * 0.5);
 	double sy = sin(z * 0.5);
 	double cp = cos(y * 0.5);
@@ -43,9 +46,25 @@ Vector3 Quaternion::vector() const
 	return Vector3(x, y, z);
 }
 
-Quaternion Quaternion::normalized() const
+Quaternion& Quaternion::normalize()
 {
-	return Quaternion(w / norme, x / norme, y / norme, z / norme);
+	float d = w * w + x * x + y * y + z * z;
+	if (d == 0) {
+		w = 1;
+		x = 0;
+		y = 0;
+		z = 0;
+	}
+	else {
+
+		d = 1 / sqrt(d);
+
+		w = w * d;
+		x = x * d;
+		y = y * d;
+		z = z * d;
+	}
+	return (*this);
 }
 
 Quaternion Quaternion::conjugated() const
@@ -55,8 +74,12 @@ Quaternion Quaternion::conjugated() const
 
 Vector3 Quaternion::rotatedVector(Vector3 vector)
 {
+	if (vector.x == vector.y && vector.x == vector.z && vector.x == 0)
+		return Vector3(0, 0, 0);
+
 	// ret QR * QV * QR'
 	// QR: rotation; QV: vector; QR': reverse rotation
+	normalize();
 	Quaternion
 		a = (*this),
 		b = Quaternion::fromAngleAndAxis(0, vector),
@@ -86,4 +109,47 @@ Quaternion& Quaternion::operator*=(Quaternion const& q)
 	z = vf.z;
 	norme = sqrt(w * w + x * x + y * y + z * z);
 	return (*this);
+}
+
+Matrix3 Quaternion::ToMatrix3(Quaternion const & q)
+{
+	double x = q.x;
+	double y = q.y;
+	double z = q.z;
+	double w = q.w;
+
+	double a = 1 - (2 * y*y - 2 * z*z);
+	double b = 2 * x*y - 2 * z*w;
+	double c = 2 * x*z + 2 * y*w;
+
+	double d = 2 * x*y + 2 * z*w;
+	double e = 1 - (2 * x*x - 2 * z*z);
+	double f = 2 * y*z - 2 * x*w;
+
+	double g = 2 * x*z - 2 * y*w;
+	double h = 2 * y*z + 2 * x*w;
+	double i = 1 - (2 * x*x - 2 * y*y);
+
+	return Matrix3(
+		a, b, c,
+		d, e, f,
+		g, h, i
+	);
+}
+
+Quaternion Quaternion::RotateByVector(Quaternion const & q, Vector3 const & vector)
+{
+	// return q * Quaternion::fromEulerAngles(vector.x, vector.y, vector.z).normalize();
+	Quaternion q2 = q * Quaternion(0, vector.x, vector.y, vector.z);
+	return Quaternion(
+		q2.w + q.w,
+		q2.x + q.x,
+		q2.y + q.y,
+		q2.z + q.z
+	).normalize();
+}
+
+std::string Quaternion::ToString()
+{
+	return "(w : " + std::to_string(w) + ", x : " + std::to_string(x) + ", y : " + std::to_string(y) + ", z : " + std::to_string(z) + ")";
 }

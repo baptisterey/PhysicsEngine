@@ -2,7 +2,7 @@
 #include "../../Math/Vector3.h"
 #include "../../Base/BaseComponent.h"
 
-class IPhysicComponent : virtual public BaseComponent 
+class IPhysicComponent : virtual public BaseComponent
 {
 public:
 	IPhysicComponent();
@@ -14,8 +14,12 @@ public:
 
 	virtual void UpdatePhysics(float deltaTime) {};
 
-	void AddForce(const Vector3& value);
+	void AddForceAtPoint( Vector3& const force, Vector3& const point);
+	void AddForceAtBodyPoint( Vector3& const force, Vector3& const point);
+
 	void ClearAccumForce();
+
+	void ClearAccumTorqueForce();
 
 	Vector3 GetVelocity();
 	Vector3 GetAcceleration();
@@ -23,9 +27,8 @@ public:
 	void SetVelocity(Vector3 value);
 
 protected:
-	Vector3 velocity, accumForce, acceleration;
+	Vector3 velocity, accumForce, acceleration, accumTorque, angularVelocity, angularAcceleration;
 
 private:
 	float mass, invertedMass;
 };
-

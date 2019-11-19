@@ -25,6 +25,5 @@ public:
 	Matrix4 operator*(Matrix4 const& matrix);
     Vector3 operator*(Vector3 const& v);
 
-private:
-    std::vector<float> matrix;
+	std::vector<float> matrix;
 };

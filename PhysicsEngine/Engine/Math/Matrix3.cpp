@@ -1,9 +1,5 @@
 #include "Matrix3.h"
 
-
-
-
-
 //Constructor
 Matrix3::Matrix3()
 {
@@ -102,6 +98,15 @@ Matrix3 Matrix3::operator*(Matrix3 const& mat)
     }
 
     return Matrix3(index);
+}
+
+Matrix3 Matrix3::operator*(float value)
+{
+	std::vector<float> index = std::vector<float>();
+	for (int i = 0; i < 9; i++) {
+		index.push_back(matrix[i] * value);
+	}
+	return Matrix3(index);
 }
 
 Vector3 Matrix3::operator*(Vector3 const& v)

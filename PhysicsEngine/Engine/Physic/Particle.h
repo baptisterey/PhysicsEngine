@@ -9,7 +9,6 @@
 
 class Particle : public IPhysicComponent, public IForceGenerator
 {
-
 public:
 
 	Particle();
