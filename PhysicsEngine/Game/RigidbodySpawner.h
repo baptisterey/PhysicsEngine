@@ -30,6 +30,8 @@ public:
 	~RigidbodySpawner();
 
 	void Update(float deltaTime);
+	void SpawnRigidbodyCar();
+	void RigidbodyCarCrash();
 
 private:
 	void SpawnRigidbodyTest(bool force);
@@ -37,5 +39,10 @@ private:
 	GLuint ultraballTexture = NULL;
 	GLuint superballTexture = NULL;
 	GLuint pokeballTexture = NULL;
+
+
+	Entity * Car1;
+	Entity * Car2;
+	bool checkCol = true;
 };
 
