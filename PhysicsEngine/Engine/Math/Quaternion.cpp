@@ -1,5 +1,6 @@
 #include "Quaternion.h"
 
+
 Quaternion::Quaternion()
 {
 	x = y = z = 0;
@@ -7,6 +8,7 @@ Quaternion::Quaternion()
 
 	norme = 1;
 }
+
 
 Quaternion::Quaternion(float _w, float _x, float _y, float _z)
 {
@@ -18,10 +20,12 @@ Quaternion::Quaternion(float _w, float _x, float _y, float _z)
 	norme = sqrt(w * w + x * x + y * y + z * z);
 }
 
+
 Quaternion Quaternion::fromAngleAndAxis(float angle, Vector3 axis)
 {
 	return Quaternion(angle, axis.x, axis.y, axis.z);
 }
+
 
 Quaternion Quaternion::fromEulerAngles(float x, float y, float z)
 {
@@ -41,10 +45,12 @@ Quaternion Quaternion::fromEulerAngles(float x, float y, float z)
 	);
 }
 
+
 Vector3 Quaternion::vector() const
 {
 	return Vector3(x, y, z);
 }
+
 
 Quaternion& Quaternion::normalize()
 {
@@ -67,10 +73,12 @@ Quaternion& Quaternion::normalize()
 	return (*this);
 }
 
+
 Quaternion Quaternion::conjugated() const
 {
 	return Quaternion::fromAngleAndAxis(w, -vector());
 }
+
 
 Vector3 Quaternion::rotatedVector(Vector3 vector)
 {
@@ -111,6 +119,7 @@ Quaternion& Quaternion::operator*=(Quaternion const& q)
 	return (*this);
 }
 
+
 Matrix3 Quaternion::ToMatrix3(Quaternion const & q)
 {
 	double x = q.x;
@@ -136,6 +145,7 @@ Matrix3 Quaternion::ToMatrix3(Quaternion const & q)
 		g, h, i
 	);
 }
+
 
 Quaternion Quaternion::RotateByVector(Quaternion const & q, Vector3 const & vector)
 {
