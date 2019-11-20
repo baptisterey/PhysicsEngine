@@ -26,6 +26,8 @@ public:
 
 	void SetVelocity(Vector3 value);
 
+	void ResetVelocityAndAcceleration();
+
 protected:
 	Vector3 velocity, accumForce, acceleration, accumTorque, angularVelocity, angularAcceleration;
 

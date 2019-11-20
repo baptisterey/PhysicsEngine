@@ -40,6 +40,9 @@ public:
 	void SetGravity(bool value);
 	bool GetGravity();
 
+	float GetLinearDamping();
+	void SetLinearDamping(float value);
+
 private:
 
 	/// <summary>

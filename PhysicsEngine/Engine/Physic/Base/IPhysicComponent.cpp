@@ -75,3 +75,12 @@ void IPhysicComponent::SetVelocity(Vector3 value)
 {
 	velocity = value;
 }
+
+void IPhysicComponent::ResetVelocityAndAcceleration()
+{
+	angularVelocity = Vector3();
+	angularAcceleration = Vector3();
+
+	velocity = Vector3();
+	acceleration = Vector3();
+}

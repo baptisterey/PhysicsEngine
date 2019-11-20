@@ -34,12 +34,9 @@ public:
 	void RigidbodyCarCrash();
 
 private:
-	void SpawnRigidbodyTest(bool force);
 
-	GLuint ultraballTexture = NULL;
-	GLuint superballTexture = NULL;
-	GLuint pokeballTexture = NULL;
-
+	void SpawnRigidbodyTest();
+	void SpawnRigidbodyTest2();
 
 	Entity * Car1;
 	Entity * Car2;
