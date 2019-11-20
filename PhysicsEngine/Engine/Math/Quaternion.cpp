@@ -1,8 +1,6 @@
 #include "Quaternion.h"
 
-/// <summary>
-/// Create a quaternion identity
-/// </summary>
+
 Quaternion::Quaternion()
 {
 	x = y = z = 0;
@@ -11,13 +9,7 @@ Quaternion::Quaternion()
 	norme = 1;
 }
 
-/// <summary>
-/// Create a quaternion from its values (w, x, y, z)
-/// </summary>
-/// <param name="_w"></param>
-/// <param name="_x"></param>
-/// <param name="_y"></param>
-/// <param name="_z"></param>
+
 Quaternion::Quaternion(float _w, float _x, float _y, float _z)
 {
 	w = _w;
@@ -28,24 +20,13 @@ Quaternion::Quaternion(float _w, float _x, float _y, float _z)
 	norme = sqrt(w * w + x * x + y * y + z * z);
 }
 
-/// <summary>
-/// Create a quaternion from a vector (x, y, z) and an angle w
-/// </summary>
-/// <param name="angle"></param>
-/// <param name="axis"></param>
-/// <returns></returns>
+
 Quaternion Quaternion::fromAngleAndAxis(float angle, Vector3 axis)
 {
 	return Quaternion(angle, axis.x, axis.y, axis.z);
 }
 
-/// <summary>
-/// Create a quaternion a matrix rotation (Euler angles in degrees)
-/// </summary>
-/// <param name="x"></param>
-/// <param name="y"></param>
-/// <param name="z"></param>
-/// <returns></returns>
+
 Quaternion Quaternion::fromEulerAngles(float x, float y, float z)
 {
 
@@ -64,19 +45,13 @@ Quaternion Quaternion::fromEulerAngles(float x, float y, float z)
 	);
 }
 
-/// <summary>
-/// Returns quaternion conjuguate (x, y, z)
-/// </summary>
-/// <returns></returns>
+
 Vector3 Quaternion::vector() const
 {
 	return Vector3(x, y, z);
 }
 
-/// <summary>
-/// Normalize current quaternion
-/// </summary>
-/// <returns></returns>
+
 Quaternion& Quaternion::normalize()
 {
 	float d = w * w + x * x + y * y + z * z;
@@ -98,20 +73,13 @@ Quaternion& Quaternion::normalize()
 	return (*this);
 }
 
-/// <summary>
-/// Return current quaternion conjugate (w, -x, -y, -z)
-/// </summary>
-/// <returns></returns>
+
 Quaternion Quaternion::conjugated() const
 {
 	return Quaternion::fromAngleAndAxis(w, -vector());
 }
 
-/// <summary>
-/// Rotates a vector through the current quaternion
-/// </summary>
-/// <param name="vector"></param>
-/// <returns></returns>
+
 Vector3 Quaternion::rotatedVector(Vector3 vector)
 {
 	if (vector.x == vector.y && vector.x == vector.z && vector.x == 0)
@@ -151,11 +119,7 @@ Quaternion& Quaternion::operator*=(Quaternion const& q)
 	return (*this);
 }
 
-/// <summary>
-/// Convert current quaternion to a matrix rotation
-/// </summary>
-/// <param name="q"></param>
-/// <returns></returns>
+
 Matrix3 Quaternion::ToMatrix3(Quaternion const & q)
 {
 	double x = q.x;
@@ -182,12 +146,7 @@ Matrix3 Quaternion::ToMatrix3(Quaternion const & q)
 	);
 }
 
-/// <summary>
-/// Rotate current quaternion with a mtrix rotation (x, y, z) in radians
-/// </summary>
-/// <param name="q"></param>
-/// <param name="vector"></param>
-/// <returns></returns>
+
 Quaternion Quaternion::RotateByVector(Quaternion const & q, Vector3 const & vector)
 {
 	// return q * Quaternion::fromEulerAngles(vector.x, vector.y, vector.z).normalize();
