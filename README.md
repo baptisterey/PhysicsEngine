@@ -1,9 +1,6 @@
 # Physics Engine
 Projet 8INF935 réalisé par Bertrand Gilbert-Collet, Yoann Haffner, Louis Iavarone, Baptiste Rey
 
-### Compilation
-Le dossier du projet comprend les fichiers nécessaires à la compilation via CMake, qu'il est donc nécessaire d'installer.
-
 ## Prise en main du projet avec Visual Studio
 + Fichier > nouveau > Projet à partir de code existant... *Mis à part le nom (PhysicsEngine) et le dossier de projet, tout est par défaut*
 + NuGet: installer 'sdl2.nuget', 'sdl2_image.nuget' et 'nupengl.core'
@@ -12,12 +9,6 @@ Le dossier du projet comprend les fichiers nécessaires à la compilation via CM
 + Si tu veux éditer des fichiers GLSL (shader), je te conseille le plugin d'intégration suivant: https://marketplace.visualstudio.com/items?itemName=DanielScherzer.GLSL
 
 ## Commandes du jeu
-+ a : Envoie une balle simple
-+ z : Fait apparaitre une balle tombante
-+ e : Envoie une balle simple
-+ r : Fait apparaitre deux balles, dont une retenue grace à un ressort
-+ q : Fait apparaitre une balle avec un effet de flottaison, ainsi qu'une balle repère pour la surface de l'eau
-+ d : Fait apparaitre deux balles, reliées par une tige solide
-
-+ Flèches directionnelles : Permet de controller la particule au centre du Blob
-+ Espace : Assemble et désassemble le Blob
++ a : Créer un cube avec une force qui provoque translation et rotation.
++ b : Créer un cube avec une force qui provoque translation et rotation.
++ g : Créer deux voitures qui se déplacent l'une vers l'autre et se frappent.
