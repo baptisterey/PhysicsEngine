@@ -9,11 +9,10 @@ RigidbodySpawner::RigidbodySpawner() : ILogicComponent()
 
 
 	float
-		size = 1000,
-		midSize = size / 2;
+		size = 500;
 
-	Entity* newEntity = EntityManager::CreateEntity("Tree", { new CubeRenderer(size, size, size) });
-	newEntity->GetTransform()->SetPosition(Vector3(-midSize, -midSize, -midSize));
+	Entity* newEntity = EntityManager::CreateEntity("Tree", { new CubeRenderer(1.325*size, size, size) });
+	newEntity->GetTransform()->SetPosition(Vector3(320,240, -500));
 }
 
 

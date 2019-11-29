@@ -4,6 +4,8 @@
 #include <vector>
 #include "ICollider.h"
 
+class ICollider;
+
 class OctoTree {
 public:
 	/// <summary>

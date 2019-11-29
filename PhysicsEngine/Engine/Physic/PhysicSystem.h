@@ -8,13 +8,16 @@
 #include "../Base/ISystem.h"
 #include "Base/IPhysicComponent.h"
 
-#include "./ContactGenerators/IContactGenerator.h";
-#include "./ContactGenerators/Contact.h";
+#include "./ContactGenerators/IContactGenerator.h"
+#include "./ContactGenerators/Contact.h"
 
 #include "./ForceGenerators/IForceGenerator.h"
-#include "Collisions/Collision.h"
-#include "Collisions/OctoTree.h"
 
+
+
+class ICollider;
+class OctoTree;
+class Collision;
 
 struct CollidingEntities {
 	ICollider* A;

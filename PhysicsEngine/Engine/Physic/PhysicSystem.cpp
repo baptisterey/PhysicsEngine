@@ -1,12 +1,12 @@
 #include "PhysicSystem.h"
+#include "Collisions/OctoTree.h"
 
 PhysicSystem::PhysicSystem() : ISystem()
 {
 	float
-		size = 1000,
-		midSize = size / 2;
+		size = 500;
 
-	tree = new OctoTree(0, Vector3(-midSize, -midSize, -midSize), Vector3(size, size, size));
+	tree = new OctoTree(0, Vector3(-11.25, -10, -1000), Vector3(1.325*size, size, 2*size));
 }
 
 
@@ -61,7 +61,10 @@ void PhysicSystem::Update()
 	GenerateContacts(possibleCollisions);
 
 	if (possibleCollisions.size())
+	{
+
 		;
+	}
 
 	// -------------------------------------
 
@@ -112,14 +115,14 @@ void PhysicSystem::RemovePhysicComponent(IPhysicComponent* component)
 	components.erase(std::remove(components.begin(), components.end(), component), components.end());
 }
 
-void PhysicSystem::AddColliderComponent(Collider* collider)
+void PhysicSystem::AddColliderComponent(ICollider* collider)
 {
 	if (collider != nullptr) {
 		colliders.push_back(collider);
 	}
 }
 
-void PhysicSystem::RemoveColliderComponent(Collider* collider)
+void PhysicSystem::RemoveColliderComponent(ICollider* collider)
 {
 	colliders.erase(std::remove(colliders.begin(), colliders.end(), collider), colliders.end());
 }
@@ -228,14 +231,14 @@ void PhysicSystem::SearchBroadCollisions(std::vector<CollidingEntities>& groups)
 
 	// Check broad collisions for every collider
 	for (int i = 0; i < size; i++) {
-		Collider* c1 = colliders[i];
+		ICollider* c1 = colliders[i];
 
 		// Retrieve objects from the concerned zone
-		std::vector<Collider*> objectsArea = tree->Retrieve(c1);
+a		std::vector<ICollider*> objectsArea = tree->Retrieve(c1);
 		int areaSize = objectsArea.size();
 
 		for (int j = 0; j < areaSize; j++) {
-			Collider* c2 = objectsArea[j];
+			ICollider* c2 = objectsArea[j];
 			
 			// Checks cases we don't need to focus on the colision
 			if (c1 == c2) 
@@ -248,8 +251,8 @@ void PhysicSystem::SearchBroadCollisions(std::vector<CollidingEntities>& groups)
 				continue;
 
 			// Check broad collision
-			int distance = c1->GetOwner()->GetTransform()->GetPosition().Distance(c2->GetOwner()->GetTransform()->GetPosition());
-			if (distance > c1->GetBroadRadius() + c2->GetBroadRadius()) {
+			int distance = Vector3::Distance(c1->GetOwner()->GetTransform()->GetPosition(), c2->GetOwner()->GetTransform()->GetPosition());
+			if (distance < c1->GetBroadRadius() + c2->GetBroadRadius()) {
 				groups.push_back({ c1, c2 });
 			}
 		}

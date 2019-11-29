@@ -21,7 +21,7 @@ public:
 
 private:
 	Vector3 contactNormal;
-
+	Vector3 contactPoint;
 	float kRestitution = 1;
 	float penetration;
 
