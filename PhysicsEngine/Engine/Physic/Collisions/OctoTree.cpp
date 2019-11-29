@@ -8,7 +8,7 @@ OctoTree::~OctoTree()
 {
 }
 
-void OctoTree::Insert(ICollider collider) {
+void OctoTree::Insert(ICollider* collider) {
 	if (nodes.size() > 0) {
 		std::vector<int> index = GetIndex(collider);
 		for(int i = 0; i < index.size(); i++)
@@ -34,12 +34,12 @@ void OctoTree::Insert(ICollider collider) {
 	}
 }
 
-std::vector<ICollider> OctoTree::Retrieve(ICollider collider) {
+std::vector<ICollider*> OctoTree::Retrieve(ICollider* collider) {
 	if (nodes.size() > 0) {
-		std::vector<ICollider> ret;
+		std::vector<ICollider*> ret;
 		std::vector<int> indexs = GetIndex(collider);
 		for (int i = 0; i < indexs.size(); i++) {
-			std::vector<ICollider> possibleCols = nodes[indexs[i]].Retrieve(collider);
+			std::vector<ICollider*> possibleCols = nodes[indexs[i]].Retrieve(collider);
 			for (int j = 0; j < possibleCols.size(); j++)
 				ret.push_back(possibleCols[j]);
 		}
@@ -73,11 +73,11 @@ void OctoTree::Split()
 	nodes.push_back(OctoTree(level + 1, Vector3(position.x + subSize.x, position.y + subSize.y, position.z + subSize.z), subSize));
 }
 
-std::vector<int> OctoTree::GetIndex(ICollider collider) {
+std::vector<int> OctoTree::GetIndex(ICollider* collider) {
 	std::vector<int> index;
 
-	Vector3 cPos = collider.GetOwner()->GetTransform()->GetPosition();
-	float cRad = collider.GetBroadRadius();
+	Vector3 cPos = collider->GetOwner()->GetTransform()->GetPosition();
+	float cRad = collider->GetBroadRadius();
 	if (cPos.x + cRad < position.x || position.x + size.x < cPos.x - cRad ||
 		cPos.y + cRad < position.y || position.y + size.y < cPos.y - cRad || 
 		cPos.z + cRad < position.z || position.z + size.z < cPos.z - cRad)

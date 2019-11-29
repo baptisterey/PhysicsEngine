@@ -7,6 +7,7 @@
 #include "../Engine/Physic/ForceGenerators/Spring.h"
 #include "../Engine/Physic/RigidBody.h"
 #include "../Engine/Renderer/CubeRenderer.h"
+#include "../Engine/Physic/Collisions/CubeCollider.h"
 #include "../Engine/Renderer/ParticleRenderer.h"
 #include "../Engine/Renderer/RendererSystem.h"
 #include "../Engine/Utils/Time.h"
