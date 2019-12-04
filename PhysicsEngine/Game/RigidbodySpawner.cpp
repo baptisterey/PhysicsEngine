@@ -6,6 +6,13 @@ RigidbodySpawner::RigidbodySpawner() : ILogicComponent()
 
 	Car1 = nullptr;
 	Car2 = nullptr;
+
+
+	float
+		size = 500;
+
+	Entity* newEntity = EntityManager::CreateEntity("Tree", { new CubeRenderer(1.325*size, size, size) });
+	newEntity->GetTransform()->SetPosition(Vector3(320,240, -500));
 }
 
 
@@ -42,7 +49,7 @@ void RigidbodySpawner::Update(float deltaTime)
 void RigidbodySpawner::SpawnRigidbodyTest()
 {
 
-	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new RigidBody(1, 80, 40, 40, 1, 0.9f), new CubeRenderer(80, 40, 40) });
+	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new RigidBody(1, 80, 40, 40, 1, 0.9f), new CubeRenderer(80, 40, 40), new CubeCollider(80, 40, 40) });
 	newEntity->GetTransform()->SetPosition(Vector3(150, 250, 0));
 
 	newEntity->GetComponentByType<RigidBody>()->AddForceAtBodyPoint(Vector3(0, 450, 100), Vector3(-8, 8, 0));
@@ -50,8 +57,7 @@ void RigidbodySpawner::SpawnRigidbodyTest()
 
 void RigidbodySpawner::SpawnRigidbodyTest2()
 {
-
-	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new RigidBody(1, 80, 40, 40, 1, 0.95f), new CubeRenderer(80, 55, 40) });
+	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new RigidBody(1, 80, 40, 40, 1, 0.95f), new CubeRenderer(80, 55, 40), new CubeCollider(80, 55, 40) });
 	newEntity->GetTransform()->SetPosition(Vector3(150, 250, 0));
 
 	newEntity->GetComponentByType<RigidBody>()->AddForceAtBodyPoint(Vector3(250, 450, 0), Vector3(-8, 8, 6));
@@ -61,10 +67,10 @@ void RigidbodySpawner::SpawnRigidbodyTest2()
 void RigidbodySpawner::SpawnRigidbodyCar()
 {
 
-	Car1 = EntityManager::CreateEntity("BasketBall", { new RigidBody(1, 80, 40, 40, 1, 0.65f), new CubeRenderer(80, 40, 40) });
+	Car1 = EntityManager::CreateEntity("BasketBall", { new RigidBody(1, 80, 40, 40, 1, 0.65f), new CubeRenderer(80, 40, 40), new CubeCollider(80, 40, 40) });
 	Car1->GetTransform()->SetPosition(Vector3(50, 250, 0));
 
-	Car2 = EntityManager::CreateEntity("VollzyBall", { new RigidBody(1, 100, 50, 50, 1, 0.65f), new CubeRenderer(100, 50, 50) });
+	Car2 = EntityManager::CreateEntity("VollzyBall", { new RigidBody(1, 100, 50, 50, 1, 0.65f), new CubeRenderer(100, 50, 50), new CubeCollider(100, 50, 50) });
 	Car2->GetTransform()->SetPosition(Vector3(650, 250, 0));
 
 

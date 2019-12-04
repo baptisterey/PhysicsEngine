@@ -1,11 +1,12 @@
 #include "PhysicSystem.h"
-
-#include <limits>
-#include <algorithm> 
+#include "Collisions/OctoTree.h"
 
 PhysicSystem::PhysicSystem() : ISystem()
 {
+	float
+		size = 500;
 
+	tree = new OctoTree(0, Vector3(-11.25, -10, -1000), Vector3(1.325*size, size, 2*size));
 }
 
 
@@ -36,7 +37,6 @@ void PhysicSystem::Update()
 		if (component->IsActive()) {
 			component->UpdatePhysics(Time::deltaTime);
 		}
-		
 	}
 
 	// Clear all forces for this frame
@@ -45,6 +45,26 @@ void PhysicSystem::Update()
 		delete force;
 	}
 	forces.clear();
+	// -------------------------------------
+
+
+	// ---------- MANAGE COLLISIONS --------
+
+	// Broad phase : find possible collisions
+	std::vector<CollidingEntities> possibleCollisions;
+	SearchBroadCollisions(possibleCollisions);
+
+	// Narrow phase : find real collisions
+	SearchNarrowCollisions(possibleCollisions);
+
+	// Contact generation
+	GenerateContacts(possibleCollisions);
+
+	if (possibleCollisions.size())
+	{
+
+		;
+	}
 
 	// -------------------------------------
 
@@ -73,7 +93,7 @@ void PhysicSystem::Update()
 
 	// Resolve the contacts
 	ResolveContacts();
-	
+
 	// Clear all contacts for this frame
 	for (auto contact : contacts) {
 		delete contact;
@@ -83,39 +103,50 @@ void PhysicSystem::Update()
 	// -------------------------------------
 }
 
-void PhysicSystem::AddPhysicComponent(IPhysicComponent * component)
+void PhysicSystem::AddPhysicComponent(IPhysicComponent* component)
 {
 	if (component != nullptr) {
 		components.push_back(component);
 	}
 }
 
-void PhysicSystem::RemovePhysicComponent(IPhysicComponent * component)
+void PhysicSystem::RemovePhysicComponent(IPhysicComponent* component)
 {
 	components.erase(std::remove(components.begin(), components.end(), component), components.end());
 }
 
+void PhysicSystem::AddColliderComponent(ICollider* collider)
+{
+	if (collider != nullptr) {
+		colliders.push_back(collider);
+	}
+}
 
-void PhysicSystem::AddContactGenerator(IContactGenerator * contactGenerator)
+void PhysicSystem::RemoveColliderComponent(ICollider* collider)
+{
+	colliders.erase(std::remove(colliders.begin(), colliders.end(), collider), colliders.end());
+}
+
+void PhysicSystem::AddContactGenerator(IContactGenerator* contactGenerator)
 {
 	if (contactGenerator != nullptr) {
 		contactGenerators.push_back(contactGenerator);
 	}
 }
 
-void PhysicSystem::RemoveContactGenerator(IContactGenerator * contactGenerator)
+void PhysicSystem::RemoveContactGenerator(IContactGenerator* contactGenerator)
 {
 	contactGenerators.erase(std::remove(contactGenerators.begin(), contactGenerators.end(), contactGenerator), contactGenerators.end());
 }
 
-void PhysicSystem::AddForceGenerator(IForceGenerator * forceGenerator)
+void PhysicSystem::AddForceGenerator(IForceGenerator* forceGenerator)
 {
 	if (forceGenerator != nullptr) {
 		forceGenerators.push_back(forceGenerator);
 	}
 }
 
-void PhysicSystem::RemoveForceGenerator(IForceGenerator * forceGenerator)
+void PhysicSystem::RemoveForceGenerator(IForceGenerator* forceGenerator)
 {
 	forceGenerators.erase(std::remove(forceGenerators.begin(), forceGenerators.end(), forceGenerator), forceGenerators.end());
 }
@@ -178,7 +209,7 @@ void PhysicSystem::ResolveContacts()
 
 		if (minSeparatingVelocity >= 0) {
 			// We do nothing if the minimum separating velocity shows that the objects are not going in the same direction
-			break; 
+			break;
 		}
 
 		// Finally resolve the contact
@@ -188,5 +219,54 @@ void PhysicSystem::ResolveContacts()
 	}
 }
 
+void PhysicSystem::SearchBroadCollisions(std::vector<CollidingEntities>& groups)
+{
+	int size = colliders.size();
+
+	// Collider regionalization
+	tree->Clear();
+	for (int i = 0; i < size; i++) {
+		tree->Insert(colliders[i]);
+	}
+
+	// Check broad collisions for every collider
+	for (int i = 0; i < size; i++) {
+		ICollider* c1 = colliders[i];
+
+		// Retrieve objects from the concerned zone
+a		std::vector<ICollider*> objectsArea = tree->Retrieve(c1);
+		int areaSize = objectsArea.size();
+
+		for (int j = 0; j < areaSize; j++) {
+			ICollider* c2 = objectsArea[j];
+			
+			// Checks cases we don't need to focus on the colision
+			if (c1 == c2) 
+				continue;
+			bool alreadyAdded = false;
+			for (int k = 0; k < i && !alreadyAdded; k++)
+				if (colliders[k] == c2)
+					alreadyAdded = true;
+			if (alreadyAdded)
+				continue;
+
+			// Check broad collision
+			int distance = Vector3::Distance(c1->GetOwner()->GetTransform()->GetPosition(), c2->GetOwner()->GetTransform()->GetPosition());
+			if (distance < c1->GetBroadRadius() + c2->GetBroadRadius()) {
+				groups.push_back({ c1, c2 });
+			}
+		}
+	}
+}
+
+void PhysicSystem::SearchNarrowCollisions(std::vector<CollidingEntities>& groups)
+{
+
+
+}
+
+void PhysicSystem::GenerateContacts(std::vector<CollidingEntities>& groups) {
+
+}
 
 

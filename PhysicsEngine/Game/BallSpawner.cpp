@@ -1,6 +1,4 @@
 #include "./BallSpawner.h"
-#include <SDL.h>
-#include <iostream>
 
 BallSpawner::BallSpawner() : ILogicComponent()
 {
