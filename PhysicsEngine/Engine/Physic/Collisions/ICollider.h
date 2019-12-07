@@ -5,10 +5,6 @@
 #include "../PhysicSystem.h"
 
 
-struct Face {
-	Vector3 norm;
-	std::vector<Vector3> vertexs;
-};
 
 class ICollider : virtual public BaseComponent {
 public:
