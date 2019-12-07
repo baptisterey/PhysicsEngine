@@ -10,5 +10,5 @@ Collision::~Collision()
 
 bool Collision::GetContact()
 {
-
+	return true;
 }

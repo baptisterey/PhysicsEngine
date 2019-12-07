@@ -2,9 +2,7 @@
 
 #include "../../Math/Vector3.h"
 #include <vector>
-#include "ICollider.h"
-
-class ICollider;
+#include "CubeCollider.h"
 
 class OctoTree {
 public:
@@ -31,12 +29,14 @@ public:
 	/// exceeds the capacity, it will split and add all
 	/// objects to their corresponding nodes.
 	/// </summary>
-	void Insert(ICollider* collider);
+	void Insert(Vector3 vertex);
+	void Insert(Face face);
 
 	/// <summary>
 	/// Return all objects that could collide with the given object
 	/// </summary>
-	std::vector<ICollider*> Retrieve(ICollider* collider);
+	std::vector<Face> Retrieve(Vector3 vert);
+	std::vector<Face> Retrieve(Face face);
 
 private:
 	/// <summary>
@@ -49,7 +49,8 @@ private:
 	/// object cannot completely fit within a child node and is part
 	/// of the parent node
 	/// </summary>
-	std::vector<int> GetIndex(ICollider* collider);
+	int GetIndex(Vector3 vertex);
+	int GetIndex(Face face);
 
 
 	const int MAX_OBJECTS = 10;
@@ -58,6 +59,7 @@ private:
 	int level;
 	Vector3 size;
 	Vector3 position;
-	std::vector<ICollider*> objects; // Colliders located in the current node
+	std::vector<Vector3> vertexs; // vertexs located in the current node
+	std::vector<Face> faces; // face located in the current node
 	std::vector<OctoTree> nodes; // Subnodes
 };

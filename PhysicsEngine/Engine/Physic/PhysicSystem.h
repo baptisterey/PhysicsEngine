@@ -12,16 +12,14 @@
 #include "./ContactGenerators/Contact.h"
 
 #include "./ForceGenerators/IForceGenerator.h"
-
-
-
+class CubeCollider;
 class ICollider;
 class OctoTree;
 class Collision;
 
 struct CollidingEntities {
-	ICollider* A;
-	ICollider* B;
+	Vector3 point;
+	Face face;
 };
 
 

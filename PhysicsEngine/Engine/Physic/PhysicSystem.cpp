@@ -1,5 +1,6 @@
 #include "PhysicSystem.h"
 #include "Collisions/OctoTree.h"
+#include "Collisions/CubeCollider.h"
 
 PhysicSystem::PhysicSystem() : ISystem()
 {
@@ -225,35 +226,30 @@ void PhysicSystem::SearchBroadCollisions(std::vector<CollidingEntities>& groups)
 
 	// Collider regionalization
 	tree->Clear();
-	for (int i = 0; i < size; i++) {
-		tree->Insert(colliders[i]);
+	for (ICollider* c : colliders) {
+		std::vector<Vector3> vertexs = c->getVertexs();
+		std::vector<Face> faces = c->getFaces();
+		for (Vector3 v : vertexs){ tree->Insert(v); }
+		for (Face f : faces){ tree->Insert(f); }
+
 	}
 
 	// Check broad collisions for every collider
-	for (int i = 0; i < size; i++) {
-		ICollider* c1 = colliders[i];
+	for (ICollider* c : colliders) {
 
-		// Retrieve objects from the concerned zone
-a		std::vector<ICollider*> objectsArea = tree->Retrieve(c1);
-		int areaSize = objectsArea.size();
+		std::vector<Vector3> vertexs = c->getVertexs();
+		//std::vector<Face> faces = c->getFaces();
 
-		for (int j = 0; j < areaSize; j++) {
-			ICollider* c2 = objectsArea[j];
-			
-			// Checks cases we don't need to focus on the colision
-			if (c1 == c2) 
-				continue;
-			bool alreadyAdded = false;
-			for (int k = 0; k < i && !alreadyAdded; k++)
-				if (colliders[k] == c2)
-					alreadyAdded = true;
-			if (alreadyAdded)
-				continue;
-
-			// Check broad collision
-			int distance = Vector3::Distance(c1->GetOwner()->GetTransform()->GetPosition(), c2->GetOwner()->GetTransform()->GetPosition());
-			if (distance < c1->GetBroadRadius() + c2->GetBroadRadius()) {
-				groups.push_back({ c1, c2 });
+	
+		for (Vector3 v : vertexs) { 
+			std::vector<Face> possibleCollisions;
+			possibleCollisions = tree->Retrieve(v); 
+			for (Face collide : possibleCollisions)
+			{
+				if(!(c->related(collide)))
+				{
+					groups.push_back({ v,collide });
+				}
 			}
 		}
 	}

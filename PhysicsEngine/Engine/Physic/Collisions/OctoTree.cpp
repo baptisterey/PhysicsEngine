@@ -8,50 +8,106 @@ OctoTree::~OctoTree()
 {
 }
 
-void OctoTree::Insert(ICollider* collider) {
+void OctoTree::Insert(Vector3 vertex) {
 	if (nodes.size() > 0) {
-		std::vector<int> index = GetIndex(collider);
-		for(int i = 0; i < index.size(); i++)
-			nodes[index[i]].Insert(collider);
+		int index = GetIndex(vertex);
+			nodes[index].Insert(vertex);
 		return;
 	}
-	else if (level == 0 && GetIndex(collider).size() == 0)
+	else if (level == 0 && GetIndex(vertex) == -1)
 		return;
 
-	objects.push_back(collider);
+	vertexs.push_back(vertex);
 
-	if (objects.size() > MAX_OBJECTS && level < MAX_LEVELS - 1) { // First level = 0
+	if (vertexs.size() > MAX_OBJECTS && level < MAX_LEVELS - 1) { // First level = 0
 		Split();
 
-		for (int i = 0; i < objects.size(); i++) {
-			std::vector<int> indexs = GetIndex(objects[i]);
-			for (int j = 0; j < indexs.size(); j++) {
-				nodes[indexs[j]].Insert(objects[i]);
-			}
+		for (int i = 0; i < vertexs.size(); i++) {
+			int index = GetIndex(vertexs[i]);
+			nodes[index].Insert(vertexs[i]);
 		}
 
-		objects.clear();
+		vertexs.clear();
 	}
 }
 
-std::vector<ICollider*> OctoTree::Retrieve(ICollider* collider) {
+
+void OctoTree::Insert(Face face) {
 	if (nodes.size() > 0) {
-		std::vector<ICollider*> ret;
-		std::vector<int> indexs = GetIndex(collider);
-		for (int i = 0; i < indexs.size(); i++) {
-			std::vector<ICollider*> possibleCols = nodes[indexs[i]].Retrieve(collider);
-			for (int j = 0; j < possibleCols.size(); j++)
-				ret.push_back(possibleCols[j]);
+		int index = GetIndex(face);
+		if (index > -1)
+		{
+			nodes[index].Insert(face);
+			return;
 		}
-		return ret;
+	}
+	else if (level == 0 && GetIndex(face) == -1)
+		return;
+
+	faces.push_back(face);
+
+
+
+
+	if (faces.size() > MAX_OBJECTS&& level < MAX_LEVELS - 1) { // First level = 0
+		Split();
+
+		std::vector<Face> _faces;
+		for (Face f : faces) {
+			int index = GetIndex(f);
+			if (index > -1)
+			{
+				nodes[index].Insert(f);
+			}
+			if (index == -2)
+			{
+				_faces.push_back(f);
+			}
+		}
+		faces = _faces;
+	}
+	return;
+
+}
+
+
+
+
+std::vector<Face> OctoTree::Retrieve(Vector3 vert) {
+	std::vector<Face> result;
+	if (nodes.size() > 0) {
+		int index = GetIndex(vert);
+		result = nodes[index].Retrieve(vert);
 	}
 
-	return objects;
+	for (Face f : faces)
+	{
+		result.push_back(f);
+	}
+
+	return result;
+}
+
+std::vector<Face> OctoTree::Retrieve(Face face) {
+	std::vector<Face> result;
+	if (nodes.size() > 0) {
+		int index = GetIndex(face);
+		if (index > -1) {
+			result = nodes[index].Retrieve(face);
+		}
+	}
+
+	for (Face f : faces)
+	{
+		result.push_back(f);
+	}
+
+	return result;
 }
 
 void OctoTree::Clear()
 {
-	objects.clear();
+	vertexs.clear();
 
 	for (int i = 0; i < nodes.size(); i++)
 		nodes[i].Clear();
@@ -73,63 +129,73 @@ void OctoTree::Split()
 	nodes.push_back(OctoTree(level + 1, Vector3(position.x + subSize.x, position.y + subSize.y, position.z + subSize.z), subSize));
 }
 
-std::vector<int> OctoTree::GetIndex(ICollider* collider) {
-	std::vector<int> index;
+int OctoTree::GetIndex(Vector3 vertex) {
 
-	Vector3 cPos = collider->GetOwner()->GetTransform()->GetPosition();
-	float cRad = collider->GetBroadRadius();
-	if (cPos.x + cRad < position.x || position.x + size.x < cPos.x - cRad ||
-		cPos.y + cRad < position.y || position.y + size.y < cPos.y - cRad || 
-		cPos.z + cRad < position.z || position.z + size.z < cPos.z - cRad)
-		return index;
+
+	if (vertex.x < position.x || position.x + size.x < vertex.x ||
+		vertex.y < position.y || position.y + size.y < vertex.y ||
+		vertex.z < position.z || position.z + size.z < vertex.z)
+		return -1;
 
 	Vector3 midPoint = position + size * .5f;
 	bool
-		xNear = cPos.x - cRad < midPoint.x,
-		xFar  = midPoint.x < cPos.x + cRad,
-		yNear = cPos.y - cRad < midPoint.y,
-		yFar  = midPoint.y < cPos.y + cRad,
-		zNear = cPos.z - cRad < midPoint.z,
-		zFar  = midPoint.z < cPos.z + cRad;
+		xNear = vertex.x < midPoint.x,
+		xFar  = midPoint.x < vertex.x,
+		yNear = vertex.y < midPoint.y,
+		yFar  = midPoint.y < vertex.y,
+		zNear = vertex.z < midPoint.z,
+		zFar  = midPoint.z < vertex.z;
 
 	if (xNear) {
 		if (yNear) {
 			if (zNear) {
-				index.push_back(0);
+				return 0;
 			}
 			if (zFar) {
-				index.push_back(1);
+				return 1;
 			}
 		}
 		if (yFar) {
 			if (zNear) {
-				index.push_back(2);
+				return 2;
 			}
 			if (zFar) {
-				index.push_back(3);
+				return 3;
 			}
 		}
 	}
 	if (xFar) {
 		if (yNear) {
 			if (zNear) {
-				index.push_back(4);
+				return 4;
 			}
 
 			if (zFar) {
-				index.push_back(5);
+				return 5;
 			}
 		}
 
 		if (yFar) {
 			if (zNear) {
-				index.push_back(6);
+				return 6;
 			}
 			if (zFar) {
-				index.push_back(7);
+				return 7;
 			}
 		}
 	}
+}
 
+
+int OctoTree::GetIndex(Face face) {
+
+	int index = GetIndex(face.vertexs[0]);
+	for (Vector3 v : face.vertexs)
+	{ 
+		if (!(index == GetIndex(v)))
+		{
+			return -2;
+		}
+	}
 	return index;
 }
