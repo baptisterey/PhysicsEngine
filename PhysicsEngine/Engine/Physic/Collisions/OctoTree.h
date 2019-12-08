@@ -1,8 +1,10 @@
 #pragma once
-
 #include "../../Math/Vector3.h"
-#include <vector>
-#include "CubeCollider.h"
+
+#include <iostream> 
+#include <vector> 
+
+class Face;
 
 class OctoTree {
 public:
@@ -30,13 +32,23 @@ public:
 	/// objects to their corresponding nodes.
 	/// </summary>
 	void Insert(Vector3 vertex);
+
+	/// <summary>
+	/// Insert the object into the quadtree. If the node
+	/// exceeds the capacity, it will split and add all
+	/// objects to their corresponding nodes.
+	/// </summary>
 	void Insert(Face face);
 
 	/// <summary>
 	/// Return all objects that could collide with the given object
 	/// </summary>
-	std::vector<Face> Retrieve(Vector3 vert);
-	std::vector<Face> Retrieve(Face face);
+	std::vector<Face> RetrieveFromVert(Vector3 vert);
+
+	/// <summary>
+	/// Return all objects that could collide with the given object
+	/// </summary>
+	std::vector<Face> RetrieveFromFace(Face face);
 
 private:
 	/// <summary>
@@ -50,6 +62,12 @@ private:
 	/// of the parent node
 	/// </summary>
 	int GetIndex(Vector3 vertex);
+
+	/// <summary>
+	/// Determine which node the object belongs to. -1 means
+	/// object cannot completely fit within a child node and is part
+	/// of the parent node
+	/// </summary>
 	int GetIndex(Face face);
 
 
@@ -59,7 +77,9 @@ private:
 	int level;
 	Vector3 size;
 	Vector3 position;
+
 	std::vector<Vector3> vertexs; // vertexs located in the current node
 	std::vector<Face> faces; // face located in the current node
+
 	std::vector<OctoTree> nodes; // Subnodes
 };

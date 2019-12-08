@@ -1,13 +1,13 @@
 #include "PhysicSystem.h"
 #include "Collisions/OctoTree.h"
-#include "Collisions/CubeCollider.h"
+#include "Collisions/ICollider.h"
 
 PhysicSystem::PhysicSystem() : ISystem()
 {
 	float
 		size = 500;
 
-	tree = new OctoTree(0, Vector3(-11.25, -10, -1000), Vector3(1.325*size, size, 2*size));
+	tree = new OctoTree(0, Vector3(320, 240, -500), Vector3(1.325*size, size, 2*size));
 }
 
 
@@ -60,12 +60,6 @@ void PhysicSystem::Update()
 
 	// Contact generation
 	GenerateContacts(possibleCollisions);
-
-	if (possibleCollisions.size())
-	{
-
-		;
-	}
 
 	// -------------------------------------
 
@@ -222,43 +216,45 @@ void PhysicSystem::ResolveContacts()
 
 void PhysicSystem::SearchBroadCollisions(std::vector<CollidingEntities>& groups)
 {
-	int size = colliders.size();
+	tree->Clear();
 
 	// Collider regionalization
-	tree->Clear();
 	for (ICollider* c : colliders) {
 		std::vector<Vector3> vertexs = c->getVertexs();
 		std::vector<Face> faces = c->getFaces();
 		for (Vector3 v : vertexs){ tree->Insert(v); }
 		for (Face f : faces){ tree->Insert(f); }
-
 	}
-
+	
 	// Check broad collisions for every collider
 	for (ICollider* c : colliders) {
+		
 
 		std::vector<Vector3> vertexs = c->getVertexs();
 		//std::vector<Face> faces = c->getFaces();
-
-	
+		
 		for (Vector3 v : vertexs) { 
-			std::vector<Face> possibleCollisions;
-			possibleCollisions = tree->Retrieve(v); 
+
+			tree->RetrieveFromVert(v);
+
+			/*
 			for (Face collide : possibleCollisions)
 			{
 				if(!(c->related(collide)))
 				{
-					groups.push_back({ v,collide });
+					groups.push_back({ v, collide });
 				}
 			}
+			*/
 		}
+		
 	}
+	
 }
 
 void PhysicSystem::SearchNarrowCollisions(std::vector<CollidingEntities>& groups)
 {
-
-
+	
 }
 
 void PhysicSystem::GenerateContacts(std::vector<CollidingEntities>& groups) {

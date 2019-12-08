@@ -78,16 +78,15 @@ std::vector<Face> CubeCollider::getFaces() {
 
 bool CubeCollider::related(Face f) {
 
-
 	std::vector<Face> faces = getFaces();
 
 	for (Face face : faces)
 	{
-		if (f.norm == face.norm && f.vertexs == face.vertexs)
+		if (f.norm == face.norm) //  && f.vertexs == face.vertexs
 		{
 			return true;
 		}
 	}
-
+	
 	return false;
 }

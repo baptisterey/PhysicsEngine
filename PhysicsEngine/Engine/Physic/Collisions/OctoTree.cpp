@@ -1,4 +1,5 @@
 #include "OctoTree.h"
+#include "ICollider.h"
 
 OctoTree::OctoTree(int _level, Vector3 _position, Vector3 _size) : level(_level), position(_position), size(_size)
 {
@@ -46,9 +47,6 @@ void OctoTree::Insert(Face face) {
 
 	faces.push_back(face);
 
-
-
-
 	if (faces.size() > MAX_OBJECTS&& level < MAX_LEVELS - 1) { // First level = 0
 		Split();
 
@@ -70,14 +68,12 @@ void OctoTree::Insert(Face face) {
 
 }
 
-
-
-
-std::vector<Face> OctoTree::Retrieve(Vector3 vert) {
+std::vector<Face> OctoTree::RetrieveFromVert(Vector3 vert) {
 	std::vector<Face> result;
+
 	if (nodes.size() > 0) {
 		int index = GetIndex(vert);
-		result = nodes[index].Retrieve(vert);
+		result = nodes[index].RetrieveFromVert(vert);
 	}
 
 	for (Face f : faces)
@@ -88,12 +84,12 @@ std::vector<Face> OctoTree::Retrieve(Vector3 vert) {
 	return result;
 }
 
-std::vector<Face> OctoTree::Retrieve(Face face) {
+std::vector<Face> OctoTree::RetrieveFromFace(Face face) {
 	std::vector<Face> result;
 	if (nodes.size() > 0) {
 		int index = GetIndex(face);
 		if (index > -1) {
-			result = nodes[index].Retrieve(face);
+			result = nodes[index].RetrieveFromFace(face);
 		}
 	}
 

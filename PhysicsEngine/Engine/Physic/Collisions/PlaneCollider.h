@@ -11,6 +11,10 @@ public:
 
 	~PlaneCollider();
 
+	std::vector<Vector3> getVertexs();
+	std::vector<Face> getFaces();
+	bool related(Face f);
+
 private:
 
 	Vector3 normal;

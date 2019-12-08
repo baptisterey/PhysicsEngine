@@ -12,16 +12,13 @@
 #include "./ContactGenerators/Contact.h"
 
 #include "./ForceGenerators/IForceGenerator.h"
+#include "Collisions/ICollider.h"
+
 class CubeCollider;
 class ICollider;
 class OctoTree;
 class Collision;
 
-
-struct Face {
-	Vector3 norm;
-	std::vector<Vector3> vertexs;
-};
 
 struct CollidingEntities {
 	Vector3 point;

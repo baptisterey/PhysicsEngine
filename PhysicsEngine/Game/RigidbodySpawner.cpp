@@ -8,8 +8,7 @@ RigidbodySpawner::RigidbodySpawner() : ILogicComponent()
 	Car2 = nullptr;
 
 
-	float
-		size = 500;
+	float size = 500;
 
 	Entity* newEntity = EntityManager::CreateEntity("Tree", { new CubeRenderer(1.325*size, size, size) });
 	newEntity->GetTransform()->SetPosition(Vector3(320,240, -500));
