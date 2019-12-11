@@ -13,17 +13,20 @@
 
 #include "./ForceGenerators/IForceGenerator.h"
 
-
-
+class Collision;
 class ICollider;
 class OctoTree;
-class Collision;
 
-struct CollidingEntities {
-	ICollider* A;
-	ICollider* B;
+struct CollidingVertex {
+	ICollider* collider1;
+	Vector3 vertex;
 };
 
+struct CollidingEntities {
+
+	CollidingVertex collidingVertex;
+	ICollider* colliderToTest;
+};
 
 class PhysicSystem : public ISystem
 {
@@ -48,9 +51,17 @@ public:
 	void AddForceGenerator(IForceGenerator* forceGenerator);
 	void RemoveForceGenerator(IForceGenerator* forceGenerator);
 
+	/// <summary>
+	/// Find all potential collisions between the planes using an octotree. Returns all the potential collisions between a vertex and a plane via the groups vector.
+	/// </summary>
+	/// <param name="groups">The group of colliding entities to modify.</param>
 	void SearchBroadCollisions(std::vector<CollidingEntities>& groups);
+
+	/// <summary>
+	/// Test all potential collisions given the groups params.
+	/// </summary>
+	/// <param name="groups">The group of colliding entities to test.</param>
 	void SearchNarrowCollisions(std::vector<CollidingEntities>& groups);
-	void GenerateContacts(std::vector<CollidingEntities>& groups);
 
 private:
 

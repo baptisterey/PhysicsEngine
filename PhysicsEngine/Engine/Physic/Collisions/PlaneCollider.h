@@ -1,19 +1,25 @@
 #pragma once
-
 #include "ICollider.h"
+#include "../../Math/Vector3.h"
 
-class CubeCollider : public ICollider {
+class PlaneCollider : public ICollider
+{
 public:
-	CubeCollider(float _width, float _height, float _depth);
-	~CubeCollider();
+
+	PlaneCollider();
+	PlaneCollider(Vector3 normal);
+
+	~PlaneCollider();
 
 	std::vector<Vector3> GetVertices();
 
 	std::vector<ContactRigidbody> ResolveCollision(ICollider* collider);
 	std::vector <ContactRigidbody> ResolveCollision(CollidingVertex collidingVertex);
 
+	Vector3 GetNormal();
+	float GetOffset();
+
 private:
-	float width;
-	float height;
-	float depth;
+
+	Vector3 normal;
 };

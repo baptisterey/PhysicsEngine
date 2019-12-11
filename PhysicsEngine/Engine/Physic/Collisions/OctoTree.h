@@ -1,19 +1,18 @@
 #pragma once
-
 #include "../../Math/Vector3.h"
-#include <vector>
-#include "ICollider.h"
+
+#include <iostream> 
+#include <vector> 
+
 
 class ICollider;
 
 class OctoTree {
 public:
+
 	/// <summary>
 	/// Constructor
 	/// </summary>
-	/// <param name="_level"></param>
-	/// <param name="_position"></param>
-	/// <param name="_size"></param>
 	OctoTree(int _level, Vector3 _position, Vector3 _size);
 
 	/// <summary>
@@ -31,12 +30,19 @@ public:
 	/// exceeds the capacity, it will split and add all
 	/// objects to their corresponding nodes.
 	/// </summary>
-	void Insert(ICollider* collider);
+	void Insert(Vector3 vertex, ICollider* collider);
 
 	/// <summary>
-	/// Return all objects that could collide with the given object
+	/// Return all objects that could collide with the given object based on the zone of the octotree wanted
 	/// </summary>
-	std::vector<ICollider*> Retrieve(ICollider* collider);
+	std::vector<ICollider*> Retrieve(Vector3 vert, ICollider* collider, bool top = true, bool left = true, bool bottom = true, bool right = true, bool front = true, bool back = true);
+
+	// --- STATIC COLLIDERS THAT REPRESENT THE PLANE OF THE BOX ---
+	static ICollider* LEFT_PLANE_COLLIDER;
+	static ICollider* RIGHT_PLANE_COLLIDER;
+	static ICollider* BOTTOM_PLANE_COLLIDER;
+	static ICollider* TOP_PLANE_COLLIDER;
+	// ------------------------------------------------------------
 
 private:
 	/// <summary>
@@ -49,15 +55,24 @@ private:
 	/// object cannot completely fit within a child node and is part
 	/// of the parent node
 	/// </summary>
-	std::vector<int> GetIndex(ICollider* collider);
+	int GetIndex(Vector3 vertex);
 
+	/// <summary>
+	/// How many objects can we store on one node, if we exceed this we split the node in sub-nodes
+	/// </summary>
+	const int MAX_OBJECTS = 1;
 
-	const int MAX_OBJECTS = 10;
-	const int MAX_LEVELS = 2;
+	/// <summary>
+	/// How many levels can the octotree handle
+	/// </summary>
+	const int MAX_LEVELS = 25;
+
 
 	int level;
+
 	Vector3 size;
 	Vector3 position;
-	std::vector<ICollider*> objects; // Colliders located in the current node
+
+	std::vector<Vector3> vertices; // vertices located in the current node
 	std::vector<OctoTree> nodes; // Subnodes
 };

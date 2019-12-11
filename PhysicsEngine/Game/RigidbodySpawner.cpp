@@ -1,18 +1,35 @@
 #include "RigidbodySpawner.h"
 
+#include "../Engine/Physic/Collisions/PlaneCollider.h"
+#include "../Engine/Physic/Collisions/OctoTree.h"
+
 RigidbodySpawner::RigidbodySpawner() : ILogicComponent()
 {
 	Time::timeScale = 5.0f; // For the sake of the demonstration
 
-	Car1 = nullptr;
-	Car2 = nullptr;
 
+	float sizeOfTheRoom = 650;
 
-	float
-		size = 500;
+	// Create the walls of the room
+	Entity* left = EntityManager::CreateEntity("Left", { new CubeRenderer(1, sizeOfTheRoom, sizeOfTheRoom), new PlaneCollider(Vector3(1, 0, 0)) });
+	left->GetTransform()->SetPosition(Vector3(-sizeOfTheRoom / 2, sizeOfTheRoom/2, 0));
 
-	Entity* newEntity = EntityManager::CreateEntity("Tree", { new CubeRenderer(1.325*size, size, size) });
-	newEntity->GetTransform()->SetPosition(Vector3(320,240, -500));
+	OctoTree::LEFT_PLANE_COLLIDER = left->GetComponentByType<PlaneCollider>();
+
+	Entity* right = EntityManager::CreateEntity("Right", { new CubeRenderer(1, sizeOfTheRoom, sizeOfTheRoom), new PlaneCollider(Vector3(-1, 0, 0)) });
+	right->GetTransform()->SetPosition(Vector3(sizeOfTheRoom, sizeOfTheRoom / 2, 0));
+
+	OctoTree::RIGHT_PLANE_COLLIDER = right->GetComponentByType<PlaneCollider>();
+
+	Entity* bottom = EntityManager::CreateEntity("Bottom", { new CubeRenderer(sizeOfTheRoom, 1, sizeOfTheRoom), new PlaneCollider(Vector3(0, 1, 0)) });
+	bottom->GetTransform()->SetPosition(Vector3(0, -sizeOfTheRoom / 4, 0));
+
+	OctoTree::BOTTOM_PLANE_COLLIDER = bottom->GetComponentByType<PlaneCollider>();
+
+	Entity* top = EntityManager::CreateEntity("Bottom", { new CubeRenderer(sizeOfTheRoom, 1, sizeOfTheRoom), new PlaneCollider(Vector3(0, -1, 0)) });
+	top->GetTransform()->SetPosition(Vector3(0, sizeOfTheRoom - sizeOfTheRoom / 4, 0));
+
+	OctoTree::TOP_PLANE_COLLIDER = top->GetComponentByType<PlaneCollider>();
 }
 
 
@@ -33,76 +50,34 @@ void RigidbodySpawner::Update(float deltaTime)
 		case SDLK_z:
 			SpawnRigidbodyTest();
 			break;
-		case SDLK_g:
-			SpawnRigidbodyCar();
+		case SDLK_e:
+			SpawnRigidbodyTest3();
 		}
 
 		break;
-	}
-
-	if (Car1 != nullptr && Car2 != nullptr)
-	{
-		RigidbodyCarCrash();
 	}
 }
 
 void RigidbodySpawner::SpawnRigidbodyTest()
 {
-
-	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new RigidBody(1, 80, 40, 40, 1, 0.9f), new CubeRenderer(80, 40, 40), new CubeCollider(80, 40, 40) });
+	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new CubeRenderer(40, 80, 40), new RigidBody(1, 80, 40, 40, 1, 0.9f), new CubeCollider(40, 80, 40) });
 	newEntity->GetTransform()->SetPosition(Vector3(150, 250, 0));
 
-	newEntity->GetComponentByType<RigidBody>()->AddForceAtBodyPoint(Vector3(0, 450, 100), Vector3(-8, 8, 0));
+	newEntity->GetComponentByType<RigidBody>()->AddForceAtBodyPoint(Vector3(500, 450, 50), Vector3(-8, 8,6 ));
 }
 
 void RigidbodySpawner::SpawnRigidbodyTest2()
 {
-	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new RigidBody(1, 80, 40, 40, 1, 0.95f), new CubeRenderer(80, 55, 40), new CubeCollider(80, 55, 40) });
+	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new CubeRenderer(40, 80, 40), new RigidBody(1, 80, 40, 40, 1, 0.9f), new CubeCollider(40, 80, 40) });
 	newEntity->GetTransform()->SetPosition(Vector3(150, 250, 0));
 
-	newEntity->GetComponentByType<RigidBody>()->AddForceAtBodyPoint(Vector3(250, 450, 0), Vector3(-8, 8, 6));
+	newEntity->GetComponentByType<RigidBody>()->AddForceAtBodyPoint(Vector3(-500, 450, 50), Vector3(-8, 8, 6));
 }
 
-
-void RigidbodySpawner::SpawnRigidbodyCar()
+void RigidbodySpawner::SpawnRigidbodyTest3()
 {
+	Entity* newEntity = EntityManager::CreateEntity("BasketBall", { new CubeRenderer(40, 80, 40), new RigidBody(1, 80, 40, 40, 1, 0.9f), new CubeCollider(40, 80, 40) });
+	newEntity->GetTransform()->SetPosition(Vector3(150, 250, 0));
 
-	Car1 = EntityManager::CreateEntity("BasketBall", { new RigidBody(1, 80, 40, 40, 1, 0.65f), new CubeRenderer(80, 40, 40), new CubeCollider(80, 40, 40) });
-	Car1->GetTransform()->SetPosition(Vector3(50, 250, 0));
-
-	Car2 = EntityManager::CreateEntity("VollzyBall", { new RigidBody(1, 100, 50, 50, 1, 0.65f), new CubeRenderer(100, 50, 50), new CubeCollider(100, 50, 50) });
-	Car2->GetTransform()->SetPosition(Vector3(650, 250, 0));
-
-
-	Car1->GetComponentByType<RigidBody>()->SetGravity(false);
-	Car1->GetComponentByType<RigidBody>()->AddForceAtBodyPoint(Vector3(1000, 0, 0), Vector3());
-
-
-	Car2->GetComponentByType<RigidBody>()->SetGravity(false);
-	Car2->GetComponentByType<RigidBody>()->AddForceAtBodyPoint(Vector3(-1000, 0, 0), Vector3());
-
-}
-
-
-void RigidbodySpawner::RigidbodyCarCrash()
-{
-	if (Vector3::Distance(Car1->GetTransform()->GetPosition(), Car2->GetTransform()->GetPosition()) <= 180)
-	{
-
-		Vector3 crashPosition = Car2->GetTransform()->GetPosition();
-		crashPosition.x -= 100;
-		crashPosition.y -= 8;
-		crashPosition.z -= 3;
-		
-		Car1->GetComponentByType<RigidBody>()->ResetVelocityAndAcceleration();
-		Car1->GetComponentByType<RigidBody>()->AddForceAtPoint(Vector3(-350, 10, 0), crashPosition);
-
-		Car2->GetComponentByType<RigidBody>()->ResetVelocityAndAcceleration();
-		Car2->GetComponentByType<RigidBody>()->AddForceAtPoint(Vector3(350, 10, 0), crashPosition);
-		checkCol = false;
-
-		Car1->GetComponentByType<RigidBody>()->SetLinearDamping(0.5f);
-		Car2->GetComponentByType<RigidBody>()->SetLinearDamping(0.5f);
-	}
-
+	newEntity->GetComponentByType<RigidBody>()->AddForceAtBodyPoint(Vector3(0, 150, 0), Vector3(0, 0, 0));
 }

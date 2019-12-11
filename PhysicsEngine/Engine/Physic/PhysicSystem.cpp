@@ -1,12 +1,14 @@
 #include "PhysicSystem.h"
+
 #include "Collisions/OctoTree.h"
+#include "Collisions/ICollider.h"
+#include "ContactGenerators/ContactRigidbody.h"
 
 PhysicSystem::PhysicSystem() : ISystem()
 {
-	float
-		size = 500;
-
-	tree = new OctoTree(0, Vector3(-11.25, -10, -1000), Vector3(1.325*size, size, 2*size));
+	// We create the octotree based on the demonstration room
+	float sizeOfTheRoom = 650;
+	tree = new OctoTree(0, Vector3(-sizeOfTheRoom / 1.5, -sizeOfTheRoom / 2, -sizeOfTheRoom / 1.5), Vector3(sizeOfTheRoom - sizeOfTheRoom / 1.5, sizeOfTheRoom, sizeOfTheRoom - sizeOfTheRoom / 1.5));
 }
 
 
@@ -57,14 +59,7 @@ void PhysicSystem::Update()
 	// Narrow phase : find real collisions
 	SearchNarrowCollisions(possibleCollisions);
 
-	// Contact generation
-	GenerateContacts(possibleCollisions);
-
-	if (possibleCollisions.size())
-	{
-
-		;
-	}
+	// TODO : Resolve all the contacts
 
 	// -------------------------------------
 
@@ -151,6 +146,7 @@ void PhysicSystem::RemoveForceGenerator(IForceGenerator* forceGenerator)
 	forceGenerators.erase(std::remove(forceGenerators.begin(), forceGenerators.end(), forceGenerator), forceGenerators.end());
 }
 
+// ------- OLD FUNCTIONS ---------------
 void PhysicSystem::GenerateInterprenationContacts()
 {
 	for (int i = 0; i < components.size(); i++) {
@@ -174,7 +170,6 @@ void PhysicSystem::GenerateInterprenationContacts()
 		}
 	}
 }
-
 void PhysicSystem::GenerateGroundContacts()
 {
 	// Temporary solution to detect collision with the ground
@@ -188,7 +183,6 @@ void PhysicSystem::GenerateGroundContacts()
 		}
 	}
 }
-
 void PhysicSystem::ResolveContacts()
 {
 	int iterationsLeft = contacts.size() * 2; // We only do 2n iterations for performances purposes and to avoid infinite loop
@@ -218,42 +212,34 @@ void PhysicSystem::ResolveContacts()
 		iterationsLeft--;
 	}
 }
+// -------------------------------------
 
 void PhysicSystem::SearchBroadCollisions(std::vector<CollidingEntities>& groups)
 {
-	int size = colliders.size();
-
-	// Collider regionalization
+	
 	tree->Clear();
-	for (int i = 0; i < size; i++) {
-		tree->Insert(colliders[i]);
+
+	// We add every vertices in the octotree
+	for (ICollider* c : colliders) {
+
+		if (c->IsActive()) {
+			std::vector<Vector3> vertices = c->GetVertices();
+			for (Vector3 v : vertices) {
+				tree->Insert(v, c);
+			}
+		}
 	}
-
-	// Check broad collisions for every collider
-	for (int i = 0; i < size; i++) {
-		ICollider* c1 = colliders[i];
-
-		// Retrieve objects from the concerned zone
-a		std::vector<ICollider*> objectsArea = tree->Retrieve(c1);
-		int areaSize = objectsArea.size();
-
-		for (int j = 0; j < areaSize; j++) {
-			ICollider* c2 = objectsArea[j];
-			
-			// Checks cases we don't need to focus on the colision
-			if (c1 == c2) 
-				continue;
-			bool alreadyAdded = false;
-			for (int k = 0; k < i && !alreadyAdded; k++)
-				if (colliders[k] == c2)
-					alreadyAdded = true;
-			if (alreadyAdded)
-				continue;
-
-			// Check broad collision
-			int distance = Vector3::Distance(c1->GetOwner()->GetTransform()->GetPosition(), c2->GetOwner()->GetTransform()->GetPosition());
-			if (distance < c1->GetBroadRadius() + c2->GetBroadRadius()) {
-				groups.push_back({ c1, c2 });
+	
+	// We retrive for all vertices the potential collisions via a collider
+	for (ICollider* c : colliders) {
+		
+		std::vector<Vector3> vertexs = c->GetVertices();
+		
+		for (Vector3 v : vertexs) { 
+			std::vector<ICollider*> collidersToTest = tree->Retrieve(v, c);
+			for (auto colliderToTest : collidersToTest) {
+				CollidingVertex collidingVertex = { c, v };
+				groups.push_back({ collidingVertex, colliderToTest }); // Add the colliding entities for the narrow phase.
 			}
 		}
 	}
@@ -261,12 +247,23 @@ a		std::vector<ICollider*> objectsArea = tree->Retrieve(c1);
 
 void PhysicSystem::SearchNarrowCollisions(std::vector<CollidingEntities>& groups)
 {
+	int size = groups.size();
+	for (int i = 0; i < size; i++) {
 
+		// We test if the specific vertx collide with the collider to test
+		std::vector<ContactRigidbody> contacts = groups[i].colliderToTest->ResolveCollision(groups[i].collidingVertex);
+		for each (auto contact in contacts) // We have contacts
+		{
+			// For the demonstration we simply desactivate the rigidbody and collider of the component and move on.
+			if (contact.component1->IsActive()) {
 
+				std::cout << contact.ToString() << std::endl;
+				contact.component1->SetActive(false);
+
+				ICollider* collider = contact.component1->GetOwner()->GetComponentByType<ICollider>();
+				collider->SetActive(false);
+			}
+		}
+	}
 }
-
-void PhysicSystem::GenerateContacts(std::vector<CollidingEntities>& groups) {
-
-}
-
 
