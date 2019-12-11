@@ -27,57 +27,6 @@ std::vector<Vector3> CubeCollider::GetVertices() {
 	return result;
 }
 
-std::vector<Face> CubeCollider::GetFaces() {
-
-	std::vector<Face> result;
-	Face a, b, c, d, e, f;
-	a.norm = GetOwner()->GetTransform()->GetRotation().rotatedVector(Vector3(1, 0, 0));
-	a.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(+width / 2, -height / 2, -depth / 2)));
-	a.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(+width / 2, -height / 2, +depth / 2)));
-	a.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(+width / 2, +height / 2, -depth / 2)));
-	a.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(+width / 2, +height / 2, +depth / 2)));
-
-	b.norm = GetOwner()->GetTransform()->GetRotation().rotatedVector(Vector3(-1, 0, 0));
-	b.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(-width / 2, -height / 2, -depth / 2)));
-	b.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(-width / 2, -height / 2, +depth / 2)));
-	b.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(-width / 2, +height / 2, -depth / 2)));
-	b.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(-width / 2, +height / 2, +depth / 2)));
-
-	c.norm = GetOwner()->GetTransform()->GetRotation().rotatedVector(Vector3(0, 1, 0));
-	c.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(-width / 2, +height / 2, -depth / 2)));
-	c.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(-width / 2, +height / 2, +depth / 2)));
-	c.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(+width / 2, +height / 2, -depth / 2)));
-	c.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(+width / 2, +height / 2, +depth / 2)));
-
-	d.norm = GetOwner()->GetTransform()->GetRotation().rotatedVector(Vector3(0, -1, 0));
-	d.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(-width / 2, -height / 2, -depth / 2)));
-	d.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(-width / 2, -height / 2, +depth / 2)));
-	d.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(+width / 2, -height / 2, -depth / 2)));
-	d.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(+width / 2, -height / 2, +depth / 2)));
-
-	e.norm = GetOwner()->GetTransform()->GetRotation().rotatedVector(Vector3(0, 0, 1));
-	e.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(-width / 2, -height / 2, +depth / 2)));
-	e.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(-width / 2, +height / 2, +depth / 2)));
-	e.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(+width / 2, -height / 2, +depth / 2)));
-	e.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(+width / 2, +height / 2, +depth / 2)));
-
-	f.norm = GetOwner()->GetTransform()->GetRotation().rotatedVector(Vector3(0, 0, -1));
-	f.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(-width / 2, -height / 2, -depth / 2)));
-	f.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(-width / 2, +height / 2, -depth / 2)));
-	f.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(+width / 2, -height / 2, -depth / 2)));
-	f.vertices.push_back(GetOwner()->GetTransform()->LocalToWorld(Vector3(+width / 2, +height / 2, -depth / 2)));
-
-
-	result.push_back(a);
-	result.push_back(b);
-	result.push_back(c);
-	result.push_back(d);
-	result.push_back(e);
-	result.push_back(f);
-
-	return result;
-}
-
 std::vector<ContactRigidbody> CubeCollider::ResolveCollision(ICollider * collider)
 {
 	if (PlaneCollider* v = dynamic_cast<PlaneCollider*>(collider)) // We test the collision with a plane collider

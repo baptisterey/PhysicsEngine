@@ -22,11 +22,6 @@ std::vector<Vector3> PlaneCollider::GetVertices()
 	return std::vector<Vector3>();
 }
 
-std::vector<Face> PlaneCollider::GetFaces()
-{
-	return std::vector<Face>();
-}
-
 std::vector<ContactRigidbody> PlaneCollider::ResolveCollision(ICollider * collider)
 {
 	if (CubeCollider* v = dynamic_cast<CubeCollider*>(collider)) // We test the collision with a cube collider

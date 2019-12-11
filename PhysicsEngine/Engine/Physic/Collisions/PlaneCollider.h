@@ -12,7 +12,6 @@ public:
 	~PlaneCollider();
 
 	std::vector<Vector3> GetVertices();
-	std::vector<Face> GetFaces();
 
 	std::vector<ContactRigidbody> ResolveCollision(ICollider* collider);
 

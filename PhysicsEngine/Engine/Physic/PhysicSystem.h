@@ -13,15 +13,14 @@
 
 #include "./ForceGenerators/IForceGenerator.h"
 
-
-class CubeCollider;
+class Collision;
 class ICollider;
 class OctoTree;
-class Collision;
-class Face;
 
-struct CollidingEntities; 
-
+struct CollidingEntities {
+	ICollider* collider1;
+	ICollider* collider2;
+};
 
 class PhysicSystem : public ISystem
 {
@@ -48,7 +47,9 @@ public:
 
 	void SearchBroadCollisions(std::vector<CollidingEntities>& groups);
 	void SearchNarrowCollisions(std::vector<CollidingEntities>& groups);
-	void GenerateContacts(std::vector<CollidingEntities>& groups);
+
+
+
 
 private:
 
