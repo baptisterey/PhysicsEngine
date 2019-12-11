@@ -5,6 +5,10 @@
 #include <vector> 
 
 class Face;
+class ICollider;
+
+struct VertexCollider; 
+struct FaceCollider;
 
 class OctoTree {
 public:
@@ -31,24 +35,24 @@ public:
 	/// exceeds the capacity, it will split and add all
 	/// objects to their corresponding nodes.
 	/// </summary>
-	void Insert(Vector3 vertex);
+	void Insert(Vector3 vertex, ICollider* collider);
 
 	/// <summary>
 	/// Insert the object into the quadtree. If the node
 	/// exceeds the capacity, it will split and add all
 	/// objects to their corresponding nodes.
 	/// </summary>
-	void Insert(Face face);
+	void Insert(Face face, ICollider* collider);
 
 	/// <summary>
 	/// Return all objects that could collide with the given object
 	/// </summary>
-	std::vector<Face> RetrieveFromVert(Vector3 vert);
+	std::vector<FaceCollider> RetrieveFromVert(Vector3 vert, ICollider* collider);
 
 	/// <summary>
 	/// Return all objects that could collide with the given object
 	/// </summary>
-	std::vector<Face> RetrieveFromFace(Face face);
+	std::vector<FaceCollider> RetrieveFromFace(Face face, ICollider* collider);
 
 private:
 	/// <summary>
@@ -70,16 +74,16 @@ private:
 	/// </summary>
 	int GetIndex(Face face);
 
-
-	const int MAX_OBJECTS = 10;
-	const int MAX_LEVELS = 2;
+	const int MAX_OBJECTS = 5;
+	const int MAX_LEVELS = 10;
 
 	int level;
+
 	Vector3 size;
 	Vector3 position;
 
-	std::vector<Vector3> vertexs; // vertexs located in the current node
-	std::vector<Face> faces; // face located in the current node
+	std::vector<VertexCollider> verticesCollider; // vertices located in the current node
+	std::vector<FaceCollider> facesCollider; // face located in the current node
 
 	std::vector<OctoTree> nodes; // Subnodes
 };

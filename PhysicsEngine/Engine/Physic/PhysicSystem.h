@@ -12,18 +12,15 @@
 #include "./ContactGenerators/Contact.h"
 
 #include "./ForceGenerators/IForceGenerator.h"
-#include "Collisions/ICollider.h"
+
 
 class CubeCollider;
 class ICollider;
 class OctoTree;
 class Collision;
+class Face;
 
-
-struct CollidingEntities {
-	Vector3 point;
-	Face face;
-};
+struct CollidingEntities; 
 
 
 class PhysicSystem : public ISystem

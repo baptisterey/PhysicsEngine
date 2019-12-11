@@ -31,16 +31,12 @@ public:
 	~RigidbodySpawner();
 
 	void Update(float deltaTime);
-	void SpawnRigidbodyCar();
-	void RigidbodyCarCrash();
 
 private:
 
 	void SpawnRigidbodyTest();
 	void SpawnRigidbodyTest2();
+	void SpawnRigidbodyTest3();
 
-	Entity * Car1;
-	Entity * Car2;
-	bool checkCol = true;
 };
 

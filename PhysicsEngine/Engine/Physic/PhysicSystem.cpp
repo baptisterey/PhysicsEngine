@@ -1,11 +1,26 @@
 #include "PhysicSystem.h"
+
+struct FaceCollider {
+
+};
+
+struct VertexCollider {
+
+};
+
 #include "Collisions/OctoTree.h"
 #include "Collisions/ICollider.h"
+#include "ContactGenerators/ContactRigidbody.h"
+
+struct CollidingEntities {
+	FaceCollider faceCollider;
+	VertexCollider vertexCollider;
+};
 
 PhysicSystem::PhysicSystem() : ISystem()
 {
 	float
-		size = 500;
+		size = 1500;
 
 	tree = new OctoTree(0, Vector3(320, 240, -500), Vector3(1.325*size, size, 2*size));
 }
@@ -216,28 +231,32 @@ void PhysicSystem::ResolveContacts()
 
 void PhysicSystem::SearchBroadCollisions(std::vector<CollidingEntities>& groups)
 {
+	/*
 	tree->Clear();
 
 	// Collider regionalization
 	for (ICollider* c : colliders) {
-		std::vector<Vector3> vertexs = c->getVertexs();
-		std::vector<Face> faces = c->getFaces();
-		for (Vector3 v : vertexs){ tree->Insert(v); }
-		for (Face f : faces){ tree->Insert(f); }
+
+		std::vector<Vector3> vertices = c->GetVertices();
+		std::vector<Face> faces = c->GetFaces();
+
+		for (Vector3 v : vertices){ tree->Insert(v, c); }
+		//for (Face f : faces){ tree->Insert(f); }
 	}
 	
 	// Check broad collisions for every collider
 	for (ICollider* c : colliders) {
 		
-
-		std::vector<Vector3> vertexs = c->getVertexs();
+		std::vector<Vector3> vertexs = c->GetVertices();
 		//std::vector<Face> faces = c->getFaces();
 		
 		for (Vector3 v : vertexs) { 
 
-			tree->RetrieveFromVert(v);
+			std::vector<FaceCollider> facesCollider = tree->RetrieveFromVert(v, c);
 
-			/*
+			std::cout << facesCollider.size() << std::endl;
+
+			
 			for (Face collide : possibleCollisions)
 			{
 				if(!(c->related(collide)))
@@ -245,16 +264,31 @@ void PhysicSystem::SearchBroadCollisions(std::vector<CollidingEntities>& groups)
 					groups.push_back({ v, collide });
 				}
 			}
-			*/
+			
 		}
 		
 	}
-	
+	*/
 }
 
 void PhysicSystem::SearchNarrowCollisions(std::vector<CollidingEntities>& groups)
 {
-	
+	int size = colliders.size();
+	for (int i = 0; i < size; i++) {
+		for (int j = i + 1; j < size; j++) {
+
+			std::vector<ContactRigidbody> contacts = colliders[i]->ResolveCollision(colliders[j]);
+			for each (auto contact in contacts)
+			{
+				// For the demonstration we simply desactivate the rigidbody of the component and move on.
+				if (contact.component1->IsActive()) {
+
+					std::cout << contact.ToString() << std::endl;
+					contact.component1->SetActive(false);
+				}
+			}
+		}
+	}
 }
 
 void PhysicSystem::GenerateContacts(std::vector<CollidingEntities>& groups) {

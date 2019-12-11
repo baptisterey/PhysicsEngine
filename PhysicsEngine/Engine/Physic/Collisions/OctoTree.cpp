@@ -1,101 +1,69 @@
 #include "OctoTree.h"
 #include "ICollider.h"
 
+struct VertexCollider {
+	Vector3 worldPosition;
+	ICollider* collider;
+
+	bool operator== (VertexCollider const& vertexCollider) {
+		return worldPosition == vertexCollider.worldPosition && collider == vertexCollider.collider;
+	}
+};
+
+struct FaceCollider {
+	Face face;
+	ICollider* collider;
+
+	bool operator== (FaceCollider const& faceCollider) {
+		return face == faceCollider.face && collider == faceCollider.collider;
+	}
+};
+
 OctoTree::OctoTree(int _level, Vector3 _position, Vector3 _size) : level(_level), position(_position), size(_size)
 {
+
 }
 
 OctoTree::~OctoTree()
 {
-}
-
-void OctoTree::Insert(Vector3 vertex) {
-	if (nodes.size() > 0) {
-		int index = GetIndex(vertex);
-			nodes[index].Insert(vertex);
-		return;
-	}
-	else if (level == 0 && GetIndex(vertex) == -1)
-		return;
-
-	vertexs.push_back(vertex);
-
-	if (vertexs.size() > MAX_OBJECTS && level < MAX_LEVELS - 1) { // First level = 0
-		Split();
-
-		for (int i = 0; i < vertexs.size(); i++) {
-			int index = GetIndex(vertexs[i]);
-			nodes[index].Insert(vertexs[i]);
-		}
-
-		vertexs.clear();
-	}
-}
-
-
-void OctoTree::Insert(Face face) {
-	if (nodes.size() > 0) {
-		int index = GetIndex(face);
-		if (index > -1)
-		{
-			nodes[index].Insert(face);
-			return;
-		}
-	}
-	else if (level == 0 && GetIndex(face) == -1)
-		return;
-
-	faces.push_back(face);
-
-	if (faces.size() > MAX_OBJECTS&& level < MAX_LEVELS - 1) { // First level = 0
-		Split();
-
-		std::vector<Face> _faces;
-		for (Face f : faces) {
-			int index = GetIndex(f);
-			if (index > -1)
-			{
-				nodes[index].Insert(f);
-			}
-			if (index == -2)
-			{
-				_faces.push_back(f);
-			}
-		}
-		faces = _faces;
-	}
-	return;
 
 }
 
-std::vector<Face> OctoTree::RetrieveFromVert(Vector3 vert) {
-	std::vector<Face> result;
+
+std::vector<FaceCollider> OctoTree::RetrieveFromVert(Vector3 vert, ICollider* collider) {
+	std::vector<FaceCollider> result;
 
 	if (nodes.size() > 0) {
 		int index = GetIndex(vert);
-		result = nodes[index].RetrieveFromVert(vert);
+		if (index != -1) {
+			result = nodes[index].RetrieveFromVert(vert, collider);
+		}
 	}
 
-	for (Face f : faces)
+	for (auto f : facesCollider)
 	{
-		result.push_back(f);
+		if (f.collider != collider) {
+			result.push_back(f);
+		}
 	}
 
 	return result;
 }
 
-std::vector<Face> OctoTree::RetrieveFromFace(Face face) {
-	std::vector<Face> result;
+std::vector<FaceCollider> OctoTree::RetrieveFromFace(Face face, ICollider* collider) {
+	std::vector<FaceCollider> result;
 	if (nodes.size() > 0) {
 		int index = GetIndex(face);
 		if (index > -1) {
-			result = nodes[index].RetrieveFromFace(face);
+			result = nodes[index].RetrieveFromFace(face, collider);
 		}
 	}
 
-	for (Face f : faces)
+	for (auto f : facesCollider)
 	{
-		result.push_back(f);
+		if (f.collider != collider) {
+			result.push_back(f);
+		}
 	}
 
 	return result;
@@ -103,12 +71,74 @@ std::vector<Face> OctoTree::RetrieveFromFace(Face face) {
 
 void OctoTree::Clear()
 {
-	vertexs.clear();
-
-	for (int i = 0; i < nodes.size(); i++)
+	int size = nodes.size();
+	for (int i = 0; i < size; i++)
 		nodes[i].Clear();
 
 	nodes.clear();
+
+	verticesCollider.clear();
+	facesCollider.clear();
+}
+
+void OctoTree::Insert(Face face, ICollider* collider) {
+	int index = GetIndex(face);
+	if (nodes.size() > 0) {
+		if (index >= 0) {
+			nodes[index].Insert(face, collider);
+			return;
+		}
+	}
+	else if (level == 0 && index == -1) {
+		// The vertex is outside the root octree
+		return;
+	}
+
+	facesCollider.push_back({ face, collider });
+
+	if (facesCollider.size() > MAX_OBJECTS && level < MAX_LEVELS - 1) { // First level = 0
+		Split();
+
+		int size = facesCollider.size();
+		for (int i = size - 1; i >= 0; i--) {
+			int index = GetIndex(facesCollider[i].face);
+			if (index != -1) {
+				nodes[index].Insert(facesCollider[i].face, collider);
+				facesCollider.erase(std::remove(facesCollider.begin(), facesCollider.end(), facesCollider[i]), facesCollider.end());
+			}
+		}
+	}
+}
+
+void OctoTree::Insert(Vector3 vertex, ICollider * collider)
+{
+
+	int index = GetIndex(vertex);
+	if (nodes.size() > 0) {
+		if (index >= 0) {
+			nodes[index].Insert(vertex, collider);
+			return;
+		}
+	}
+	else if (level == 0 && index == -1) {
+		// The vertex is outside the root octree
+		return;
+	}
+
+	verticesCollider.push_back({vertex, collider});
+
+	if (verticesCollider.size() > MAX_OBJECTS && level < MAX_LEVELS - 1) { // First level = 0
+		Split();
+
+		int size = verticesCollider.size();
+		for (int i = size - 1; i >= 0; i--) {
+			int index = GetIndex(verticesCollider[i].worldPosition);
+			if (index != -1) {
+				nodes[index].Insert(verticesCollider[i].worldPosition, collider);
+				verticesCollider.erase(std::remove(verticesCollider.begin(), verticesCollider.end(), verticesCollider[i]), verticesCollider.end());
+			}
+		}
+	}
 }
 
 void OctoTree::Split()
@@ -180,18 +210,24 @@ int OctoTree::GetIndex(Vector3 vertex) {
 			}
 		}
 	}
+
+	return -1;
 }
 
 
 int OctoTree::GetIndex(Face face) {
 
-	int index = GetIndex(face.vertexs[0]);
-	for (Vector3 v : face.vertexs)
-	{ 
-		if (!(index == GetIndex(v)))
+	if (face.vertices.size() > 0) {
+		int index = GetIndex(face.vertices[0]);
+		for (Vector3 v : face.vertices)
 		{
-			return -2;
+			if (!(index == GetIndex(v)))
+			{
+				return -1;
+			}
 		}
+		return index;
 	}
-	return index;
+
+	return -1;
 }

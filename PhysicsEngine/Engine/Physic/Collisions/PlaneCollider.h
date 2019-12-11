@@ -7,16 +7,18 @@ class PlaneCollider : public ICollider
 public:
 
 	PlaneCollider();
-	PlaneCollider(Vector3 normal, float offset);
+	PlaneCollider(Vector3 normal);
 
 	~PlaneCollider();
 
-	std::vector<Vector3> getVertexs();
-	std::vector<Face> getFaces();
-	bool related(Face f);
+	std::vector<Vector3> GetVertices();
+	std::vector<Face> GetFaces();
 
+	std::vector<ContactRigidbody> ResolveCollision(ICollider* collider);
+
+	Vector3 GetNormal();
+	float GetOffset();
 private:
 
 	Vector3 normal;
-	float offset;
 };
