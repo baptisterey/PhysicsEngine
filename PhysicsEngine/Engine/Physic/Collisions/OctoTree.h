@@ -9,6 +9,7 @@ class ICollider;
 
 class OctoTree {
 public:
+
 	/// <summary>
 	/// Constructor
 	/// </summary>
@@ -36,10 +37,12 @@ public:
 	/// </summary>
 	std::vector<ICollider*> Retrieve(Vector3 vert, ICollider* collider, bool top = true, bool left = true, bool bottom = true, bool right = true, bool front = true, bool back = true);
 
+	// --- STATIC COLLIDERS THAT REPRESENT THE PLANE OF THE BOX ---
 	static ICollider* LEFT_PLANE_COLLIDER;
 	static ICollider* RIGHT_PLANE_COLLIDER;
 	static ICollider* BOTTOM_PLANE_COLLIDER;
 	static ICollider* TOP_PLANE_COLLIDER;
+	// ------------------------------------------------------------
 
 private:
 	/// <summary>
@@ -54,8 +57,16 @@ private:
 	/// </summary>
 	int GetIndex(Vector3 vertex);
 
+	/// <summary>
+	/// How many objects can we store on one node, if we exceed this we split the node in sub-nodes
+	/// </summary>
 	const int MAX_OBJECTS = 1;
-	const int MAX_LEVELS = 10;
+
+	/// <summary>
+	/// How many levels can the octotree handle
+	/// </summary>
+	const int MAX_LEVELS = 25;
+
 
 	int level;
 

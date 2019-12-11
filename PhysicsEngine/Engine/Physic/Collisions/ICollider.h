@@ -6,6 +6,8 @@
 #include "../../Managers/SystemManager.h"
 #include "../ContactGenerators/ContactRigidbody.h";
 
+#include "../PhysicSystem.h"
+
 
 class ICollider : virtual public BaseComponent {
 public:
@@ -20,6 +22,13 @@ public:
 	/// <param name="collider">The collider to test.</param>
 	/// <returns>All the collisions found for this frame.</returns>
 	virtual std::vector<ContactRigidbody> ResolveCollision(ICollider* collider) = 0;
+
+	/// <summary>
+/// Try to find the collision between the collider and a vertex.
+/// </summary>
+/// <param name="collider">The collider to test.</param>
+/// <returns>All the collisions found for this frame.</returns>
+	virtual std::vector <ContactRigidbody> ResolveCollision(CollidingVertex collidingVertex) = 0;
 
 	/// <summary>
 	/// Return radius of an sphere that encapsulate all the collider.

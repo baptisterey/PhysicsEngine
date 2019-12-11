@@ -25,6 +25,11 @@ RigidbodySpawner::RigidbodySpawner() : ILogicComponent()
 	bottom->GetTransform()->SetPosition(Vector3(0, -sizeOfTheRoom / 4, 0));
 
 	OctoTree::BOTTOM_PLANE_COLLIDER = bottom->GetComponentByType<PlaneCollider>();
+
+	Entity* top = EntityManager::CreateEntity("Bottom", { new CubeRenderer(sizeOfTheRoom, 1, sizeOfTheRoom), new PlaneCollider(Vector3(0, -1, 0)) });
+	top->GetTransform()->SetPosition(Vector3(0, sizeOfTheRoom - sizeOfTheRoom / 4, 0));
+
+	OctoTree::TOP_PLANE_COLLIDER = top->GetComponentByType<PlaneCollider>();
 }
 
 

@@ -6,8 +6,9 @@
 
 PhysicSystem::PhysicSystem() : ISystem()
 {
+	// We create the octotree based on the demonstration room
 	float sizeOfTheRoom = 650;
-	tree = new OctoTree(0, Vector3(-sizeOfTheRoom / 2, -sizeOfTheRoom / 4, -sizeOfTheRoom / 2), Vector3(sizeOfTheRoom + sizeOfTheRoom / 2, sizeOfTheRoom + sizeOfTheRoom / 2, sizeOfTheRoom + sizeOfTheRoom / 2));
+	tree = new OctoTree(0, Vector3(-sizeOfTheRoom / 1.5, -sizeOfTheRoom / 2, -sizeOfTheRoom / 1.5), Vector3(sizeOfTheRoom - sizeOfTheRoom / 1.5, sizeOfTheRoom, sizeOfTheRoom - sizeOfTheRoom / 1.5));
 }
 
 
@@ -218,7 +219,7 @@ void PhysicSystem::SearchBroadCollisions(std::vector<CollidingEntities>& groups)
 	
 	tree->Clear();
 
-	// Collider regionalization
+	// We add every vertices in the octotree
 	for (ICollider* c : colliders) {
 
 		if (c->IsActive()) {
@@ -229,16 +230,16 @@ void PhysicSystem::SearchBroadCollisions(std::vector<CollidingEntities>& groups)
 		}
 	}
 	
-	// Check broad collisions for every collider
+	// We retrive for all vertices the potential collisions via a collider
 	for (ICollider* c : colliders) {
 		
 		std::vector<Vector3> vertexs = c->GetVertices();
 		
 		for (Vector3 v : vertexs) { 
 			std::vector<ICollider*> collidersToTest = tree->Retrieve(v, c);
-
 			for (auto colliderToTest : collidersToTest) {
-				groups.push_back({ c, colliderToTest });
+				CollidingVertex collidingVertex = { c, v };
+				groups.push_back({ collidingVertex, colliderToTest }); // Add the colliding entities for the narrow phase.
 			}
 		}
 	}
@@ -249,10 +250,11 @@ void PhysicSystem::SearchNarrowCollisions(std::vector<CollidingEntities>& groups
 	int size = groups.size();
 	for (int i = 0; i < size; i++) {
 
-		std::vector<ContactRigidbody> contacts = groups[i].collider1->ResolveCollision(groups[i].collider2);
-		for each (auto contact in contacts)
+		// We test if the specific vertx collide with the collider to test
+		std::vector<ContactRigidbody> contacts = groups[i].colliderToTest->ResolveCollision(groups[i].collidingVertex);
+		for each (auto contact in contacts) // We have contacts
 		{
-			// For the demonstration we simply desactivate the rigidbody of the component and move on.
+			// For the demonstration we simply desactivate the rigidbody and collider of the component and move on.
 			if (contact.component1->IsActive()) {
 
 				std::cout << contact.ToString() << std::endl;

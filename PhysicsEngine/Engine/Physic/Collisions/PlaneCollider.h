@@ -14,9 +14,11 @@ public:
 	std::vector<Vector3> GetVertices();
 
 	std::vector<ContactRigidbody> ResolveCollision(ICollider* collider);
+	std::vector <ContactRigidbody> ResolveCollision(CollidingVertex collidingVertex);
 
 	Vector3 GetNormal();
 	float GetOffset();
+
 private:
 
 	Vector3 normal;

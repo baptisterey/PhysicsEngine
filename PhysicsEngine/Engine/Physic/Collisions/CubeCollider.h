@@ -10,6 +10,7 @@ public:
 	std::vector<Vector3> GetVertices();
 
 	std::vector<ContactRigidbody> ResolveCollision(ICollider* collider);
+	std::vector <ContactRigidbody> ResolveCollision(CollidingVertex collidingVertex);
 
 private:
 	float width;

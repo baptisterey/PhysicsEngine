@@ -27,7 +27,6 @@ std::vector<ContactRigidbody> PlaneCollider::ResolveCollision(ICollider * collid
 	if (CubeCollider* v = dynamic_cast<CubeCollider*>(collider)) // We test the collision with a cube collider
 	{
 		CubeCollider* cube = dynamic_cast<CubeCollider*>(collider);
-
 		return cube->ResolveCollision(this); // Simply call the cube's function
 	}
 	else
@@ -36,6 +35,24 @@ std::vector<ContactRigidbody> PlaneCollider::ResolveCollision(ICollider * collid
 	}
 
 	return std::vector<ContactRigidbody>();
+}
+
+std::vector<ContactRigidbody> PlaneCollider::ResolveCollision(CollidingVertex collidingVertex)
+{
+	std::vector<ContactRigidbody> contacts;
+
+	// We calculate the distance of the vertex with the plane collider, if the distance is negative, an collision occured.
+	double dist = Vector3::Dot(collidingVertex.vertex, GetNormal()) + GetOffset();
+	if (dist < 0)
+	{
+		IPhysicComponent* physicComponent = collidingVertex.collider1->GetOwner()->GetComponentByType<IPhysicComponent>();
+		if (physicComponent != nullptr && physicComponent->IsActive()) {
+			contacts.push_back(ContactRigidbody(physicComponent, nullptr, collidingVertex.vertex, dist, GetNormal()));
+		}
+	}
+	
+	return contacts;
+
 }
 
 Vector3 PlaneCollider::GetNormal()
